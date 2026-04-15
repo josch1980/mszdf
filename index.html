@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lass ma lernen! - Übersicht</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #1a1a2e;
+      color: #fff;
+      min-height: 100vh;
+    }
+    header {
+      background: #16213e;
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      border-bottom: 3px solid #0f3460;
+    }
+    header h1 {
+      font-size: 1.8em;
+      margin: 0;
+      color: #e0e0e0;
+    }
+    nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-left: auto;
+    }
+    nav a {
+      color: #90caf9;
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      border: 1px solid #0f3460;
+    }
+    nav a:hover {
+      background: #0f3460;
+    }
+    .hero {
+      text-align: center;
+      padding: 60px 40px 40px;
+    }
+    .hero h2 {
+      font-size: 3em;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      margin: 0;
+      color: #e0e0e0;
+    }
+    .hero p {
+      color: #aaa;
+      margin-top: 10px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      padding: 30px 40px 60px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .card {
+      border-radius: 12px;
+      padding: 28px 24px;
+      text-decoration: none;
+      color: #000;
+      display: block;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+    }
+    .card.mathe { background-color: #fffde7; }
+    .card.gpg   { background-color: #e8f5e9; }
+    .card.wib   { background-color: #e3f2fd; }
+    .card.eng   { background-color: #f3e5f5; }
+    .card.nt    { background-color: #f1f8e9; }
+    .card .label {
+      font-size: 0.75em;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+      opacity: 0.6;
+      font-weight: bold;
+    }
+    .card h3 {
+      font-size: 1.4em;
+      margin: 0 0 12px;
+      color: #000;
+    }
+    .card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: 0.85em;
+      color: #333;
+    }
+    .card ul li {
+      padding: 2px 0;
+    }
+    .card ul li::before {
+      content: "→ ";
+      color: #1a73e8;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 0.85em;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #888;
+      padding: 30px 40px 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📚 Lass ma lernen!</h1>
+    <nav>
+      <a href="mathe_m9_inhaltsverzeichnis.html">M9 Mathe</a>
+      <a href="nt_m9_inhaltsverzeichnis.html">M9 NT</a>
+      <a href="mathe_m10_inhaltsverzeichnis.html">M10 Mathe</a>
+      <a href="gpg_m10_inhaltsverzeichnis.html">M10 GPG</a>
+      <a href="wib_m10_inhaltsverzeichnis.html">M10 WiB</a>
+      <a href="englisch_m10_inhaltsverzeichnis.html">M10 Englisch</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <h2>Mister Black</h2>
+    <p>Lernmaterialien für Mittelschule – Jahrgangsstufe 9 &amp; 10</p>
+  </div>
+
+  <div class="section-title">Jahrgangsstufe 9</div>
+  <div class="grid">
+    <a href="mathe_m9_inhaltsverzeichnis.html" class="card mathe">
+      <div class="label">M9 · Mathematik</div>
+      <h3>Mathe M9</h3>
+      <ul>
+        <li>LB 01 Prozent- und Zinsrechnung</li>
+        <li>LB 02 Potenzen</li>
+        <li>LB 03-04 Geometrische Figuren</li>
+        <li>LB 07 Gleichungen</li>
+        <li>LB 08 Funktionen</li>
+        <li>Prüfungsvorbereitung</li>
+      </ul>
+    </a>
+    <a href="nt_m9_inhaltsverzeichnis.html" class="card nt">
+      <div class="label">M9 · Natur und Technik</div>
+      <h3>NT M9</h3>
+      <ul>
+        <li>LB 01 Naturwiss. Arbeiten</li>
+        <li>LB 02 Lebensgrundlage Kohlenstoff</li>
+        <li>LB 03 Mensch und Gesundheit</li>
+        <li>LB 04 Materie, Stoffe und Technik</li>
+      </ul>
+    </a>
+  </div>
+
+  <div class="section-title">Jahrgangsstufe 10</div>
+  <div class="grid">
+    <a href="mathe_m10_inhaltsverzeichnis.html" class="card mathe">
+      <div class="label">M10 · Mathematik</div>
+      <h3>Mathe M10</h3>
+      <ul>
+        <li>10.1 Potenzen und Wurzeln</li>
+        <li>10.2 Geometrie</li>
+        <li>10.3 Trigonometrie</li>
+        <li>10.4 Lineare und quadratische Funktionen</li>
+        <li>10.5 Statistik</li>
+        <li>Prüfungsaufgaben</li>
+      </ul>
+    </a>
+    <a href="gpg_m10_inhaltsverzeichnis.html" class="card gpg">
+      <div class="label">M10 · GPG</div>
+      <h3>GPG M10</h3>
+      <ul>
+        <li>LB 01 Lebensraum Erde</li>
+        <li>LB 02 Leben und Wandel</li>
+        <li>LB 03 Politik und Gesellschaft</li>
+        <li>LB 04 Lebenswelt</li>
+      </ul>
+    </a>
+    <a href="wib_m10_inhaltsverzeichnis.html" class="card wib">
+      <div class="label">M10 · WiB</div>
+      <h3>WiB M10</h3>
+      <ul>
+        <li>Übersicht (LB 02–05)</li>
+        <li>10.4 Die Aktienbörse</li>
+        <li>Bewerbungsmappe</li>
+        <li>Bewerbungsschreiben</li>
+      </ul>
+    </a>
+    <a href="englisch_m10_inhaltsverzeichnis.html" class="card eng">
+      <div class="label">M10 · Englisch</div>
+      <h3>Englisch M10</h3>
+      <ul>
+        <li>M9-M10 Prüfungen</li>
+        <li>Mündl. Prüfung</li>
+        <li>Listening / Reading / Writing</li>
+        <li>Mediation-Sprechkompetenz</li>
+        <li>Grammar</li>
+      </ul>
+    </a>
+  </div>
+</body>
+</html>
