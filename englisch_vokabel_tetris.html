@@ -51,7 +51,9 @@
   #playfield {
     position: relative;
     width: 100%;
-    height: 440px;
+    height: 46vh;
+    min-height: 220px;
+    max-height: 440px;
     background: linear-gradient(#12122a, #0d0d20);
     border: 2px solid #0f3460;
     border-radius: 10px;
@@ -83,7 +85,7 @@
   .brick.flash-ok { background: #a5d6a7 !important; transition: background 0.15s; }
 
   .danger-line {
-    position: absolute; left: 0; right: 0; top: 64px;
+    position: absolute; left: 0; right: 0; top: 60px;
     border-top: 2px dashed rgba(239,154,154,0.5);
     pointer-events: none;
   }
@@ -139,6 +141,22 @@
   .overlay.hidden { display: none; }
 
   .hint { text-align: center; color: #666; font-size: 0.8em; margin-top: 14px; }
+
+  /* Auf kleinen / niedrigen Displays kompakter, damit die Auswahl-Buttons
+     immer sichtbar bleiben */
+  @media (max-height: 760px), (max-width: 560px) {
+    header { padding: 10px 16px; }
+    header h1 { font-size: 1.1em; }
+    .wrap { padding: 10px 12px; }
+    .hud { margin-bottom: 8px; gap: 8px; }
+    .stat { padding: 6px 8px; }
+    .stat .val { font-size: 1.2em; }
+    #playfield { height: 38vh; min-height: 180px; }
+    .choices { gap: 8px; margin-top: 10px; }
+    .choices button { padding: 12px 8px; font-size: 1em; }
+    .controls { margin-top: 10px; }
+    .hint { margin-top: 8px; }
+  }
 </style>
 </head>
 <body>
@@ -230,8 +248,8 @@ let rafId = null;
 let lastTs = 0;
 
 const BRICK_H = 42;       // Höhe eines gestapelten Bricks
-const DANGER_TOP = 64;    // Pixel von oben, bis wohin der Stapel darf
-const FIELD_H = 440;
+const DANGER_TOP = 60;    // Pixel von oben, bis wohin der Stapel darf
+function fieldH(){ return pf.clientHeight; }  // aktuelle Spielfeldhöhe (responsiv)
 
 function shuffle(arr){
   const a = arr.slice();
@@ -301,7 +319,7 @@ function spawnBrick(){
 
 // maximale Fallhöhe, bevor der Brick auf dem Stapel aufschlägt
 function landingY(){
-  return FIELD_H - BRICK_H - (state.stackCount * BRICK_H);
+  return fieldH() - BRICK_H - (state.stackCount * BRICK_H);
 }
 
 function tick(ts){
@@ -330,13 +348,15 @@ function landCurrent(wasHandled){
   if(!c) return;
   c.el.className = 'brick stacked';
   c.el.textContent = c.pair[0] + ' = ' + c.pair[1];
-  c.el.style.top = (FIELD_H - BRICK_H - (state.stackCount * BRICK_H)) + 'px';
+  // gestapelte Bricks am unteren Rand verankern (bleibt bei jeder Feldhöhe korrekt)
+  c.el.style.top = 'auto';
+  c.el.style.bottom = (state.stackCount * BRICK_H) + 'px';
   state.stackCount++;
   state.current = null;
   updateHud();
 
   // Game Over prüfen: Stapel erreicht Gefahrenlinie
-  if((FIELD_H - state.stackCount * BRICK_H) <= DANGER_TOP){
+  if((fieldH() - state.stackCount * BRICK_H) <= DANGER_TOP){
     endGame();
     return;
   }
