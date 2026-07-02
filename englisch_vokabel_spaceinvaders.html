@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Vokabel-Invaders – Englisch M9/M10</title>
+<style>
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0; padding: 0;
+    background: #1a1a2e; color: #fff;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  header {
+    background: #16213e;
+    padding: 12px 20px;
+    display: flex; align-items: center; gap: 16px;
+    border-bottom: 3px solid #0f3460;
+    flex-wrap: wrap;
+  }
+  header h1 { font-size: 1.2em; margin: 0; color: #e0e0e0; }
+  header a { color: #90caf9; text-decoration: none; font-size: 0.9em; margin-left: auto; border: 1px solid #0f3460; padding: 6px 14px; border-radius: 4px; }
+  header a:hover { background: #0f3460; }
+
+  .wrap { max-width: 760px; margin: 0 auto; padding: 12px; }
+
+  .hud { display: flex; gap: 8px; margin-bottom: 10px; }
+  .stat {
+    background: #16213e; border: 1px solid #0f3460; border-radius: 8px;
+    padding: 6px 8px; text-align: center; flex: 1; min-width: 60px;
+  }
+  .stat .label { font-size: 0.65em; text-transform: uppercase; letter-spacing: 1px; color: #888; }
+  .stat .val { font-size: 1.3em; font-weight: bold; color: #ce93d8; }
+
+  .prompt {
+    text-align: center;
+    background: #16213e;
+    border: 1px solid #0f3460;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  .prompt .small { font-size: 0.75em; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+  .prompt .word { font-size: 1.5em; font-weight: bold; color: #ce93d8; }
+
+  .stage { position: relative; }
+  canvas {
+    display: block; width: 100%;
+    height: 52vh; min-height: 260px; max-height: 520px;
+    background: linear-gradient(#12122a, #0d0d20);
+    border: 2px solid #0f3460; border-radius: 10px;
+    touch-action: none;
+  }
+
+  .overlay {
+    position: absolute; inset: 0;
+    background: rgba(13,13,32,0.93);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 20px; z-index: 10;
+    border-radius: 10px;
+  }
+  .overlay h2 { font-size: 1.8em; margin: 0 0 10px; color: #ce93d8; }
+  .overlay p { color: #bbb; margin: 6px 0; max-width: 460px; }
+  .overlay.hidden { display: none; }
+
+  .btn {
+    padding: 12px 24px; font-size: 1em; font-weight: bold;
+    border: none; border-radius: 8px; background: #ce93d8; color: #1a1a2e;
+    cursor: pointer; margin: 4px;
+  }
+  .btn:hover { background: #ba68c8; }
+  .btn.secondary { background: #0f3460; color: #e0e0e0; }
+  .btn.secondary:hover { background: #1a4b8f; }
+
+  /* Touch-Steuerung */
+  .touch {
+    display: flex; gap: 10px; margin-top: 12px; justify-content: center;
+    user-select: none;
+  }
+  .touch button {
+    flex: 1; max-width: 130px;
+    padding: 18px 0; font-size: 1.5em; font-weight: bold;
+    border: none; border-radius: 10px;
+    background: #0f3460; color: #e0e0e0; cursor: pointer;
+  }
+  .touch button:active { background: #1a4b8f; }
+  .touch button.fire { background: #ce93d8; color: #1a1a2e; }
+  .touch button.fire:active { background: #ba68c8; }
+
+  .controls { text-align: center; margin-top: 10px; }
+  .hint { text-align: center; color: #666; font-size: 0.8em; margin-top: 10px; }
+
+  @media (max-height: 760px), (max-width: 560px) {
+    header { padding: 8px 14px; }
+    header h1 { font-size: 1.05em; }
+    .wrap { padding: 8px 10px; }
+    .prompt { padding: 8px; margin-bottom: 8px; }
+    .prompt .word { font-size: 1.3em; }
+    canvas { height: 46vh; }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <h1>👾 Vokabel-Invaders · Englisch</h1>
+    <a href="index.html">← Übersicht</a>
+  </header>
+
+  <div class="wrap">
+    <div class="hud">
+      <div class="stat"><div class="label">Punkte</div><div class="val" id="score">0</div></div>
+      <div class="stat"><div class="label">Level</div><div class="val" id="level">1</div></div>
+      <div class="stat"><div class="label">Treffer</div><div class="val" id="hits">0</div></div>
+      <div class="stat"><div class="label">Leben</div><div class="val" id="lives">❤❤❤</div></div>
+    </div>
+
+    <div class="prompt">
+      <div class="small">Schieße die richtige Übersetzung ab:</div>
+      <div class="word" id="promptWord">–</div>
+    </div>
+
+    <div class="stage">
+      <canvas id="c"></canvas>
+      <div class="overlay" id="overlay">
+        <h2>Vokabel-Invaders</h2>
+        <p>Oben steht ein deutsches Wort. Von oben fliegen englische Wörter herunter – <b>schieße das richtige ab!</b></p>
+        <p>🎯 Richtig → Punkte, es wird schneller.<br>
+           ❌ Falsches Wort abgeschossen oder ein Wort erreicht unten → ein Leben weniger.</p>
+        <p>Steuerung: <b>← →</b> bewegen, <b>Leertaste</b> schießen.<br>
+           Am Handy: Buttons unten – oder <b>direkt auf das Wort tippen</b>.</p>
+        <button class="btn" id="startBtn">Spiel starten</button>
+      </div>
+    </div>
+
+    <div class="touch">
+      <button id="leftBtn">◀</button>
+      <button class="fire" id="fireBtn">🔥</button>
+      <button id="rightBtn">▶</button>
+    </div>
+
+    <div class="controls">
+      <button class="btn secondary" id="pauseBtn" disabled>Pause</button>
+      <button class="btn secondary" id="restartBtn">Neustart</button>
+    </div>
+
+    <p class="hint">Tipp: Am Handy einfach auf das gesuchte Wort tippen. · Testversion</p>
+  </div>
+
+<script>
+// ---- 100 Vokabeln (Englisch → Deutsch), Mittelschule M9/M10 ----
+const VOCAB = [
+  ["to answer","antworten"],["question","die Frage"],["to ask","fragen"],["to learn","lernen"],
+  ["to teach","unterrichten"],["homework","die Hausaufgabe"],["school","die Schule"],["teacher","der/die Lehrer/in"],
+  ["pupil","der/die Schüler/in"],["exam","die Prüfung"],["to pass","bestehen"],["to fail","durchfallen"],
+  ["knowledge","das Wissen"],["language","die Sprache"],["word","das Wort"],["sentence","der Satz"],
+  ["to read","lesen"],["to write","schreiben"],["to speak","sprechen"],["to listen","zuhören"],
+  ["to understand","verstehen"],["to remember","sich erinnern"],["to forget","vergessen"],["to translate","übersetzen"],
+  ["dictionary","das Wörterbuch"],["job","der Job / die Arbeit"],["work","die Arbeit"],["to earn","verdienen"],
+  ["money","das Geld"],["to buy","kaufen"],["to sell","verkaufen"],["expensive","teuer"],
+  ["cheap","billig / günstig"],["shop","der Laden"],["customer","der/die Kunde/Kundin"],["to pay","bezahlen"],
+  ["bill","die Rechnung"],["price","der Preis"],["salary","das Gehalt"],["company","die Firma"],
+  ["to apply","sich bewerben"],["application","die Bewerbung"],["interview","das Vorstellungsgespräch"],["skill","die Fähigkeit"],
+  ["experience","die Erfahrung"],["to hire","einstellen"],["to fire","entlassen"],["colleague","der/die Kollege/in"],
+  ["boss","der/die Chef/in"],["meeting","die Besprechung"],["family","die Familie"],["parents","die Eltern"],
+  ["brother","der Bruder"],["sister","die Schwester"],["child","das Kind"],["friend","der/die Freund/in"],
+  ["neighbour","der/die Nachbar/in"],["to live","leben / wohnen"],["house","das Haus"],["flat","die Wohnung"],
+  ["room","das Zimmer"],["city","die Stadt"],["country","das Land"],["world","die Welt"],
+  ["to travel","reisen"],["journey","die Reise"],["holiday","der Urlaub / die Ferien"],["airport","der Flughafen"],
+  ["to arrive","ankommen"],["to leave","abreisen / verlassen"],["ticket","das Ticket / die Fahrkarte"],["luggage","das Gepäck"],
+  ["weather","das Wetter"],["rain","der Regen"],["snow","der Schnee"],["sun","die Sonne"],
+  ["cold","kalt"],["warm","warm"],["health","die Gesundheit"],["doctor","der/die Arzt/Ärztin"],
+  ["illness","die Krankheit"],["medicine","das Medikament"],["to hurt","wehtun / verletzen"],["dangerous","gefährlich"],
+  ["safe","sicher"],["to help","helfen"],["to need","brauchen"],["to want","wollen"],
+  ["to decide","entscheiden"],["to choose","wählen"],["to change","ändern"],["to improve","verbessern"],
+  ["important","wichtig"],["difficult","schwierig"],["easy","einfach"],["angry","wütend"],
+  ["happy","glücklich"],["afraid","ängstlich / verängstigt"],["to enjoy","genießen"],["to hope","hoffen"]
+];
+
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+const overlay = document.getElementById('overlay');
+const el = {
+  score: document.getElementById('score'),
+  level: document.getElementById('level'),
+  hits: document.getElementById('hits'),
+  lives: document.getElementById('lives'),
+  prompt: document.getElementById('promptWord'),
+};
+
+let W = 0, H = 0;
+const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+function resize(){
+  const rect = canvas.getBoundingClientRect();
+  W = Math.round(rect.width);
+  H = Math.round(rect.height);
+  canvas.width = Math.round(W * dpr);
+  canvas.height = Math.round(H * dpr);
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  if(game) { placeShip(); layoutInvaders(); }
+}
+window.addEventListener('resize', resize);
+
+let game = null;
+let rafId = null;
+let lastTs = 0;
+
+const SHIP_W = 46, SHIP_H = 20;
+const SHIP_SPEED = 340;      // px/s seitliche Bewegung
+const BULLET_SPEED = 460;    // px/s
+const FIRE_COOLDOWN = 0.28;  // s
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+function newGame(){
+  return {
+    deck: shuffle(VOCAB), idx: 0,
+    score: 0, level: 1, hits: 0, lives: 3,
+    descendSpeed: 26,           // px/s Startgeschwindigkeit der Invader
+    invaders: [], bullets: [], particles: [],
+    ship: { x: 0, y: 0 },
+    moveDir: 0, fireTimer: 0,
+    pair: null, message: null, messageT: 0,
+    running: false, paused: false, gameOver: false,
+    lock: false,                // kurze Sperre zwischen den Wellen
+  };
+}
+
+function placeShip(){
+  game.ship.y = H - SHIP_H - 8;
+  if(game.ship.x === 0) game.ship.x = W/2;
+  game.ship.x = Math.max(SHIP_W/2, Math.min(W - SHIP_W/2, game.ship.x));
+}
+
+// Multiple-Choice: 1 richtiges + 2 falsche englische Wörter
+function buildOptions(pair){
+  const correct = pair[0];
+  const pool = shuffle(VOCAB.filter(v => v[0] !== correct));
+  const wrong = pool.slice(0,2).map(v => v[0]);
+  return shuffle([correct, ...wrong]);
+}
+
+function layoutInvaders(){
+  const n = game.invaders.length;
+  if(!n) return;
+  const slot = W / n;
+  ctx.font = 'bold 16px Arial';
+  game.invaders.forEach((inv, i) => {
+    // Schriftgröße an Slotbreite anpassen
+    let fs = 16;
+    ctx.font = 'bold ' + fs + 'px Arial';
+    while(ctx.measureText(inv.text).width + 22 > slot - 8 && fs > 10){
+      fs--; ctx.font = 'bold ' + fs + 'px Arial';
+    }
+    inv.fs = fs;
+    inv.w = Math.min(ctx.measureText(inv.text).width + 22, slot - 6);
+    inv.h = 34;
+    inv.cx = slot * (i + 0.5);   // horizontales Zentrum (fix pro Welle)
+  });
+}
+
+function spawnWave(){
+  if(game.idx >= game.deck.length){ game.deck = shuffle(VOCAB); game.idx = 0; }
+  const pair = game.deck[game.idx++];
+  game.pair = pair;
+  el.prompt.textContent = pair[1];   // deutsches Wort als Aufgabe
+
+  const opts = buildOptions(pair);
+  game.invaders = opts.map(text => ({
+    text, correct: text === pair[0],
+    cx: 0, y: -20, w: 120, h: 34, fs: 16, alive: true, flash: 0,
+  }));
+  layoutInvaders();
+  game.bullets = [];
+  game.lock = false;
+}
+
+function fire(){
+  if(!game.running || game.paused || game.lock) return;
+  if(game.fireTimer > 0) return;
+  game.fireTimer = FIRE_COOLDOWN;
+  game.bullets.push({ x: game.ship.x, y: game.ship.y - 4 });
+}
+
+function addExplosion(x, y, color){
+  for(let i=0;i<10;i++){
+    const ang = (Math.PI * 2 * i) / 10;
+    game.particles.push({ x, y, vx: Math.cos(ang)*90, vy: Math.sin(ang)*90, t: 0.45, color });
+  }
+}
+
+function loseLife(reveal){
+  game.lives--;
+  el.lives.textContent = '❤'.repeat(Math.max(0, game.lives)) || '—';
+  if(reveal) showMessage('Richtig: ' + game.pair[0], '#ef9a9a');
+  if(game.lives <= 0){ endGame(); return true; }
+  return false;
+}
+
+function showMessage(text, color){
+  game.message = { text, color };
+  game.messageT = 1.1;
+}
+
+function correctHit(inv){
+  game.hits++;
+  game.score += 10 + game.level * 2;
+  el.hits.textContent = game.hits;
+  el.score.textContent = game.score;
+  addExplosion(inv.cx, inv.y + inv.h/2, '#a5d6a7');
+  showMessage('✓ ' + game.pair[0], '#a5d6a7');
+  // alle 3 Treffer: schneller
+  if(game.hits % 3 === 0){
+    game.level++;
+    game.descendSpeed = Math.round(game.descendSpeed * 1.15);
+    el.level.textContent = game.level;
+  }
+  game.invaders.forEach(i => i.alive = false);
+  game.lock = true;
+  setTimeout(() => { if(game.running && !game.gameOver) spawnWave(); }, 500);
+}
+
+function wrongHit(inv){
+  addExplosion(inv.cx, inv.y + inv.h/2, '#ef9a9a');
+  inv.alive = false;
+  loseLife(false);
+}
+
+function update(dt){
+  // Ship bewegen
+  game.ship.x += game.moveDir * SHIP_SPEED * dt;
+  game.ship.x = Math.max(SHIP_W/2, Math.min(W - SHIP_W/2, game.ship.x));
+  if(game.fireTimer > 0) game.fireTimer -= dt;
+  if(game.messageT > 0) game.messageT -= dt;
+
+  // Partikel
+  game.particles.forEach(p => { p.x += p.vx*dt; p.y += p.vy*dt; p.t -= dt; });
+  game.particles = game.particles.filter(p => p.t > 0);
+
+  if(game.lock) return;
+
+  // Bullets nach oben
+  game.bullets.forEach(b => b.y -= BULLET_SPEED * dt);
+  game.bullets = game.bullets.filter(b => b.y > -10);
+
+  // Invader nach unten
+  const aliveInv = game.invaders.filter(i => i.alive);
+  aliveInv.forEach(inv => { inv.y += game.descendSpeed * dt; });
+
+  // Kollision Bullet <-> Invader
+  for(const b of game.bullets){
+    for(const inv of aliveInv){
+      if(!inv.alive) continue;
+      const left = inv.cx - inv.w/2, right = inv.cx + inv.w/2;
+      if(b.x >= left && b.x <= right && b.y <= inv.y + inv.h && b.y >= inv.y){
+        b.y = -100; // Bullet verbraucht
+        if(inv.correct){ correctHit(inv); return; }
+        else { wrongHit(inv); }
+        break;
+      }
+    }
+  }
+
+  // Invader erreicht die untere Linie?
+  const bottomLine = game.ship.y - SHIP_H;
+  for(const inv of game.invaders){
+    if(inv.alive && inv.y + inv.h >= bottomLine){
+      game.invaders.forEach(i => i.alive = false);
+      game.lock = true;
+      const over = loseLife(true);
+      if(!over) setTimeout(() => { if(game.running && !game.gameOver) spawnWave(); }, 800);
+      break;
+    }
+  }
+}
+
+function roundRect(x, y, w, h, r){
+  ctx.beginPath();
+  ctx.moveTo(x+r, y);
+  ctx.arcTo(x+w, y, x+w, y+h, r);
+  ctx.arcTo(x+w, y+h, x, y+h, r);
+  ctx.arcTo(x, y+h, x, y, r);
+  ctx.arcTo(x, y, x+w, y, r);
+  ctx.closePath();
+}
+
+function draw(){
+  ctx.clearRect(0, 0, W, H);
+
+  // untere Gefahrenlinie
+  const bottomLine = game.ship.y - SHIP_H;
+  ctx.strokeStyle = 'rgba(239,154,154,0.35)';
+  ctx.setLineDash([6,6]);
+  ctx.beginPath(); ctx.moveTo(0, bottomLine); ctx.lineTo(W, bottomLine); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Invader
+  game.invaders.forEach(inv => {
+    if(!inv.alive) return;
+    const x = inv.cx - inv.w/2;
+    ctx.fillStyle = '#ce93d8';
+    roundRect(x, inv.y, inv.w, inv.h, 7); ctx.fill();
+    // kleine "Beinchen" für Invader-Look
+    ctx.fillStyle = '#ba68c8';
+    ctx.fillRect(x+6, inv.y+inv.h, 5, 4);
+    ctx.fillRect(x+inv.w-11, inv.y+inv.h, 5, 4);
+    ctx.fillStyle = '#1a1a2e';
+    ctx.font = 'bold ' + inv.fs + 'px Arial';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(inv.text, inv.cx, inv.y + inv.h/2);
+  });
+
+  // Bullets
+  ctx.fillStyle = '#fff59d';
+  game.bullets.forEach(b => ctx.fillRect(b.x - 2, b.y - 8, 4, 10));
+
+  // Ship
+  const s = game.ship;
+  ctx.fillStyle = '#90caf9';
+  ctx.beginPath();
+  ctx.moveTo(s.x, s.y - 4);
+  ctx.lineTo(s.x - SHIP_W/2, s.y + SHIP_H);
+  ctx.lineTo(s.x + SHIP_W/2, s.y + SHIP_H);
+  ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#e3f2fd';
+  ctx.fillRect(s.x - 4, s.y - 10, 8, 10);
+
+  // Partikel
+  game.particles.forEach(p => {
+    ctx.globalAlpha = Math.max(0, p.t / 0.45);
+    ctx.fillStyle = p.color;
+    ctx.fillRect(p.x - 2, p.y - 2, 4, 4);
+  });
+  ctx.globalAlpha = 1;
+
+  // Meldung
+  if(game.messageT > 0 && game.message){
+    ctx.globalAlpha = Math.min(1, game.messageT);
+    ctx.fillStyle = game.message.color;
+    ctx.font = 'bold 22px Arial';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(game.message.text, W/2, H/2);
+    ctx.globalAlpha = 1;
+  }
+}
+
+function loop(ts){
+  if(!game){ return; }
+  const dt = Math.min((ts - lastTs)/1000, 0.05);
+  lastTs = ts;
+  if(game.running && !game.paused) update(dt);
+  draw();
+  rafId = requestAnimationFrame(loop);
+}
+
+function startGame(){
+  game = newGame();
+  resize();
+  placeShip();
+  game.running = true;
+  overlay.classList.add('hidden');
+  document.getElementById('pauseBtn').disabled = false;
+  el.score.textContent = 0; el.level.textContent = 1; el.hits.textContent = 0;
+  el.lives.textContent = '❤❤❤';
+  spawnWave();
+  lastTs = performance.now();
+  if(rafId) cancelAnimationFrame(rafId);
+  rafId = requestAnimationFrame(loop);
+}
+
+function endGame(){
+  game.running = false;
+  game.gameOver = true;
+  document.getElementById('pauseBtn').disabled = true;
+  overlay.innerHTML =
+    '<h2>Game Over</h2>' +
+    '<p>Punkte: <b>' + game.score + '</b> · Treffer: <b>' + game.hits + '</b> · Level: <b>' + game.level + '</b></p>' +
+    '<button class="btn" id="againBtn">Nochmal spielen</button>';
+  overlay.classList.remove('hidden');
+  document.getElementById('againBtn').addEventListener('click', startGame);
+}
+
+function togglePause(){
+  if(!game || !game.running) return;
+  game.paused = !game.paused;
+  document.getElementById('pauseBtn').textContent = game.paused ? 'Weiter' : 'Pause';
+}
+
+// ---- Steuerung ----
+document.getElementById('startBtn').addEventListener('click', startGame);
+document.getElementById('restartBtn').addEventListener('click', startGame);
+document.getElementById('pauseBtn').addEventListener('click', togglePause);
+
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'ArrowLeft' || e.key === 'a') game && (game.moveDir = -1);
+  else if(e.key === 'ArrowRight' || e.key === 'd') game && (game.moveDir = 1);
+  else if(e.key === ' '){ e.preventDefault(); fire(); }
+  else if(e.key === 'p' || e.key === 'P') togglePause();
+});
+document.addEventListener('keyup', (e) => {
+  if(['ArrowLeft','a'].includes(e.key) && game && game.moveDir < 0) game.moveDir = 0;
+  if(['ArrowRight','d'].includes(e.key) && game && game.moveDir > 0) game.moveDir = 0;
+});
+
+// Touch-Buttons (halten = bewegen)
+function holdBtn(id, dir){
+  const b = document.getElementById(id);
+  const start = (e) => { e.preventDefault(); if(game) game.moveDir = dir; };
+  const stop  = (e) => { e.preventDefault(); if(game && game.moveDir === dir) game.moveDir = 0; };
+  b.addEventListener('pointerdown', start);
+  b.addEventListener('pointerup', stop);
+  b.addEventListener('pointerleave', stop);
+  b.addEventListener('pointercancel', stop);
+}
+holdBtn('leftBtn', -1);
+holdBtn('rightBtn', 1);
+document.getElementById('fireBtn').addEventListener('pointerdown', (e) => { e.preventDefault(); fire(); });
+
+// Direkt auf ein Wort tippen: Ship dorthin + feuern
+canvas.addEventListener('pointerdown', (e) => {
+  if(!game || !game.running || game.paused) return;
+  const rect = canvas.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  game.ship.x = Math.max(SHIP_W/2, Math.min(W - SHIP_W/2, x));
+  game.fireTimer = 0;
+  fire();
+});
+
+// initiales Canvas-Setup, damit vor dem Start etwas zu sehen ist
+resize();
+</script>
+</body>
+</html>
