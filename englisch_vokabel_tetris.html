@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vokabel-Tetris – Englisch M9/M10</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #1a1a2e;
+    color: #fff;
+    min-height: 100vh;
+  }
+  header {
+    background: #16213e;
+    padding: 16px 40px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border-bottom: 3px solid #0f3460;
+    flex-wrap: wrap;
+  }
+  header h1 { font-size: 1.4em; margin: 0; color: #e0e0e0; }
+  header a { color: #90caf9; text-decoration: none; font-size: 0.9em; margin-left: auto; border: 1px solid #0f3460; padding: 6px 14px; border-radius: 4px; }
+  header a:hover { background: #0f3460; }
+
+  .wrap { max-width: 760px; margin: 0 auto; padding: 20px; }
+
+  .hud {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .stat {
+    background: #16213e;
+    border: 1px solid #0f3460;
+    border-radius: 8px;
+    padding: 10px 16px;
+    text-align: center;
+    flex: 1;
+    min-width: 90px;
+  }
+  .stat .label { font-size: 0.7em; text-transform: uppercase; letter-spacing: 1px; color: #888; }
+  .stat .val { font-size: 1.5em; font-weight: bold; color: #ce93d8; }
+
+  #playfield {
+    position: relative;
+    width: 100%;
+    height: 440px;
+    background: linear-gradient(#12122a, #0d0d20);
+    border: 2px solid #0f3460;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  /* subtle Tetris grid lines */
+  #playfield::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(to right, rgba(255,255,255,0.03) 0 1px, transparent 1px 76px);
+    pointer-events: none;
+  }
+
+  .brick {
+    position: absolute;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #1a1a2e;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.4);
+    white-space: nowrap;
+    transform: translateX(-50%);
+    border: 2px solid rgba(0,0,0,0.15);
+  }
+  .brick.falling { background: #ce93d8; }
+  .brick.stacked { background: #ef9a9a; }
+  .brick.flash-ok { background: #a5d6a7 !important; transition: background 0.15s; }
+
+  .danger-line {
+    position: absolute; left: 0; right: 0; top: 64px;
+    border-top: 2px dashed rgba(239,154,154,0.5);
+    pointer-events: none;
+  }
+
+  .choices {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .choices button {
+    padding: 16px;
+    font-size: 1.1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    background: #0f3460;
+    color: #e0e0e0;
+    cursor: pointer;
+    transition: transform 0.08s, background 0.15s;
+  }
+  .choices button:hover:not(:disabled) { background: #1a4b8f; transform: translateY(-2px); }
+  .choices button:disabled { opacity: 0.5; cursor: default; }
+  .choices button.correct { background: #388e3c; color: #fff; }
+  .choices button.wrong { background: #c62828; color: #fff; }
+
+  .controls { text-align: center; margin-top: 18px; }
+  .controls button {
+    padding: 12px 28px;
+    font-size: 1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    background: #ce93d8;
+    color: #1a1a2e;
+    cursor: pointer;
+    margin: 0 6px;
+  }
+  .controls button:hover { background: #ba68c8; }
+  .controls button.secondary { background: #0f3460; color: #e0e0e0; }
+  .controls button.secondary:hover { background: #1a4b8f; }
+
+  .overlay {
+    position: absolute; inset: 0;
+    background: rgba(13,13,32,0.92);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 20px;
+    z-index: 10;
+  }
+  .overlay h2 { font-size: 2em; margin: 0 0 10px; color: #ce93d8; }
+  .overlay p { color: #bbb; margin: 6px 0; max-width: 460px; }
+  .overlay.hidden { display: none; }
+
+  .hint { text-align: center; color: #666; font-size: 0.8em; margin-top: 14px; }
+</style>
+</head>
+<body>
+  <header>
+    <h1>🧱 Vokabel-Tetris · Englisch</h1>
+    <a href="index.html">← Übersicht</a>
+  </header>
+
+  <div class="wrap">
+    <div class="hud">
+      <div class="stat"><div class="label">Punkte</div><div class="val" id="score">0</div></div>
+      <div class="stat"><div class="label">Richtig</div><div class="val" id="correct">0</div></div>
+      <div class="stat"><div class="label">Level</div><div class="val" id="level">1</div></div>
+      <div class="stat"><div class="label">Stapel</div><div class="val" id="stack">0</div></div>
+    </div>
+
+    <div id="playfield">
+      <div class="danger-line"></div>
+      <div class="overlay" id="overlay">
+        <h2>Vokabel-Tetris</h2>
+        <p>Englische Vokabeln fallen von oben. Wähle unten die richtige deutsche Übersetzung, bevor das Wort unten aufschlägt!</p>
+        <p>✅ Richtig → Wort verschwindet, es wird schneller.<br>
+           ❌ Falsch oder zu langsam → das Wort stapelt sich unten.</p>
+        <p>Wenn der Stapel die gestrichelte Linie erreicht, ist das Spiel vorbei.</p>
+        <div class="controls">
+          <button id="startBtn">Spiel starten</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="choices" id="choices">
+      <button data-i="0" disabled>–</button>
+      <button data-i="1" disabled>–</button>
+      <button data-i="2" disabled>–</button>
+      <button data-i="3" disabled>–</button>
+    </div>
+
+    <div class="controls">
+      <button id="pauseBtn" class="secondary" disabled>Pause</button>
+      <button id="restartBtn" class="secondary">Neustart</button>
+    </div>
+
+    <p class="hint">Tipp: Du kannst auch mit den Tasten 1–4 antworten. · Testversion</p>
+  </div>
+
+<script>
+// ---- 100 Vokabeln (Englisch → Deutsch), Mittelschule M9/M10 ----
+const VOCAB = [
+  ["to answer","antworten"],["question","die Frage"],["to ask","fragen"],["to learn","lernen"],
+  ["to teach","unterrichten"],["homework","die Hausaufgabe"],["school","die Schule"],["teacher","der/die Lehrer/in"],
+  ["pupil","der/die Schüler/in"],["exam","die Prüfung"],["to pass","bestehen"],["to fail","durchfallen"],
+  ["knowledge","das Wissen"],["language","die Sprache"],["word","das Wort"],["sentence","der Satz"],
+  ["to read","lesen"],["to write","schreiben"],["to speak","sprechen"],["to listen","zuhören"],
+  ["to understand","verstehen"],["to remember","sich erinnern"],["to forget","vergessen"],["to translate","übersetzen"],
+  ["dictionary","das Wörterbuch"],["job","der Job / die Arbeit"],["work","die Arbeit"],["to earn","verdienen"],
+  ["money","das Geld"],["to buy","kaufen"],["to sell","verkaufen"],["expensive","teuer"],
+  ["cheap","billig / günstig"],["shop","der Laden"],["customer","der/die Kunde/Kundin"],["to pay","bezahlen"],
+  ["bill","die Rechnung"],["price","der Preis"],["salary","das Gehalt"],["company","die Firma"],
+  ["to apply","sich bewerben"],["application","die Bewerbung"],["interview","das Vorstellungsgespräch"],["skill","die Fähigkeit"],
+  ["experience","die Erfahrung"],["to hire","einstellen"],["to fire","entlassen"],["colleague","der/die Kollege/in"],
+  ["boss","der/die Chef/in"],["meeting","die Besprechung"],["family","die Familie"],["parents","die Eltern"],
+  ["brother","der Bruder"],["sister","die Schwester"],["child","das Kind"],["friend","der/die Freund/in"],
+  ["neighbour","der/die Nachbar/in"],["to live","leben / wohnen"],["house","das Haus"],["flat","die Wohnung"],
+  ["room","das Zimmer"],["city","die Stadt"],["country","das Land"],["world","die Welt"],
+  ["to travel","reisen"],["journey","die Reise"],["holiday","der Urlaub / die Ferien"],["airport","der Flughafen"],
+  ["to arrive","ankommen"],["to leave","abreisen / verlassen"],["ticket","das Ticket / die Fahrkarte"],["luggage","das Gepäck"],
+  ["weather","das Wetter"],["rain","der Regen"],["snow","der Schnee"],["sun","die Sonne"],
+  ["cold","kalt"],["warm","warm"],["health","die Gesundheit"],["doctor","der/die Arzt/Ärztin"],
+  ["illness","die Krankheit"],["medicine","das Medikament"],["to hurt","wehtun / verletzen"],["dangerous","gefährlich"],
+  ["safe","sicher"],["to help","helfen"],["to need","brauchen"],["to want","wollen"],
+  ["to decide","entscheiden"],["to choose","wählen"],["to change","ändern"],["to improve","verbessern"],
+  ["important","wichtig"],["difficult","schwierig"],["easy","einfach"],["angry","wütend"],
+  ["happy","glücklich"],["afraid","ängstlich / verängstigt"],["to enjoy","genießen"],["to hope","hoffen"]
+];
+
+// ---- Spielzustand ----
+const pf = document.getElementById('playfield');
+const overlay = document.getElementById('overlay');
+const choiceBtns = [...document.querySelectorAll('#choices button')];
+const el = {
+  score: document.getElementById('score'),
+  correct: document.getElementById('correct'),
+  level: document.getElementById('level'),
+  stack: document.getElementById('stack'),
+};
+
+let state = null;
+let rafId = null;
+let lastTs = 0;
+
+const BRICK_H = 42;       // Höhe eines gestapelten Bricks
+const DANGER_TOP = 64;    // Pixel von oben, bis wohin der Stapel darf
+const FIELD_H = 440;
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+function newState(){
+  return {
+    deck: shuffle(VOCAB),
+    idx: 0,
+    score: 0,
+    correct: 0,
+    level: 1,
+    stackCount: 0,       // Anzahl gestapelter Bricks
+    speed: 55,           // Pixel pro Sekunde (Startgeschwindigkeit)
+    current: null,       // {pair, el, y, choices, answer}
+    running: false,
+    paused: false,
+    gameOver: false,
+  };
+}
+
+function updateHud(){
+  el.score.textContent = state.score;
+  el.correct.textContent = state.correct;
+  el.level.textContent = state.level;
+  el.stack.textContent = state.stackCount;
+}
+
+// Baut Multiple-Choice: 1 richtige + 3 falsche deutsche Antworten
+function buildChoices(pair){
+  const correct = pair[1];
+  const distractPool = shuffle(VOCAB.filter(v => v[1] !== correct));
+  const wrong = distractPool.slice(0,3).map(v => v[1]);
+  const opts = shuffle([correct, ...wrong]);
+  return { opts, answer: opts.indexOf(correct) };
+}
+
+function spawnBrick(){
+  if(state.idx >= state.deck.length){
+    state.deck = shuffle(VOCAB);   // Deck wiederholen (Testversion)
+    state.idx = 0;
+  }
+  const pair = state.deck[state.idx++];
+  const {opts, answer} = buildChoices(pair);
+
+  const brick = document.createElement('div');
+  brick.className = 'brick falling';
+  brick.textContent = pair[0];
+  brick.style.left = '50%';
+  brick.style.top = '0px';
+  pf.appendChild(brick);
+
+  state.current = { pair, el: brick, y: 0, opts, answer };
+
+  // Choices anzeigen
+  choiceBtns.forEach((b,i) => {
+    b.textContent = (i+1) + '. ' + opts[i];
+    b.disabled = false;
+    b.className = '';
+  });
+}
+
+// maximale Fallhöhe, bevor der Brick auf dem Stapel aufschlägt
+function landingY(){
+  return FIELD_H - BRICK_H - (state.stackCount * BRICK_H);
+}
+
+function tick(ts){
+  if(!state.running || state.paused){ lastTs = ts; rafId = requestAnimationFrame(tick); return; }
+  const dt = Math.min((ts - lastTs)/1000, 0.05);
+  lastTs = ts;
+
+  const c = state.current;
+  if(c){
+    c.y += state.speed * dt;
+    const limit = landingY();
+    if(c.y >= limit){
+      c.y = limit;
+      c.el.style.top = c.y + 'px';
+      landCurrent(false); // Zeit abgelaufen -> falsch, stapeln
+    } else {
+      c.el.style.top = c.y + 'px';
+    }
+  }
+  rafId = requestAnimationFrame(tick);
+}
+
+// Brick "landet" auf dem Stapel (falsch beantwortet oder Zeit abgelaufen)
+function landCurrent(wasHandled){
+  const c = state.current;
+  if(!c) return;
+  c.el.className = 'brick stacked';
+  c.el.textContent = c.pair[0] + ' = ' + c.pair[1];
+  c.el.style.top = (FIELD_H - BRICK_H - (state.stackCount * BRICK_H)) + 'px';
+  state.stackCount++;
+  state.current = null;
+  updateHud();
+
+  // Game Over prüfen: Stapel erreicht Gefahrenlinie
+  if((FIELD_H - state.stackCount * BRICK_H) <= DANGER_TOP){
+    endGame();
+    return;
+  }
+  disableChoices();
+  setTimeout(() => { if(state.running && !state.gameOver) spawnBrick(); }, 350);
+}
+
+// Richtig beantwortet -> Brick löschen, schneller werden
+function clearCurrent(){
+  const c = state.current;
+  if(!c) return;
+  c.el.classList.add('flash-ok');
+  const toRemove = c.el;
+  setTimeout(() => toRemove.remove(), 150);
+
+  state.correct++;
+  state.score += 10 + state.level * 2;
+  // alle 5 richtige Antworten: Level + Tempo hoch
+  if(state.correct % 5 === 0){
+    state.level++;
+    state.speed = Math.round(state.speed * 1.18);
+  }
+  state.current = null;
+  updateHud();
+  disableChoices();
+  setTimeout(() => { if(state.running && !state.gameOver) spawnBrick(); }, 200);
+}
+
+function answer(i){
+  const c = state.current;
+  if(!c || !state.running || state.paused) return;
+  choiceBtns.forEach(b => b.disabled = true);
+  if(i === c.answer){
+    choiceBtns[i].classList.add('correct');
+    clearCurrent();
+  } else {
+    choiceBtns[i].classList.add('wrong');
+    choiceBtns[c.answer].classList.add('correct');
+    landCurrent(true);
+  }
+}
+
+function disableChoices(){
+  choiceBtns.forEach(b => { b.disabled = true; });
+}
+
+function startGame(){
+  // altes Spielfeld leeren
+  [...pf.querySelectorAll('.brick')].forEach(b => b.remove());
+  state = newState();
+  state.running = true;
+  overlay.classList.add('hidden');
+  document.getElementById('pauseBtn').disabled = false;
+  updateHud();
+  spawnBrick();
+  lastTs = performance.now();
+  if(rafId) cancelAnimationFrame(rafId);
+  rafId = requestAnimationFrame(tick);
+}
+
+function endGame(){
+  state.running = false;
+  state.gameOver = true;
+  disableChoices();
+  document.getElementById('pauseBtn').disabled = true;
+  overlay.innerHTML =
+    '<h2>Game Over</h2>' +
+    '<p>Der Stapel hat die Linie erreicht!</p>' +
+    '<p>Punkte: <b>' + state.score + '</b> · Richtig beantwortet: <b>' + state.correct + '</b> · Level: <b>' + state.level + '</b></p>' +
+    '<div class="controls"><button id="againBtn">Nochmal spielen</button></div>';
+  overlay.classList.remove('hidden');
+  document.getElementById('againBtn').addEventListener('click', startGame);
+}
+
+function togglePause(){
+  if(!state || !state.running) return;
+  state.paused = !state.paused;
+  document.getElementById('pauseBtn').textContent = state.paused ? 'Weiter' : 'Pause';
+}
+
+// ---- Event-Listener ----
+document.getElementById('startBtn').addEventListener('click', startGame);
+document.getElementById('restartBtn').addEventListener('click', startGame);
+document.getElementById('pauseBtn').addEventListener('click', togglePause);
+choiceBtns.forEach(b => b.addEventListener('click', () => answer(+b.dataset.i)));
+document.addEventListener('keydown', (e) => {
+  if(['1','2','3','4'].includes(e.key)) answer(+e.key - 1);
+  if(e.key === 'p' || e.key === 'P') togglePause();
+});
+</script>
+</body>
+</html>
