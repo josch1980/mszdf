@@ -51,9 +51,9 @@
   #playfield {
     position: relative;
     width: 100%;
-    height: 46vh;
-    min-height: 220px;
-    max-height: 440px;
+    height: 58vh;
+    min-height: 260px;
+    max-height: 560px;
     background: linear-gradient(#12122a, #0d0d20);
     border: 2px solid #0f3460;
     border-radius: 10px;
@@ -92,8 +92,8 @@
 
   .choices {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    grid-template-columns: 1fr;
+    gap: 10px;
     margin-top: 16px;
   }
   .choices button {
@@ -151,7 +151,7 @@
     .hud { margin-bottom: 8px; gap: 8px; }
     .stat { padding: 6px 8px; }
     .stat .val { font-size: 1.2em; }
-    #playfield { height: 38vh; min-height: 180px; }
+    #playfield { height: 52vh; min-height: 260px; }
     .choices { gap: 8px; margin-top: 10px; }
     .choices button { padding: 12px 8px; font-size: 1em; }
     .controls { margin-top: 10px; }
@@ -191,7 +191,6 @@
       <button data-i="0" disabled>–</button>
       <button data-i="1" disabled>–</button>
       <button data-i="2" disabled>–</button>
-      <button data-i="3" disabled>–</button>
     </div>
 
     <div class="controls">
@@ -199,7 +198,7 @@
       <button id="restartBtn" class="secondary">Neustart</button>
     </div>
 
-    <p class="hint">Tipp: Du kannst auch mit den Tasten 1–4 antworten. · Testversion</p>
+    <p class="hint">Tipp: Du kannst auch mit den Tasten 1–3 antworten. · Testversion</p>
   </div>
 
 <script>
@@ -283,11 +282,11 @@ function updateHud(){
   el.stack.textContent = state.stackCount;
 }
 
-// Baut Multiple-Choice: 1 richtige + 3 falsche deutsche Antworten
+// Baut Multiple-Choice: 1 richtige + 2 falsche deutsche Antworten
 function buildChoices(pair){
   const correct = pair[1];
   const distractPool = shuffle(VOCAB.filter(v => v[1] !== correct));
-  const wrong = distractPool.slice(0,3).map(v => v[1]);
+  const wrong = distractPool.slice(0,2).map(v => v[1]);
   const opts = shuffle([correct, ...wrong]);
   return { opts, answer: opts.indexOf(correct) };
 }
@@ -443,7 +442,7 @@ document.getElementById('restartBtn').addEventListener('click', startGame);
 document.getElementById('pauseBtn').addEventListener('click', togglePause);
 choiceBtns.forEach(b => b.addEventListener('click', () => answer(+b.dataset.i)));
 document.addEventListener('keydown', (e) => {
-  if(['1','2','3','4'].includes(e.key)) answer(+e.key - 1);
+  if(['1','2','3'].includes(e.key)) answer(+e.key - 1);
   if(e.key === 'p' || e.key === 'P') togglePause();
 });
 </script>
