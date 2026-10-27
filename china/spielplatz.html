@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rätsel-Spielplatz China</title>
+<link rel="stylesheet" href="kurs.css">
+<style>
+  .hero.play { background: linear-gradient(135deg, #7b4fa0 0%, #45286a 100%); }
+  .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; position: sticky; top: 58px; z-index: 20; background: var(--paper); padding: 8px 0; }
+  .tabs a { text-decoration: none; color: var(--ink); background: var(--card); border: 2px solid var(--line); border-radius: 999px; padding: 6px 14px; font-weight: 800; font-size: .9rem; }
+  .tabs a.got { border-color: var(--ok); }
+  .tabs a.got::after { content: " ✔"; color: var(--ok); }
+
+  /* Kreuzworträtsel */
+  .cw-wrap { overflow-x: auto; padding-bottom: 6px; }
+  .cw { display: grid; gap: 2px; margin: 0 auto; width: max-content; }
+  .cw .c { position: relative; width: var(--cs); height: var(--cs); }
+  .cw .c input {
+    width: 100%; height: 100%; text-align: center; text-transform: uppercase; font-weight: 900; font-size: calc(var(--cs) * .55);
+    padding: 0; border-radius: 4px; border: 2px solid var(--ink-2); background: var(--card); caret-color: transparent;
+  }
+  .cw .c input:focus { outline: none; border-color: var(--gold); background: var(--gold-soft); }
+  .cw .c input.hl { background: var(--sky-soft); }
+  .cw .c input.ok { border-color: var(--ok); background: var(--jade-soft); }
+  .cw .c input.bad { border-color: var(--bad); background: var(--red-soft); }
+  .cw .c sup { position: absolute; left: 2px; top: 0; font-size: 9px; font-weight: 800; color: var(--ink-2); pointer-events: none; line-height: 1.2; }
+  .clues { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 14px; font-size: .92rem; }
+  .clues ol { margin: 0; padding-left: 0; list-style: none; }
+  .clues li { padding: 4px 6px; border-radius: 8px; cursor: pointer; }
+  .clues li.act { background: var(--gold-soft); }
+  .clues li.solved { color: var(--ok); text-decoration: line-through; }
+  .clues li b { display: inline-block; min-width: 24px; }
+
+  /* Memory */
+  .mem { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .mc { aspect-ratio: 1 / 1; border: 0; padding: 0; background: none; perspective: 600px; cursor: pointer; }
+  .mc .in { position: relative; width: 100%; height: 100%; transition: transform .4s; transform-style: preserve-3d; }
+  .mc.up .in, .mc.got .in { transform: rotateY(180deg); }
+  .mc .f, .mc .b { position: absolute; inset: 0; border-radius: 12px; display: grid; place-items: center; backface-visibility: hidden; -webkit-backface-visibility: hidden; padding: 6px; }
+  .mc .f { background: linear-gradient(135deg, var(--red), #8e1f15); color: #fff; font-size: 1.8rem; }
+  .mc .b { background: var(--card); border: 2px solid var(--line); transform: rotateY(180deg); font-size: clamp(.62rem, 2.4vw, .88rem); font-weight: 800; line-height: 1.2; }
+  .mc .b.term { color: var(--red); font-size: clamp(.72rem, 2.8vw, 1rem); }
+  .mc.got .b { border-color: var(--ok); background: var(--jade-soft); }
+
+  /* Wortsuche */
+  .ws { display: grid; gap: 3px; margin: 0 auto; width: max-content; user-select: none; touch-action: manipulation; }
+  .ws button { width: var(--ws); height: var(--ws); border: 0; border-radius: 6px; background: var(--card); font-weight: 900; font-size: calc(var(--ws) * .5); cursor: pointer; box-shadow: inset 0 0 0 1px var(--line); padding: 0; }
+  .ws button.start { background: var(--gold); color: #2a1d00; }
+  .ws button.f { background: var(--jade-soft); color: var(--ok); }
+  .wl { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+  .wl span { padding: 4px 10px; border-radius: 999px; background: var(--line); font-weight: 800; font-size: .85rem; }
+  .wl span.f { background: var(--jade-soft); color: var(--ok); text-decoration: line-through; }
+
+  /* Speed */
+  .speed { text-align: center; }
+  .speed .stmt { font-size: clamp(1.05rem, 3.5vw, 1.4rem); font-weight: 800; min-height: 4.4em; display: grid; place-items: center; padding: 10px; }
+  .speed .timer { height: 10px; border-radius: 5px; background: var(--line); overflow: hidden; margin: 10px 0; }
+  .speed .timer i { display: block; height: 100%; background: linear-gradient(90deg, var(--ok), var(--gold), var(--red)); width: 100%; }
+  .speed .tf { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .speed .tf button { font-size: 1.2rem; padding: 16px; }
+  .speed .sc { display: flex; justify-content: space-around; font-weight: 800; }
+  .speed .sc b { font-size: 1.6rem; color: var(--red); display: block; }
+  .flashok { animation: fok .4s; } .flashbad { animation: fbad .4s; }
+  @keyframes fok { 50% { background: var(--jade-soft); } }
+  @keyframes fbad { 50% { background: var(--red-soft); } }
+</style>
+</head>
+<body>
+<main>
+  <section class="hero play">
+    <div class="kicker">Zwischendurch · Spaß mit Köpfchen</div>
+    <h1>🧩 Rätsel-Spielplatz</h1>
+    <p>Hier wiederholst du die wichtigsten Begriffe aus allen Stationen – ganz nebenbei. Jedes Spiel bringt XP. Schaffst du alle fünf?</p>
+    <div class="deco">🐼</div>
+  </section>
+
+  <nav class="tabs" id="tabs">
+    <a href="#kreuz" data-g="g-cross">✏️ Kreuzworträtsel</a>
+    <a href="#memory" data-g="g-memory">🃏 Memory</a>
+    <a href="#suche" data-g="g-words">🔎 Wortsuche</a>
+    <a href="#emoji" data-g="g-emoji">😀 Emoji-Rätsel</a>
+    <a href="#speed" data-g="g-speed">⚡ Speed-Quiz</a>
+  </nav>
+
+  <section class="section" id="kreuz" data-act="g-cross">
+    <div class="step-head"><div class="num">✏️</div><h2>Kreuzworträtsel</h2><span class="done-tag">✔ gelöst</span></div>
+    <div class="task">
+      <p class="small muted">Tippe ein Kästchen oder einen Hinweis an und schreib los. Ä, Ö, Ü kommen nicht vor.</p>
+      <div class="cw-wrap"><div class="cw" id="cw"></div></div>
+      <div class="row" style="margin-top:12px">
+        <button class="btn" id="cwCheck">Prüfen</button>
+        <button class="btn ghost" id="cwHint">💡 Buchstaben verraten</button>
+        <button class="btn ghost" id="cwNew">↻ Neues Rätsel</button>
+      </div>
+      <div class="fb" id="cwFb"></div>
+      <div class="clues"><div><h3>➡️ Waagerecht</h3><ol id="cwA"></ol></div><div><h3>⬇️ Senkrecht</h3><ol id="cwD"></ol></div></div>
+    </div>
+  </section>
+
+  <section class="section" id="memory" data-act="g-memory">
+    <div class="step-head"><div class="num">🃏</div><h2>Begriffe-Memory</h2><span class="done-tag">✔ geschafft</span></div>
+    <div class="task">
+      <div class="row" style="justify-content:space-between;margin-bottom:10px"><span class="small muted">Finde zu jedem Begriff die passende Erklärung.</span><span class="pill">Züge: <b id="memMoves">0</b></span></div>
+      <div class="mem" id="mem"></div>
+      <div class="fb" id="memFb"></div>
+      <div class="row" style="margin-top:10px"><button class="btn ghost" id="memNew">↻ Neu mischen</button></div>
+    </div>
+  </section>
+
+  <section class="section" id="suche" data-act="g-words">
+    <div class="step-head"><div class="num">🔎</div><h2>Wortsuche</h2><span class="done-tag">✔ alle gefunden</span></div>
+    <div class="task">
+      <p class="small muted">Die Wörter verstecken sich waagerecht, senkrecht und schräg. Tippe den <b>ersten</b> und dann den <b>letzten</b> Buchstaben eines Wortes an.</p>
+      <div class="wl" id="wl"></div>
+      <div style="overflow-x:auto"><div class="ws" id="ws"></div></div>
+      <div class="fb" id="wsFb"></div>
+      <div class="row" style="margin-top:10px"><button class="btn ghost" id="wsNew">↻ Neues Gitter</button></div>
+    </div>
+  </section>
+
+  <section class="section" id="emoji" data-act="g-emoji">
+    <div class="step-head"><div class="num">😀</div><h2>Emoji-Rätsel</h2><span class="done-tag">✔ geknackt</span></div>
+    <p class="muted">Welcher Fachbegriff versteckt sich hinter den Emojis?</p>
+    <div id="emq"></div>
+  </section>
+
+  <section class="section" id="speed" data-act="g-speed">
+    <div class="step-head"><div class="num">⚡</div><h2>Speed-Quiz: Wahr oder falsch?</h2><span class="done-tag">✔ geschafft</span></div>
+    <div class="task speed" id="sp">
+      <p>60 Sekunden. So viele Aussagen wie möglich richtig einschätzen! Ab <b>8 Punkten</b> gibt’s das Häkchen. Serien geben Bonuspunkte 🔥</p>
+      <div class="sc"><div><b id="spScore">0</b>Punkte</div><div><b id="spStreak">0</b>Serie 🔥</div><div><b id="spBest">0</b>Rekord</div></div>
+      <div class="timer"><i id="spTime"></i></div>
+      <div class="stmt" id="spStmt">Bereit?</div>
+      <div class="tf hidden" id="spBtns"><button class="btn jade" id="spT">👍 Wahr</button><button class="btn" id="spF">👎 Falsch</button></div>
+      <div class="row" style="justify-content:center;margin-top:12px"><button class="btn gold" id="spGo">▶ Start</button></div>
+      <div class="fb" id="spFb" style="text-align:left"></div>
+    </div>
+  </section>
+
+  <nav class="nextnav">
+    <a class="btn ghost" href="index.html">← Zur Kursübersicht</a>
+    <a class="btn" href="abschluss.html">Zum Abschlusstest 🎓</a>
+  </nav>
+</main>
+
+<script src="kurs.js"></script>
+<script>
+Kurs.init({ title: 'Rätsel-Spielplatz' });
+const { h, $, $$, shuffle } = Kurs;
+function markTabs() { $$('#tabs a').forEach(a => a.classList.toggle('got', Kurs.isDone(a.dataset.g))); }
+markTabs();
+const done = (id, xp, msg) => { Kurs.complete(id, xp, msg); markTabs(); Kurs.confetti(); };
+
+/* =================== Kreuzworträtsel =================== */
+const CW_WORDS = [
+  ['LIEFERKETTE', 'Alle Stationen eines Produkts von der Fabrik bis zu dir'],
+  ['CONTAINER', 'Genormte Metallkiste für den Transport auf Schiffen'],
+  ['EXPORT', 'Waren werden ins Ausland verkauft'],
+  ['IMPORT', 'Waren werden aus dem Ausland eingekauft'],
+  ['MONSUN', 'Windsystem, das im Sommer viel Regen nach Ostchina bringt'],
+  ['SHENZHEN', 'Vom kleinen Ort zur Megastadt: berühmte Sonderwirtschaftszone im Süden'],
+  ['HUKOU', 'Chinesisches System der Haushaltsregistrierung'],
+  ['MEGASTADT', 'Sehr große Stadt mit vielen Millionen Einwohnern'],
+  ['PEKING', 'Hauptstadt Chinas'],
+  ['MIGRATION', 'Wechsel des Wohnortes'],
+  ['ZULIEFERER', 'Firma, die Bauteile für andere Firmen herstellt'],
+  ['INDIEN', 'Dieses Land hat China 2023 bei der Einwohnerzahl überholt'],
+  ['KAISER', '„Kleiner …“: Spitzname für Einzelkinder in China'],
+  ['PANDA', 'Chinas bekanntestes Tier – und dein Kursbegleiter'],
+  ['HAFEN', 'Hier werden Container auf Schiffe verladen'],
+  ['GLOBALISIERUNG', 'Weltweite Verbindung von Ländern, Firmen und Menschen'],
+  ['JANGTSEKIANG', 'Längster Fluss Chinas'],
+  ['INVESTITION', 'Geld einsetzen, um etwas aufzubauen, z. B. eine Fabrik']
+];
+function buildCrossword(list) {
+  let best = null;
+  for (let attempt = 0; attempt < 60; attempt++) {
+    const words = shuffle(list).slice(0, 12).sort((a, b) => b[0].length - a[0].length);
+    const grid = new Map(), dirs = new Map(), placed = [];
+    const key = (x, y) => x + ',' + y;
+    const can = (w, x, y, dx, dy) => {
+      let cross = 0;
+      if (grid.has(key(x - dx, y - dy)) || grid.has(key(x + dx * w.length, y + dy * w.length))) return -1;
+      for (let i = 0; i < w.length; i++) {
+        const cx = x + dx * i, cy = y + dy * i, g = grid.get(key(cx, cy));
+        if (g) { if (g !== w[i] || dirs.get(key(cx, cy)) === dx) return -1; cross++; }
+        else if (grid.has(key(cx + dy, cy + dx)) || grid.has(key(cx - dy, cy - dx))) return -1;
+      }
+      return cross;
+    };
+    const put = (item, x, y, dx, dy) => { const w = item[0]; for (let i = 0; i < w.length; i++) { grid.set(key(x + dx * i, y + dy * i), w[i]); dirs.set(key(x + dx * i, y + dy * i), dx); } placed.push({ w, clue: item[1], x, y, dx, dy }); };
+    put(words[0], 0, 0, 1, 0);
+    for (const item of words.slice(1)) {
+      const w = item[0]; let opts = [];
+      for (const [k, ch] of grid) {
+        const [gx, gy] = k.split(',').map(Number);
+        for (let i = 0; i < w.length; i++) {
+          if (w[i] !== ch) continue;
+          for (const [dx, dy] of [[1, 0], [0, 1]]) {
+            const x = gx - dx * i, y = gy - dy * i, c = can(w, x, y, dx, dy);
+            if (c > 0) opts.push({ x, y, dx, dy, c });
+          }
+        }
+      }
+      if (!opts.length) continue;
+      // möglichst kompakt
+      const score = o => { let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9; for (const k of grid.keys()) { const [a, b] = k.split(',').map(Number); x0 = Math.min(x0, a); x1 = Math.max(x1, a); y0 = Math.min(y0, b); y1 = Math.max(y1, b); } x0 = Math.min(x0, o.x); y0 = Math.min(y0, o.y); x1 = Math.max(x1, o.x + o.dx * (w.length - 1)); y1 = Math.max(y1, o.y + o.dy * (w.length - 1)); return Math.max(x1 - x0, (y1 - y0) * 1.1) - o.c * 2; };
+      opts.sort((a, b) => score(a) - score(b));
+      const o = opts[Math.floor(Math.random() * Math.min(2, opts.length))];
+      put(item, o.x, o.y, o.dx, o.dy);
+    }
+    let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+    for (const k of grid.keys()) { const [a, b] = k.split(',').map(Number); x0 = Math.min(x0, a); x1 = Math.max(x1, a); y0 = Math.min(y0, b); y1 = Math.max(y1, b); }
+    const W = x1 - x0 + 1, H = y1 - y0 + 1;
+    const q = placed.length * 10 - Math.max(W, H);
+    if (placed.length >= 9 && Math.max(W, H) <= 17 && (!best || q > best.q)) best = { q, placed: placed.map(p => Object.assign(p, { x: p.x - x0, y: p.y - y0 })), W, H };
+  }
+  return best;
+}
+let CW;
+function renderCrossword() {
+  CW = buildCrossword(CW_WORDS);
+  const cw = $('#cw'), A = $('#cwA'), D = $('#cwD');
+  cw.innerHTML = ''; A.innerHTML = ''; D.innerHTML = ''; $('#cwFb').className = 'fb';
+  const avail = Math.min(cw.parentElement.clientWidth || 600, 720);
+  const cs = Math.max(22, Math.min(38, Math.floor((avail - CW.W * 2) / CW.W)));
+  cw.style.setProperty('--cs', cs + 'px');
+  cw.style.gridTemplateColumns = 'repeat(' + CW.W + ', ' + cs + 'px)';
+  // Nummern vergeben
+  const starts = {}; let n = 0;
+  CW.placed.slice().sort((a, b) => a.y - b.y || a.x - b.x).forEach(p => { const k = p.x + ',' + p.y; if (!starts[k]) starts[k] = ++n; p.num = starts[k]; });
+  const cells = {};
+  CW.placed.forEach(p => { for (let i = 0; i < p.w.length; i++) { const k = (p.x + p.dx * i) + ',' + (p.y + p.dy * i); (cells[k] = cells[k] || { ch: p.w[i], words: [] }).words.push(p); } });
+  for (let y = 0; y < CW.H; y++) for (let x = 0; x < CW.W; x++) {
+    const k = x + ',' + y, c = cells[k];
+    const div = h('div', { class: 'c' });
+    if (c) {
+      const inp = h('input', { maxlength: 1, autocomplete: 'off', autocapitalize: 'characters', spellcheck: 'false', 'aria-label': 'Feld' });
+      inp._k = k; c.inp = inp;
+      if (starts[k]) div.append(h('sup', null, String(starts[k])));
+      div.append(inp);
+      inp.addEventListener('focus', () => { if (!curWord || !curWord.cells.includes(k)) selectWord(c.words[0]); });
+      inp.addEventListener('click', () => { if (c.words.length > 1 && curWord && curWord.cells.includes(k) && lastClick === k) selectWord(c.words.find(w => w !== curWord.p) || c.words[0]); lastClick = k; });
+      inp.addEventListener('keydown', e => {
+        if (e.key === 'Backspace' && !inp.value) { e.preventDefault(); move(-1); }
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); move(1); }
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); move(-1); }
+      });
+      inp.addEventListener('input', () => {
+        inp.value = inp.value.toUpperCase().replace(/[^A-Z]/g, '').slice(-1);
+        inp.classList.remove('ok', 'bad');
+        if (inp.value) move(1);
+        if (allFilled()) check(true);
+      });
+    }
+    cw.append(div);
+  }
+  CW.cells = cells;
+  CW.placed.slice().sort((a, b) => a.num - b.num).forEach(p => {
+    p.cells = Array.from({ length: p.w.length }, (_, i) => (p.x + p.dx * i) + ',' + (p.y + p.dy * i));
+    const li = h('li', { onclick: () => { selectWord(p); cells[p.cells.find(k => !cells[k].inp.value) || p.cells[0]].inp.focus(); } }, h('b', null, p.num + '.'), ' ' + p.clue + ' (' + p.w.length + ')');
+    p.li = li; (p.dx ? A : D).append(li);
+  });
+}
+let curWord = null, lastClick = null;
+function selectWord(p) {
+  curWord = { p, cells: p.cells };
+  $$('#cw input').forEach(i => i.classList.remove('hl'));
+  p.cells.forEach(k => CW.cells[k].inp.classList.add('hl'));
+  CW.placed.forEach(q => q.li.classList.toggle('act', q === p));
+}
+function move(d) {
+  const a = document.activeElement; if (!curWord || !a || !a._k) return;
+  const i = curWord.cells.indexOf(a._k), j = i + d;
+  if (j >= 0 && j < curWord.cells.length) CW.cells[curWord.cells[j]].inp.focus();
+}
+function allFilled() { return Object.values(CW.cells).every(c => c.inp.value); }
+function check(auto) {
+  let wrong = 0;
+  for (const k in CW.cells) { const c = CW.cells[k]; if (!c.inp.value) continue; const ok = c.inp.value === c.ch; if (!auto) c.inp.classList.add(ok ? 'ok' : 'bad'); if (!ok) wrong++; }
+  CW.placed.forEach(p => p.li.classList.toggle('solved', p.cells.every(k => CW.cells[k].inp.value === CW.cells[k].ch)));
+  const empty = Object.values(CW.cells).filter(c => !c.inp.value).length;
+  const fbx = $('#cwFb');
+  if (!empty && !wrong) { fbx.className = 'fb show ok'; fbx.innerHTML = '<b>Rätsel gelöst! 🎉</b> Du kennst die Fachbegriffe richtig gut.'; Object.values(CW.cells).forEach(c => c.inp.classList.add('ok')); done('g-cross', 25, 'Kreuzworträtsel gelöst'); }
+  else if (!auto) { fbx.className = 'fb show ' + (wrong ? 'bad' : 'info'); fbx.textContent = wrong ? wrong + ' Buchstaben sind falsch (rot). ' + (empty ? 'Und ' + empty + ' Felder sind noch leer.' : '') : 'Bisher alles richtig! Noch ' + empty + ' Felder leer.'; }
+}
+$('#cwCheck').onclick = () => check(false);
+$('#cwNew').onclick = renderCrossword;
+$('#cwHint').onclick = () => {
+  const p = curWord ? curWord.p : CW.placed[0];
+  const k = p.cells.find(k => CW.cells[k].inp.value !== CW.cells[k].ch);
+  if (!k) { Kurs.toast('Dieses Wort stimmt schon!'); return; }
+  const c = CW.cells[k]; c.inp.value = c.ch; c.inp.classList.add('ok'); c.inp.focus();
+  if (allFilled()) check(true);
+};
+renderCrossword();
+
+/* =================== Memory =================== */
+const MEM = [
+  ['Lieferkette', 'Weg eines Produkts bis zum Käufer'],
+  ['Globalisierung', 'Welt wächst wirtschaftlich zusammen'],
+  ['Monsun', 'Wind, der Regen bringt'],
+  ['Bevölkerungs­dichte', 'Einwohner pro km²'],
+  ['Sonderwirt­schaftszone', 'Gebiet mit besonderen Regeln für Firmen'],
+  ['Urbanisierung', 'Immer mehr Menschen leben in Städten'],
+  ['Hukou', 'Haushalts­registrierung'],
+  ['4-2-1', '4 Großeltern, 2 Eltern, 1 Kind']
+];
+let memOpen = [], memMoves = 0, memLock = false;
+function renderMemory() {
+  const g = $('#mem'); g.innerHTML = ''; memOpen = []; memMoves = 0; $('#memMoves').textContent = 0; $('#memFb').className = 'fb';
+  const cards = shuffle(MEM.flatMap((p, i) => [{ i, t: p[0], term: true }, { i, t: p[1] }]));
+  cards.forEach(c => {
+    const b = h('button', { class: 'mc', 'aria-label': 'Karte' }, h('div', { class: 'in' }, h('div', { class: 'f' }, '🐼'), h('div', { class: 'b' + (c.term ? ' term' : '') }, c.t)));
+    b._c = c;
+    b.onclick = () => {
+      if (memLock || b.classList.contains('up') || b.classList.contains('got')) return;
+      b.classList.add('up'); memOpen.push(b);
+      if (memOpen.length === 2) {
+        memMoves++; $('#memMoves').textContent = memMoves;
+        const [x, y] = memOpen;
+        if (x._c.i === y._c.i) { x.classList.add('got'); y.classList.add('got'); memOpen = []; if ($$('.mc.got').length === cards.length) finishMem(); }
+        else { memLock = true; setTimeout(() => { x.classList.remove('up'); y.classList.remove('up'); memOpen = []; memLock = false; }, 1100); }
+      }
+    };
+    g.append(b);
+  });
+}
+function finishMem() {
+  const s = Kurs.state(); const best = s.best['memory'];
+  if (!best || memMoves < best) { s.best['memory'] = memMoves; Kurs.save(); }
+  const f = $('#memFb'); f.className = 'fb show ok';
+  f.innerHTML = '<b>Alle Paare gefunden – in ' + memMoves + ' Zügen!</b> ' + (memMoves <= 12 ? 'Gedächtnis-Champion! 🧠' : 'Schaffst du es in weniger Zügen?') + ' Dein Rekord: ' + s.best['memory'] + ' Züge.';
+  done('g-memory', 20, 'Memory geschafft');
+}
+$('#memNew').onclick = renderMemory;
+renderMemory();
+
+/* =================== Wortsuche =================== */
+const WS_WORDS = ['CHINA', 'PEKING', 'MONSUN', 'HAFEN', 'EXPORT', 'PANDA', 'HUKOU', 'JANGTSE', 'SHANGHAI', 'KAISER'];
+let WS;
+function buildWordSearch() {
+  const N = 11, dirs = [[1, 0], [0, 1], [1, 1], [1, -1]];
+  for (let attempt = 0; attempt < 200; attempt++) {
+    const g = Array.from({ length: N }, () => Array(N).fill(null)), pos = {};
+    let ok = true;
+    for (const w of shuffle(WS_WORDS).sort((a, b) => b.length - a.length)) {
+      let placed = false;
+      for (let t = 0; t < 300 && !placed; t++) {
+        const [dx, dy] = dirs[Math.floor(Math.random() * dirs.length)];
+        const x = Math.floor(Math.random() * N), y = Math.floor(Math.random() * N);
+        const ex = x + dx * (w.length - 1), ey = y + dy * (w.length - 1);
+        if (ex < 0 || ex >= N || ey < 0 || ey >= N) continue;
+        let fit = true;
+        for (let i = 0; i < w.length; i++) { const c = g[y + dy * i][x + dx * i]; if (c && c !== w[i]) { fit = false; break; } }
+        if (!fit) continue;
+        for (let i = 0; i < w.length; i++) g[y + dy * i][x + dx * i] = w[i];
+        pos[w] = { x, y, dx, dy }; placed = true;
+      }
+      if (!placed) { ok = false; break; }
+    }
+    if (!ok) continue;
+    const AL = 'ABCDEFGHIJKLMNOPRSTUWZ';
+    for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) if (!g[y][x]) g[y][x] = AL[Math.floor(Math.random() * AL.length)];
+    return { N, g, pos, found: {} };
+  }
+}
+let wsStart = null;
+function renderWordSearch() {
+  WS = buildWordSearch(); wsStart = null; $('#wsFb').className = 'fb';
+  const box = $('#ws'); box.innerHTML = '';
+  const avail = Math.min(box.parentElement.clientWidth || 500, 560);
+  const s = Math.max(26, Math.min(44, Math.floor((avail - WS.N * 3) / WS.N)));
+  box.style.setProperty('--ws', s + 'px'); box.style.gridTemplateColumns = 'repeat(' + WS.N + ', ' + s + 'px)';
+  for (let y = 0; y < WS.N; y++) for (let x = 0; x < WS.N; x++) {
+    const b = h('button', { 'aria-label': WS.g[y][x] }, WS.g[y][x]); b._x = x; b._y = y;
+    b.onclick = () => pick(b);
+    box.append(b);
+  }
+  drawList();
+}
+function cell(x, y) { return $('#ws').children[y * WS.N + x]; }
+function drawList() { const wl = $('#wl'); wl.innerHTML = ''; WS_WORDS.forEach(w => wl.append(h('span', { class: WS.found[w] ? 'f' : '' }, w))); }
+function pick(b) {
+  if (!wsStart) { wsStart = b; b.classList.add('start'); return; }
+  const a = wsStart; wsStart = null; a.classList.remove('start');
+  if (a === b) return;
+  for (const w of WS_WORDS) {
+    if (WS.found[w]) continue;
+    const p = WS.pos[w], ex = p.x + p.dx * (w.length - 1), ey = p.y + p.dy * (w.length - 1);
+    const fwd = a._x === p.x && a._y === p.y && b._x === ex && b._y === ey;
+    const back = b._x === p.x && b._y === p.y && a._x === ex && a._y === ey;
+    if (fwd || back) {
+      WS.found[w] = 1;
+      for (let i = 0; i < w.length; i++) cell(p.x + p.dx * i, p.y + p.dy * i).classList.add('f');
+      drawList(); Kurs.toast('Gefunden: ' + w + ' ✔');
+      if (Object.keys(WS.found).length === WS_WORDS.length) { const f = $('#wsFb'); f.className = 'fb show ok'; f.innerHTML = '<b>Alle 10 Wörter gefunden!</b> Adleraugen! 🦅'; done('g-words', 20, 'Wortsuche geschafft'); }
+      return;
+    }
+  }
+  b.classList.add('flashbad'); setTimeout(() => b.classList.remove('flashbad'), 400);
+}
+$('#wsNew').onclick = renderWordSearch;
+renderWordSearch();
+
+/* =================== Emoji-Rätsel =================== */
+const E = s => '<span style="font-size:2rem;letter-spacing:4px">' + s + '</span>';
+Kurs.quiz('#emq', {
+  id: 'g-emoji', xp: 20, pass: 6,
+  questions: [
+    { q: E('🏭➡️🚚➡️⚓➡️🚢➡️📦➡️🙂'), o: ['Lieferkette', 'Massenproduktion', 'Migration'], a: 0, e: 'Alle Stationen eines Produkts bis zu dir.' },
+    { q: E('🌍🔗💶📱💬'), o: ['Globalisierung', 'Urbanisierung', 'Monsun'], a: 0, e: 'Die Welt ist wirtschaftlich verbunden.' },
+    { q: E('🏡🌾 ➡️ 🏙️💼'), o: ['Land-Stadt-Wanderung', 'Export', 'Ein-Kind-Politik'], a: 0, e: 'Menschen ziehen vom Dorf in die Stadt.' },
+    { q: E('🌊💨☁️🌧️🌾'), o: ['Monsun', 'Sonderwirtschaftszone', 'Hu-Linie'], a: 0, e: 'Der Sommermonsun bringt Regen vom Meer.' },
+    { q: E('👴👵👴👵 ➡️ 👨👩 ➡️ 👦'), o: ['4-2-1-Problem', 'Bevölkerungsdichte', 'Hukou'], a: 0, e: 'Vier Großeltern, zwei Eltern, ein Kind.' },
+    { q: E('👕 ×1.000.000 = 💶⬇️'), o: ['Massenproduktion', 'Investition', 'Import'], a: 0, e: 'Viele gleiche Stücke senken den Preis pro Stück.' },
+    { q: E('🇨🇳📦 ➡️ 🌍'), o: ['Export', 'Import', 'Zulieferer'], a: 0, e: 'China verkauft Waren ins Ausland.' },
+    { q: E('👶 = 1️⃣ 🚫2️⃣'), o: ['Ein-Kind-Politik', 'Medianalter', 'Megastadt'], a: 0, e: 'Von etwa 1980 bis 2015 durfte jede Familie meist nur ein Kind haben.' },
+    { q: E('🏙️🏙️🏙️ 👥 20.000.000'), o: ['Megastadt', 'Naturraum', 'Küstenraum'], a: 0, e: 'Eine sehr große Stadt mit vielen Millionen Einwohnern.' },
+    { q: E('🔩🔋📷 ➡️ 🏭📱'), o: ['Zulieferer', 'Verbraucher', 'Hafen'], a: 0, e: 'Zulieferer stellen Bauteile für andere Firmen her.' }
+  ]
+});
+setInterval(markTabs, 1500);
+
+/* =================== Speed-Quiz =================== */
+const SP = [
+  ['China liegt in Ostasien.', 1], ['„Made in China“ heißt: Alle Teile stammen aus China.', 0], ['Eine Lieferkette beschreibt den Weg eines Produkts bis zum Käufer.', 1],
+  ['Import bedeutet: Ein Land verkauft Waren ins Ausland.', 0], ['Deutschland importiert mehr Waren aus China als aus jedem anderen Land.', 1],
+  ['Im Westen Chinas liegen vor allem Ebenen und große Häfen.', 0], ['Der Monsun bringt im Sommer viel Regen nach Ost- und Südchina.', 1],
+  ['Die meisten Chinesen leben im Westen des Landes.', 0], ['Huang He und Jangtsekiang sind große Flüsse in China.', 1],
+  ['Bevölkerungsdichte gibt an, wie viele Menschen auf einem km² leben.', 1], ['Shenzhen war früher ein vergleichsweise kleiner Ort.', 1],
+  ['Sonderwirtschaftszonen sollten ausländische Firmen fernhalten.', 0], ['Massenproduktion kann den Preis pro Stück senken.', 1],
+  ['China stellt heute nur noch billige Massenware her.', 0], ['Ein Zulieferer stellt Bauteile für andere Firmen her.', 1],
+  ['Heute lebt ungefähr zwei Drittel der Chinesen in Städten.', 1], ['Urbanisierung heißt: Immer mehr Menschen ziehen aufs Land.', 0],
+  ['Der Hukou ordnet Menschen offiziell einem Wohnort zu.', 1], ['Schnelles Stadtwachstum kann zu Staus und Wohnungsmangel führen.', 1],
+  ['Die Ein-Kind-Politik gilt in China bis heute.', 0], ['In China leben mehr Männer als Frauen.', 1], ['Seit 2023 hat Indien mehr Einwohner als China.', 1],
+  ['Eine Frau in China bekommt heute im Schnitt etwa 3 Kinder.', 0], ['Beim 4-2-1-Problem muss ein Kind später für sechs Ältere sorgen.', 1],
+  ['Chinas Bevölkerung wächst zurzeit jedes Jahr stark.', 0], ['Seit 2021 dürfen Familien in China drei Kinder bekommen.', 1],
+  ['Peking ist die Hauptstadt Chinas.', 1], ['Ein Container ist eine genormte Metallkiste für den Transport.', 1],
+  ['Die größten Containerhäfen der Welt liegen in Europa.', 0], ['Eine Bevölkerungspyramide zeigt die Altersgruppen einer Bevölkerung.', 1]
+];
+let spT = null, spQ = [], spCur = null, spScore = 0, spStreak = 0, spEnd = 0, spWrong = [];
+$('#spBest').textContent = Kurs.state().best['speed'] || 0;
+$('#spGo').onclick = () => {
+  spQ = shuffle(SP); spScore = 0; spStreak = 0; spWrong = [];
+  $('#spScore').textContent = 0; $('#spStreak').textContent = 0; $('#spFb').className = 'fb';
+  $('#spBtns').classList.remove('hidden'); $('#spGo').classList.add('hidden');
+  spEnd = performance.now() + 60000; nextStmt();
+  clearInterval(spT); spT = setInterval(tick, 100);
+};
+function tick() {
+  const left = spEnd - performance.now();
+  $('#spTime').style.width = Math.max(0, left / 600) + '%';
+  if (left <= 0) endSpeed();
+}
+function nextStmt() { if (!spQ.length) spQ = shuffle(SP); spCur = spQ.pop(); $('#spStmt').textContent = spCur[0]; }
+function answer(v) {
+  if (!spCur) return;
+  const ok = (v ? 1 : 0) === spCur[1], box = $('#sp');
+  box.classList.remove('flashok', 'flashbad'); void box.offsetWidth; box.classList.add(ok ? 'flashok' : 'flashbad');
+  if (ok) { spStreak++; spScore += spStreak >= 3 ? 2 : 1; } else { spStreak = 0; spWrong.push(spCur); }
+  $('#spScore').textContent = spScore; $('#spStreak').textContent = spStreak;
+  nextStmt();
+}
+$('#spT').onclick = () => answer(true);
+$('#spF').onclick = () => answer(false);
+function endSpeed() {
+  clearInterval(spT); spCur = null;
+  $('#spBtns').classList.add('hidden'); $('#spGo').classList.remove('hidden'); $('#spGo').textContent = '↻ Nochmal';
+  $('#spStmt').textContent = spScore >= 15 ? '🏆 Wahnsinn!' : spScore >= 8 ? '🎉 Stark!' : '💪 Nochmal versuchen?';
+  const s = Kurs.state();
+  if (spScore > (s.best['speed'] || 0)) { s.best['speed'] = spScore; Kurs.save(); Kurs.toast('Neuer Rekord: ' + spScore + ' Punkte!'); }
+  $('#spBest').textContent = s.best['speed'];
+  const f = $('#spFb'); f.className = 'fb show ' + (spScore >= 8 ? 'ok' : 'info');
+  f.innerHTML = '<b>' + spScore + ' Punkte.</b> ' + (spWrong.length ? 'Daneben lagst du hier:<ul style="margin:.4em 0 0;padding-left:1.2em">' + spWrong.slice(0, 6).map(w => '<li>' + Kurs.esc(w[0]) + ' → <b>' + (w[1] ? 'wahr' : 'falsch') + '</b></li>').join('') + '</ul>' : 'Kein einziger Fehler! 🤩');
+  if (spScore >= 8) done('g-speed', 20, 'Speed-Quiz geschafft');
+}
+</script>
+</body>
+</html>

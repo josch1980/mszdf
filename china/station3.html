@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Werkbank der Welt</title>
+<link rel="stylesheet" href="kurs.css">
+</head>
+<body>
+<main>
+  <section class="hero">
+    <div class="kicker">Station 3 von 5 · GPG M10 · China</div>
+    <h1>🏭 Die „Werkbank der Welt“</h1>
+    <p>Ein Hoodie für 12 Euro, Kopfhörer für 15 Euro: Wie kann etwas, das Tausende Kilometer entfernt hergestellt wird, so günstig sein? Die Antwort führt nach China – und in eine Stadt, die in 40 Jahren vom Fischerdorf zur Megametropole wurde.</p>
+    <div class="deco">⚙️</div>
+  </section>
+
+  <div class="question">❓ <span>Frage der Station: Wie wurde China zur „Werkbank der Welt“?</span></div>
+
+  <div id="tip3"></div>
+
+  <section class="section" id="start">
+    <div class="step-head"><div class="num">🎯</div><h2>Aufwärmen</h2></div>
+    <div id="est3"></div>
+  </section>
+
+  <section class="section" data-act="s3-video" id="film">
+    <div class="step-head"><div class="num">🎬</div><h2>Erklärfilm: Vom Fischerdorf zur Fabrikstadt</h2><span class="done-tag">✔ erledigt</span></div>
+    <div id="vid3"></div>
+  </section>
+
+  <section class="section" data-act="s3-audio">
+    <div class="step-head"><div class="num">🎧</div><h2>Hörtext: Wie wurde China zur „Werkbank der Welt“?</h2><span class="done-tag">✔ erledigt</span></div>
+    <div id="aud3"></div>
+  </section>
+
+  <section class="section" data-act="s3-chart">
+    <div class="step-head"><div class="num">📊</div><h2>Schaubilder auswerten</h2><span class="done-tag">✔ erledigt</span></div>
+    <div id="chart3a"></div>
+    <div id="chart3b" style="margin-top:14px"></div>
+    <div id="chart3c" style="margin-top:14px"></div>
+    <div id="ana3" style="margin-top:14px"></div>
+  </section>
+
+  <section class="section" data-act="s3-order">
+    <div class="step-head"><div class="num">🔗</div><h2>Ursache-Wirkungs-Kette</h2><span class="done-tag">✔ erledigt</span></div>
+    <div id="ord3"></div>
+  </section>
+
+  <section class="section" data-act="s3-cloze">
+    <div class="step-head"><div class="num">✏️</div><h2>Lückentext: Fachbegriffe sicher anwenden</h2><span class="done-tag">✔ erledigt</span></div>
+    <div id="clz3"></div>
+  </section>
+
+  <section class="section" data-act="s3-quiz">
+    <div class="step-head"><div class="num">✅</div><h2>Check: Was weißt du jetzt?</h2><span class="done-tag">✔ bestanden</span></div>
+    <div id="quiz3"></div>
+  </section>
+
+  <section class="section">
+    <div class="merk">
+      <h3>📌 Merksatz</h3>
+      <p>China wurde zur „Werkbank der Welt“, weil sich das Land ab Ende der 1970er-Jahre wirtschaftlich <b>öffnete</b>, große Industriegebiete und <b>Sonderwirtschaftszonen</b> aufbaute, ausländischen Unternehmen <b>Investitionen</b> ermöglichte, viele Arbeitskräfte vorhanden waren und leistungsfähige Häfen sowie Verkehrswege entstanden. Heute ist China zusätzlich ein bedeutender <b>Hightech- und Technologiestandort</b>.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="step-head"><div class="num">🃏</div><h2>Fachbegriffe-Karten</h2></div>
+    <div id="flash3"></div>
+  </section>
+
+  <nav class="nextnav">
+    <a class="btn ghost" href="station2.html">← Station 2: Warum leben die meisten im Osten?</a>
+    <a class="btn" href="station4.html">Station 4: Warum wachsen Chinas Städte? →</a>
+  </nav>
+</main>
+
+<script src="kurs.js"></script>
+<script>
+const A = Kurs.Art;
+Kurs.init({ station: 's3' });
+
+Kurs.tip('#tip3', '<b>Willkommen bei Station 3!</b> Heute wirst du zum Wirtschaftsdetektiv: Warum lassen so viele Firmen aus aller Welt gerade in China produzieren? Achte im Film auf die <b>vier Gründe</b> – du brauchst sie später. 🔍');
+
+Kurs.estimate('#est3', {
+  id: 's3-est',
+  q: '1980 lebten in Shenzhen nur rund <b>0,3 Millionen</b> Menschen. Wie viele Millionen waren es ungefähr <b>2020</b>?',
+  min: 0, max: 30, step: 0.5, a: 17.6, unit: 'Mio.',
+  e: 'Shenzhen ist in 40 Jahren fast um das 60-Fache gewachsen. Zum Vergleich: In ganz Bayern leben rund 13 Millionen Menschen. (Werte gerundet)',
+  compare: [{ label: '1980', value: 0.3 }, { label: 'Bayern', value: 13 }]
+});
+
+/* ---------- Erklärfilm ---------- */
+function skyline(x0, n, d) {
+  let s = '';
+  for (let i = 0; i < n; i++) {
+    const hgt = 90 + ((i * 53) % 150), w = 38 + (i % 3) * 8, x = x0 + i * 46;
+    s += '<g class="a-grow" style="--d:' + (d + i * .12) + 's"><rect x="' + x + '" y="' + (360 - hgt) + '" width="' + w + '" height="' + hgt + '" fill="' + ['#2d6cdf', '#1f2430', '#5a6170', '#7b4fa0'][i % 4] + '"/>';
+    for (let r = 0; r < Math.floor(hgt / 22); r++) s += '<rect x="' + (x + 8) + '" y="' + (370 - hgt + r * 22) + '" width="' + (w - 16) + '" height="6" fill="#f5c542" opacity=".7"/>';
+    s += '</g>';
+  }
+  return s;
+}
+Kurs.video('#vid3', {
+  id: 's3-video', title: 'Vom Fischerdorf zur Fabrikstadt', next: '#aud3',
+  scenes: [
+    { svg: () => A.bg('#eaf3fb') + Kurs.map({ x: 20, y: 40, w: 380, h: 330, cities: ['Shenzhen'], cityDelay: .6 }) +
+        A.label(600, 110, 'Shenzhen', { size: 40, cls: 'a-up', d: .3 }) +
+        A.label(600, 150, 'im Süden Chinas, direkt an der Küste', { size: 18, fill: '#5a6170', weight: 600, d: .8 }) +
+        A.box(470, 190, 260, 110, 'Wie kann sich ein Ort\nso schnell verändern?', { icon: '🤔', d: 1.6, fill: '#fff4d6', size: 17 }),
+      say: 'Das hier ist Shenzhen. Die Stadt liegt im Süden Chinas, direkt an der Küste, gleich neben Hongkong. Heute ist Shenzhen eine riesige Metropole. Aber das war nicht immer so.' },
+    { svg: () => A.bg('#eaf3fb') + '<rect x="0" y="360" width="800" height="90" fill="#9cc7ea"/>' +
+        '<line x1="400" y1="20" x2="400" y2="360" stroke="#1f2430" stroke-width="3" stroke-dasharray="6 6"/>' +
+        A.label(200, 50, '1980: ca. 0,3 Mio. Menschen', { size: 22, cls: 'a-up' }) +
+        A.emoji(110, 345, '🛖', 60, 'a-pop', .4) + A.emoji(200, 345, '🛖', 50, 'a-pop', .6) + A.emoji(290, 352, '⛵', 54, 'a-pop', .8) + A.emoji(170, 250, '🌾', 44, 'a-pop', 1) +
+        A.label(600, 50, '2020: ca. 17,6 Mio. Menschen', { size: 22, cls: 'a-up', d: 1.6, fill: '#c0392b' }) +
+        skyline(420, 8, 2),
+      say: 'Um 1980 lebten in Shenzhen nur rund dreihunderttausend Menschen. Es gab Felder, Fischerboote und kleine Siedlungen. Vierzig Jahre später sind es ungefähr siebzehn Millionen. Wie war das möglich?' },
+    { svg: () => A.bg() + A.title('Ende der 1970er: China öffnet sich') +
+        '<g class="a-pop" style="--d:.3s"><rect x="300" y="140" width="200" height="200" rx="10" fill="#c0392b"/><rect x="315" y="155" width="80" height="170" fill="#8e1f15" class="a-growx" style="--d:1s;transform-origin:left"/><rect x="405" y="155" width="80" height="170" fill="#8e1f15"/></g>' +
+        A.emoji(400, 270, '🚪', 70, 'a-pop', 1.2) +
+        A.box(40, 170, 220, 110, 'Handel mit\nanderen Ländern', { icon: '🤝', d: 1.8, size: 16 }) + A.arrow(265, 225, 295, 225, { d: 2 }) +
+        A.box(540, 170, 220, 110, 'ausländische Firmen\ndürfen investieren', { icon: '💶', d: 2.4, size: 16 }) + A.arrow(535, 225, 505, 225, { d: 2.6 }),
+      say: 'Ab Ende der siebziger Jahre öffnete China seine Wirtschaft Schritt für Schritt. Das Land handelte mehr mit anderen Ländern. Und Firmen aus dem Ausland durften jetzt in China investieren. Investieren heißt: Geld einsetzen, um etwas aufzubauen, zum Beispiel eine Fabrik, und später Gewinn zu machen.' },
+    { svg: () => A.bg() + A.title('Sonderwirtschaftszonen', 'Gebiete mit besonderen Regeln für Unternehmen') +
+        Kurs.map({ x: 40, y: 120, w: 340, h: 270, cities: ['Shenzhen'], cityDelay: .6, labels: true }) +
+        A.box(430, 140, 330, 60, '✔ weniger Steuern', { d: 1, size: 18, fill: '#e3f5ef' }) +
+        A.box(430, 215, 330, 60, '✔ einfachere Genehmigungen', { d: 1.6, size: 18, fill: '#e3f5ef' }) +
+        A.box(430, 290, 330, 60, '✔ Firmen werden angelockt', { d: 2.2, size: 18, fill: '#e3f5ef' }),
+      say: 'Besonders wichtig waren die Sonderwirtschaftszonen. Das sind Gebiete, in denen besondere Regeln gelten, zum Beispiel weniger Steuern und einfachere Genehmigungen. So sollten Unternehmen und Geld aus dem Ausland angelockt werden. Shenzhen war eine der ersten dieser Zonen.' },
+    { svg: () => A.bg() + A.title('Vier Gründe für China') +
+        A.box(30, 130, 175, 170, 'viele\nArbeitskräfte', { icon: '👷', d: .3, fill: '#fdecea' }) +
+        A.box(220, 130, 175, 170, 'lange niedrige\nLöhne', { icon: '💰', d: 1, fill: '#fff4d6' }) +
+        A.box(410, 130, 175, 170, 'Infrastruktur:\nHäfen, Straßen', { icon: '🛣️', d: 1.7, fill: '#e8f0fd' }) +
+        A.box(600, 130, 175, 170, 'Zulieferer\nganz in der Nähe', { icon: '🔩', d: 2.4, fill: '#e3f5ef' }),
+      say: 'Warum war China für Firmen so interessant? Erstens gab es sehr viele Arbeitskräfte. Zweitens waren die Löhne lange viel niedriger als in Europa. Drittens baute der Staat Straßen, Bahnlinien, Häfen und Flughäfen aus. Das nennt man Infrastruktur. Und viertens siedelten sich viele Zulieferer nah beieinander an, also Firmen, die Teile wie Akkus, Kabel oder Displays herstellen.' },
+    { svg: () => A.bg() + A.title('Massenproduktion senkt die Kosten') +
+        A.label(400, 120, 'Feste Kosten für Maschinen & Vorbereitung: 1.000 €', { size: 20, weight: 700, d: .3 }) +
+        A.box(60, 160, 300, 170, '10 T-Shirts\n1.000 € : 10\n= 100 € pro Stück', { icon: '👕', d: 1, fill: '#fdecea', size: 18 }) +
+        A.box(440, 160, 300, 170, '1 Million T-Shirts\n1.000 € : 1.000.000\n= 0,1 Cent pro Stück', { icon: '👕👕👕', iconSize: 28, d: 2.2, fill: '#e3f5ef', size: 18 }) +
+        A.arrow(365, 245, 435, 245, { d: 1.8 }),
+      say: 'Dazu kommt die Massenproduktion. Stell dir vor, die Vorbereitung der Maschinen kostet tausend Euro. Druckst du nur zehn T-Shirts, kostet das pro Stück hundert Euro. Druckst du eine Million T-Shirts, sind es pro Stück nur noch ein Zehntel Cent. Je größer die Menge, desto billiger wird jedes einzelne Stück.' },
+    { svg: () => A.bg('#eaf3fb') + '<circle cx="80" cy="70" r="36" fill="#f5c542" class="a-pop"/>' +
+        A.label(430, 70, 'Export: Waren werden ins Ausland verkauft', { size: 24, cls: 'a-up' }) +
+        A.emoji(110, 300, '🏗️', 90, 'a-pop', .4) +
+        '<g class="a-ship" style="--x0:120px;--x1:820px;--t:12s;--d:1s">' + A.ship(0, 230, 1.2) + '</g>' + A.waves(320) +
+        A.label(400, 115, 'China wurde zu einem der größten Exportländer der Welt', { size: 18, fill: '#5a6170', weight: 700, d: 1.5 }),
+      say: 'Fabriken allein reichen aber nicht. Die Waren müssen auch zu den Kunden. Deshalb sind Chinas riesige Häfen so wichtig. Container werden auf Schiffe geladen und in die ganze Welt gebracht. Wenn ein Land Waren ins Ausland verkauft, nennt man das Export. China wurde zu einem der größten Exportländer der Welt.' },
+    { svg: () => A.bg() + A.title('China heute: mehr als billige Massenware') +
+        A.box(60, 140, 200, 150, 'Elektroautos', { icon: '🚗', d: .3, fill: '#e8f0fd' }) +
+        A.box(300, 140, 200, 150, 'Akkus', { icon: '🔋', d: 1, fill: '#e3f5ef' }) +
+        A.box(540, 140, 200, 150, 'Solartechnik', { icon: '☀️', d: 1.7, fill: '#fff4d6' }) +
+        A.label(400, 340, 'Von der Werkbank zum Technologiestandort', { size: 22, fill: '#c0392b', d: 2.5, cls: 'a-up' }),
+      say: 'Heute ist China nicht mehr nur wegen niedriger Löhne erfolgreich. Chinesische Firmen forschen selbst und bauen moderne Elektroautos, Akkus, Maschinen und Solartechnik. Ein Land, das zuerst vor allem für andere produziert hat, wurde so zu einem wichtigen Technologiestandort.' }
+  ]
+});
+
+/* ---------- Hörtext ---------- */
+Kurs.audio('#aud3', {
+  id: 's3-audio', title: 'Wie wurde China zur „Werkbank der Welt“?', sub: 'Sachtext zum Anhören und Mitlesen',
+  paras: [
+    'Du siehst online einen Hoodie für 12 Euro, Kopfhörer für 15 Euro oder eine Powerbank für weniger als 20 Euro. Wie kann ein Produkt, das Tausende Kilometer entfernt hergestellt wurde, so günstig sein? Ein Teil der Antwort führt nach China.',
+    { h: 'Der Ausdruck „Werkbank der Welt“' },
+    'China wurde lange als Werkbank der Welt bezeichnet. Gemeint ist, dass dort riesige Mengen an Waren für andere Länder hergestellt werden. Heute ist dieses Bild aber zu einfach. China produziert auch moderne Elektroautos, Batterien, Maschinen, Solartechnik und Elektronik.',
+    { h: 'Ein wichtiger Wendepunkt' },
+    'Ab Ende der 1970er-Jahre öffnete China seine Wirtschaft schrittweise für Handel und ausländische Unternehmen. Firmen aus anderen Ländern konnten leichter investieren. Eine Investition bedeutet, dass Geld eingesetzt wird, um etwas aufzubauen und später Gewinn zu erzielen, zum Beispiel eine Fabrik.',
+    'Besonders wichtig waren Sonderwirtschaftszonen. Das sind Gebiete mit besonderen wirtschaftlichen Regeln, die Unternehmen anlocken sollen. Ein bekanntes Beispiel ist Shenzhen im Süden Chinas. Aus einem kleinen Ort wurde in wenigen Jahrzehnten eine riesige Wirtschaftsmetropole.',
+    { h: 'Warum war China für Unternehmen interessant?' },
+    'China hatte sehr viele Arbeitskräfte, und die Löhne waren lange deutlich niedriger als in vielen Industrieländern. Gleichzeitig baute der Staat Straßen, Häfen, Flughäfen, Bahnlinien und Industriegebiete aus. Diese Grundausstattung nennt man Infrastruktur.',
+    'Außerdem siedelten sich viele Zulieferer nah beieinander an. Ein Zulieferer stellt Teile für ein anderes Unternehmen her, bei einem Smartphone zum Beispiel Displays, Kabel, Akkus oder Kameras. Liegen solche Betriebe in derselben Region, können sie schneller und günstiger zusammenarbeiten.',
+    { h: 'Massenproduktion senkt Kosten' },
+    'Stell dir vor, du willst zehn T-Shirts bedrucken. Du musst Maschinen vorbereiten, Farben mischen und Verpackungen organisieren. Druckst du stattdessen eine Million T-Shirts, verteilen sich diese festen Kosten auf viel mehr Stücke. Dadurch sinkt der Preis pro Stück.',
+    { h: 'Vom Werk zum Hafen' },
+    'Die Waren müssen auch in andere Länder gelangen. Deshalb sind Chinas große Häfen so wichtig. Container werden per Lkw oder Bahn zum Hafen gebracht und auf Containerschiffe verladen. Verkauft ein Land Waren ins Ausland, nennt man das Export. China wurde zu einem der wichtigsten Exportländer der Welt.',
+    { h: 'China verändert sich' },
+    'Heute ist China nicht nur wegen niedriger Löhne erfolgreich. Viele chinesische Unternehmen entwickeln selbst moderne Technologien. Forschung, Automatisierung und Hightech spielen eine immer größere Rolle. Wenn du etwas kaufst, bist du Teil dieser weltweiten Verbindung: Deine Nachfrage beeinflusst, was produziert wird.'
+  ]
+});
+
+/* ---------- Schaubilder ---------- */
+Kurs.line('#chart3a', {
+  title: 'Chinas Anteil am Weltwarenexport',
+  sub: 'Wie viel Prozent aller Waren, die weltweit exportiert werden, kommen aus China? (Werte gerundet)',
+  series: [{ name: 'China', color: 'var(--red)', data: [[1980, 1], [1990, 1.8], [2000, 3.9], [2010, 10.3], [2020, 14.7], [2024, 14.6]] }],
+  xMin: 1975, xMax: 2025, xTicks: [1980, 1990, 2000, 2010, 2020, 2024],
+  yMax: 16, yStep: 4, unit: '%', unitShort: ' %', yLabel: 'Anteil in %', xLabel: 'Jahr',
+  marks: [{ x: 1979, label: 'Öffnung' }],
+  source: 'WTO, Werte gerundet'
+});
+Kurs.bars('#chart3b', {
+  title: 'Die größten Containerhäfen der Welt (2023)',
+  sub: 'Umschlag in Millionen Standardcontainern (TEU), gerundet · rot = Häfen in China',
+  items: [
+    { label: 'Shanghai', value: 49, hi: true },
+    { label: 'Singapur', value: 39, color: 'var(--sky)' },
+    { label: 'Ningbo-Zhoushan', value: 35, hi: true },
+    { label: 'Shenzhen', value: 30, hi: true },
+    { label: 'Qingdao', value: 29, hi: true },
+    { label: 'Guangzhou', value: 25, hi: true },
+    { label: 'Rotterdam', value: 13, color: 'var(--jade)' },
+    { label: 'Hamburg', value: 8, color: 'var(--jade)' }
+  ],
+  unitShort: 'Mio.', labelW: 150,
+  source: 'Hafenstatistiken / Lloyd’s List 2023, Werte gerundet; grün = europäische Häfen'
+});
+Kurs.columns('#chart3c', {
+  title: 'Einwohner von Shenzhen',
+  sub: 'in Millionen (gerundet)',
+  items: [
+    { label: '1980', value: 0.3, color: 'var(--gold)' },
+    { label: '1990', value: 1.7, color: 'var(--gold)' },
+    { label: '2000', value: 7.0, color: 'var(--gold)' },
+    { label: '2010', value: 10.4, color: 'var(--gold)' },
+    { label: '2020', value: 17.6, color: 'var(--red)' }
+  ],
+  max: 20, yStep: 5, unitShort: ' Mio.', yLabel: 'Mio. Einwohner',
+  source: 'Statistikamt Shenzhen / Volkszählungen, Werte gerundet'
+});
+Kurs.analyse('#ana3', {
+  id: 's3-chart',
+  steps: [
+    { label: 'Beschreiben', type: 'mc', q: 'Liniendiagramm: Wie entwickelt sich Chinas Anteil am Weltwarenexport?',
+      o: ['Er steigt von ca. 1 % (1980) auf ca. 15 % – besonders stark nach 2000', 'Er bleibt seit 1980 ungefähr gleich', 'Er sinkt seit 1980 deutlich'],
+      a: 0, e: 'Erst langsam, dann sehr schnell: Zwischen 2000 und 2010 hat sich der Anteil fast verdreifacht. Seit 2020 bleibt er ungefähr gleich hoch.' },
+    { label: 'Ablesen', type: 'num', q: 'Balkendiagramm: Wie viele der acht größten Häfen im Diagramm liegen in China?', a: 5, tol: 0, unit: 'Häfen',
+      e: 'Shanghai, Ningbo-Zhoushan, Shenzhen, Qingdao und Guangzhou. Shanghai allein schlägt rund sechsmal so viele Container um wie Hamburg.' },
+    { label: 'Erklären', type: 'open', q: 'Erkläre, warum Chinas Exportanteil nach der Öffnung so stark gestiegen ist. Nutze mindestens zwei Fachbegriffe.',
+      check: 'Öffnung/Sonderwirtschaftszonen · Investitionen · Arbeitskräfte/Löhne · Zulieferer · Massenproduktion · Häfen',
+      model: 'Nach der Öffnung Ende der 1970er-Jahre durften ausländische Firmen in China investieren, vor allem in Sonderwirtschaftszonen wie Shenzhen. Es gab viele Arbeitskräfte mit niedrigen Löhnen und viele Zulieferer in der Nähe. Durch Massenproduktion wurden Waren günstig. Über die großen Häfen konnten sie in die ganze Welt exportiert werden.' },
+    { label: 'Beurteilen', type: 'open', q: 'Passt die Bezeichnung „Werkbank der Welt“ heute noch? Begründe deine Meinung.',
+      check: 'eigene Meinung · Begründung mit „weil“ · Hightech-Beispiel',
+      model: 'Teilweise. China stellt immer noch riesige Mengen an Waren für die Welt her und hat die größten Häfen – das passt zum Bild der Werkbank. Aber der Begriff ist zu einfach, weil chinesische Firmen heute selbst forschen und Hightech wie Elektroautos, Akkus und Solartechnik entwickeln.' }
+  ]
+});
+
+/* ---------- Übungen ---------- */
+Kurs.order('#ord3', {
+  id: 's3-order', tag: 'Ursache & Wirkung',
+  prompt: 'Wie wurde China zum Export-Riesen? Bring die Kette von der Ursache bis zur Wirkung in die richtige Reihenfolge!',
+  items: ['China öffnet seine Wirtschaft (ab Ende der 1970er)', 'Sonderwirtschaftszonen wie Shenzhen entstehen', 'Ausländische Firmen investieren', 'Fabriken und Zulieferer siedeln sich an', 'Massenproduktion macht Waren günstig', 'Export über große Häfen in alle Welt', 'Chinesische Firmen entwickeln eigene Hightech'],
+  explain: 'Eine Entwicklung baut auf der anderen auf. So wurde aus der „Werkbank der Welt“ nach und nach ein Technologiestandort.'
+});
+
+Kurs.cloze('#clz3', {
+  id: 's3-cloze', tag: 'Fachbegriffe',
+  prompt: 'Setze die passenden Fachbegriffe ein. Achtung: Zwei Wörter passen nicht!',
+  text: 'Ab Ende der 1970er-Jahre öffnete sich China für ausländische Unternehmen. In {Sonderwirtschaftszonen} galten besondere Regeln, um Firmen anzulocken. Ausländische Firmen brachten Geld für Fabriken und Maschinen mit – man nennt das eine {Investition}. Ein {Zulieferer} stellt Teile wie Akkus oder Displays für andere Firmen her. Werden riesige Mengen gleicher Produkte hergestellt, spricht man von {Massenproduktion}. Straßen, Bahnlinien und Häfen gehören zur {Infrastruktur}. Verkauft China Waren ins Ausland, ist das ein {Export}.',
+  extra: ['Import', 'Monsun'],
+  explain: 'Diese sechs Begriffe brauchst du auch im Abschlusstest – merk sie dir gut!'
+});
+
+/* ---------- Quiz ---------- */
+Kurs.quiz('#quiz3', {
+  id: 's3-quiz',
+  questions: [
+    { q: 'Was ist mit „Werkbank der Welt“ gemeint?', o: ['In China werden riesige Mengen Waren für andere Länder hergestellt', 'China verkauft besonders viele Werkzeuge', 'In China gibt es die meisten Handwerksbetriebe'], a: 0, e: 'Der Begriff ist ein Bild für China als riesigen Produktionsstandort.' },
+    { q: 'Wann begann China, seine Wirtschaft für ausländische Firmen zu öffnen?', o: ['Ab Ende der 1970er-Jahre', 'Erst im Jahr 2010', 'Schon um 1900'], a: 0, e: 'Ab Ende der 1970er-Jahre öffnete sich China Schritt für Schritt.' },
+    { q: 'Was ist eine <b>Sonderwirtschaftszone</b>?', o: ['Ein Gebiet mit besonderen Regeln, das Unternehmen anlocken soll', 'Ein Naturschutzgebiet', 'Ein Gebiet, in dem keine Fabriken erlaubt sind'], a: 0, e: 'Shenzhen war eine der ersten und bekanntesten Sonderwirtschaftszonen.' },
+    { q: 'Was macht ein <b>Zulieferer</b>?', o: ['Er stellt Bauteile oder Vorprodukte für andere Firmen her', 'Er liefert Pakete an Kunden aus', 'Er kauft Waren im Ausland ein'], a: 0, e: 'Z. B. Displays, Akkus oder Kabel für ein Smartphone.' },
+    { q: 'Feste Kosten von 1.000 € verteilen sich auf 1 Million T-Shirts. Was passiert mit dem Preis pro Stück?', o: ['Er sinkt stark', 'Er steigt stark', 'Er bleibt gleich'], a: 0, e: '1.000 € : 1.000.000 = 0,1 Cent pro Stück – das ist der Vorteil der Massenproduktion.' },
+    { q: 'Warum sind große Häfen für China so wichtig?', o: ['Über sie werden die Waren in die ganze Welt exportiert', 'Dort wohnen die meisten Arbeitskräfte', 'Häfen ersetzen Fabriken'], a: 0, e: 'Ohne Häfen und Containerschiffe kein Export-Weltmeister.' },
+    { q: 'Welche Aussage über China heute stimmt?', o: ['China entwickelt auch eigene Hightech wie E-Autos und Akkus', 'China produziert nur noch billige Massenware', 'China exportiert heute fast nichts mehr'], a: 0, e: 'China ist heute zusätzlich ein bedeutender Technologiestandort.' }
+  ]
+});
+
+Kurs.flash('#flash3', [
+  ['Industrialisierung', 'Entwicklung einer Wirtschaft, bei der Industrie und Fabrikproduktion stark an Bedeutung gewinnen.'],
+  ['Investition', 'Einsatz von Geld, um etwas aufzubauen und später einen Nutzen oder Gewinn zu erzielen.'],
+  ['Sonderwirtschaftszone', 'Gebiet mit besonderen wirtschaftlichen Regeln, das Unternehmen und Investitionen anziehen soll.'],
+  ['Zulieferer', 'Unternehmen, das Bauteile oder Vorprodukte für andere Unternehmen herstellt.'],
+  ['Massenproduktion', 'Herstellung sehr großer Mengen eines Produkts.'],
+  ['Export', 'Verkauf von Waren oder Dienstleistungen ins Ausland.'],
+  ['Infrastruktur', 'Straßen, Bahnlinien, Häfen, Stromnetze und andere Einrichtungen, die Wirtschaft und Alltag ermöglichen.']
+]);
+</script>
+</body>
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Warum leben die meisten im Osten?</title>
+<link rel="stylesheet" href="kurs.css">
+</head>
+<body>
+<main>
+  <section class="hero">
+    <div class="kicker">Station 2 von 5 · GPG M10 · China</div>
+    <h1>🗺️ Warum leben die meisten Chinesen im Osten?</h1>
+    <p>Hohe Gebirge und Wüsten im Westen, Flüsse, Ebenen und Megastädte im Osten: China ist riesig – und seine Menschen sind sehr ungleich verteilt. Finde heraus, warum.</p>
+    <div class="deco">⛰️</div>
+  </section>
+
+  <div class="question">❓ <span>Frage der Station: Warum lebt der größte Teil der Bevölkerung Chinas im Osten des Landes?</span></div>
+
+  <div id="tip2"></div>
+
+  <section class="section" id="start">
+    <div class="step-head"><div class="num">🎯</div><h2>Aufwärmen</h2></div>
+    <div id="est2"></div>
+  </section>
+
+  <section class="section" data-act="s2-video" id="film">
+    <div class="step-head"><div class="num">🎬</div><h2>Erklärfilm: Ein Land – zwei Welten</h2><span class="done-tag">✔ erledigt</span></div>
+    <div id="vid2"></div>
+  </section>
+
+  <section class="section" data-act="s2-audio">
+    <div class="step-head"><div class="num">🎧</div><h2>Hörtext: Wo würdest du leben wollen?</h2><span class="done-tag">✔ erledigt</span></div>
+    <div id="aud2"></div>
+  </section>
+
+  <section class="section" data-act="s2-chart">
+    <div class="step-head"><div class="num">📊</div><h2>Schaubild auswerten</h2><span class="done-tag">✔ erledigt</span></div>
+    <div id="map2"></div>
+    <div id="chart2" style="margin-top:14px"></div>
+    <div id="ana2" style="margin-top:14px"></div>
+  </section>
+
+  <section class="section" data-act="s2-sort">
+    <div class="step-head"><div class="num">↔️</div><h2>Natur oder Wirtschaft?</h2><span class="done-tag">✔ erledigt</span></div>
+    <div id="sort2"></div>
+  </section>
+
+  <section class="section" data-act="s2-cloze">
+    <div class="step-head"><div class="num">✏️</div><h2>Lückentext</h2><span class="done-tag">✔ erledigt</span></div>
+    <div id="cloze2"></div>
+  </section>
+
+  <section class="section" data-act="s2-quiz">
+    <div class="step-head"><div class="num">✅</div><h2>Check: Was weißt du jetzt?</h2><span class="done-tag">✔ bestanden</span></div>
+    <div id="quiz2"></div>
+  </section>
+
+  <section class="section">
+    <div class="merk">
+      <h3>📌 Merksatz</h3>
+      <p>Die Bevölkerung Chinas ist sehr ungleich verteilt. Der <b>Westen</b> ist in vielen Gebieten hoch, trocken und schwer zugänglich. Im <b>Osten</b> gibt es häufiger Ebenen, Flüsse, fruchtbare Böden, große Städte, Industrie, Häfen und viele Arbeitsplätze. Deshalb lebt dort der weitaus größte Teil der Bevölkerung. <b>Natur und Wirtschaft</b> beeinflussen sich dabei gegenseitig.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="step-head"><div class="num">🃏</div><h2>Fachbegriffe-Karten</h2></div>
+    <div id="flash2"></div>
+  </section>
+
+  <nav class="nextnav">
+    <a class="btn ghost" href="station1.html">← Station 1: China in deinem Alltag</a>
+    <a class="btn" href="station3.html">Station 3: Die „Werkbank der Welt“ →</a>
+  </nav>
+</main>
+
+<script src="kurs.js"></script>
+<script>
+const A = Kurs.Art;
+Kurs.init({ station: 's2' });
+
+Kurs.tip('#tip2', '<b>Stell dir vor</b>, du könntest dir aussuchen, wo du später lebst. Worauf würdest du achten? Arbeit, Schulen, Wasser, gutes Klima … Genau diese Fragen erklären, warum die Menschen in China so ungleich verteilt sind. 🐼');
+
+Kurs.estimate('#est2', {
+  id: 's2-est',
+  q: 'Quer durch China kann man eine gedachte Linie ziehen, die <b>Hu-Linie</b>. Östlich davon liegt weniger als die Hälfte der Fläche. Wie viel <b>Prozent</b> der Menschen leben dort?',
+  min: 0, max: 100, step: 1, a: 94, unit: '%',
+  e: 'Rund 94 von 100 Chinesen leben im Osten – auf nur ca. 43 % der Fläche. Im riesigen Westen leben nur ca. 6 %.',
+  compare: [{ label: 'Fläche Ost', value: 43 }]
+});
+
+/* ---------- Erklärfilm ---------- */
+const LAND = '#f1d58a';
+const M = { x: 20, y: 40, w: 500, h: 340 };     // Karte links
+const P = Kurs.proj(M.x, M.y, M.w, M.h);        // gleiche Projektion für Symbole
+const at = (lon, lat) => P([lon, lat]);
+const mapL = o => Kurs.map(Object.assign({}, M, { fill: LAND }, o || {}));
+function side(title, lines, color, d) {
+  return A.label(660, 90, title, { size: 26, d: d || .3, cls: 'a-up', fill: color || '#1f2430' }) +
+    lines.map((l, i) => A.label(660, 140 + i * 40, l, { size: 19, weight: 700, d: (d || .3) + .6 + i * .5 })).join('');
+}
+
+Kurs.video('#vid2', {
+  id: 's2-video', title: 'Ein Land – zwei Welten', next: '#aud2',
+  scenes: [
+    { svg: () => A.bg('#eaf3fb') + mapL({ cities: ['Peking', 'Shanghai'], cityDelay: .8, cls: 'a-fade' }) +
+        side('China', ['liegt in Ostasien', 'ca. 27-mal so groß', 'wie Deutschland', 'ca. 1,4 Mrd. Menschen'], '#c0392b'),
+      say: 'China liegt in Ostasien und gehört zu den größten Staaten der Erde. Es ist ungefähr siebenundzwanzigmal so groß wie Deutschland. Hier leben rund eins Komma vier Milliarden Menschen. Aber wo genau leben sie?' },
+    { svg: () => { const t = at(88, 32), d = at(84, 40), g = at(97, 36);
+        return A.bg() + mapL({ cls: 'a-fade', cities: ['Lhasa'], cityDelay: 2 }) +
+        A.emoji(t[0], t[1], '🏔️', 46, 'a-pop', .5) + A.emoji(g[0], g[1], '⛰️', 40, 'a-pop', .9) + A.emoji(d[0], d[1], '🏜️', 44, 'a-pop', 1.3) +
+        side('Der Westen', ['🏔️ Hochgebirge, Tibet', '🏜️ Wüsten, wenig Regen', '❄️ kühl, dünne Luft', '🛣️ weite Wege'], '#8c5a1b'); },
+      say: 'Im Westen liegen hohe Gebirge und das Tibetische Hochland. Dazu kommen große, trockene Wüsten. Hier gibt es wenig Wasser, die Wege sind weit und Landwirtschaft ist nur eingeschränkt möglich. In großer Höhe ist es kühl und die Luft ist dünn.' },
+    { svg: () => { const e = at(116, 34);
+        return A.bg() + mapL({ cls: 'a-fade', rivers: true, riverCls: 'a-draw' }) +
+        A.emoji(e[0], e[1], '🌾', 36, 'a-pop', 1.8) +
+        side('Der Osten', ['🌊 große Flüsse', '🟩 weite Ebenen', '🌾 fruchtbare Böden', '💧 genug Wasser'], '#1f8a70', 1); },
+      say: 'Im Osten sieht es ganz anders aus. Hier gibt es weite Ebenen und große Flüsse wie den Huang He und den Jangtsekiang. Wasser brauchen Menschen zum Trinken, für die Landwirtschaft, für Industrie und Städte.' },
+    { svg: () => { const s1 = at(126, 24), s2 = at(118, 19), tg = at(113, 29), sh = at(121.5, 31.2), ks = at(76, 39.5);
+        return A.bg('#eaf3fb') + mapL({ cls: 'a-fade' }) +
+        A.emoji(s1[0] + 40, s1[1], '☁️', 46, 'a-pop', .4) + A.arrow(s1[0] + 20, s1[1], tg[0] + 30, tg[1] - 10, { d: .8, color: '#2d6cdf', w: 6 }) +
+        A.emoji(s2[0] + 10, s2[1] + 30, '☁️', 40, 'a-pop', .9) + A.arrow(s2[0], s2[1] + 10, tg[0] - 20, tg[1] + 30, { d: 1.2, color: '#2d6cdf', w: 6 }) +
+        A.emoji(tg[0], tg[1] + 10, '🌧️', 44, 'a-pop', 1.6) +
+        A.label(sh[0] - 20, sh[1] - 26, 'ca. 1.200 mm', { size: 15, fill: '#2d6cdf', d: 2.2 }) +
+        A.label(ks[0] + 34, ks[1] - 16, 'ca. 70 mm', { size: 15, fill: '#8c5a1b', d: 2.6 }) +
+        side('Der Monsun', ['Windsystem, das im Jahr', 'seine Richtung wechselt', 'Sommer: feuchte Meeresluft', '→ viel Regen im Osten'], '#2d6cdf'); },
+      say: 'Ein Grund für den Regen im Osten ist der Monsun. Das ist ein Windsystem, das im Lauf des Jahres seine Richtung wechselt. Im Sommer bringt es feuchte Luft vom Meer und damit viel Regen. In Shanghai fallen im Jahr etwa zwölfhundert Millimeter, in der Wüstenstadt Kaschgar nur etwa siebzig.' },
+    { svg: () => A.bg() + mapL({ cls: 'a-fade', dots: 520, dotCls: 'a-fade' }) +
+        side('Bevölkerungsdichte', ['= Menschen pro km²', '1 Punkt ≈ viele Menschen', 'Osten: sehr dicht', 'Westen: sehr dünn'], '#c0392b', .8),
+      say: 'Jeder Punkt auf dieser Karte steht für viele Menschen. Man sieht sofort: Im Osten drängen sie sich, im Westen sind sie weit verstreut. Wie viele Menschen durchschnittlich auf einem Quadratkilometer leben, nennt man Bevölkerungsdichte.' },
+    { svg: () => { const w = at(86, 38), e = at(113, 27);
+        return A.bg() + mapL({ cls: 'a-fade', split: true, westFill: '#e8d9b5', eastFill: '#9fd3a8', hu: true, huCls: 'a-draw' }) +
+        A.label(w[0], w[1], 'ca. 6 %', { size: 30, fill: '#8c5a1b', d: 1.6, cls: 'a-pop' }) +
+        A.label(e[0], e[1], 'ca. 94 %', { size: 30, fill: '#1f6b3a', d: 2.2, cls: 'a-pop' }) +
+        side('Die Hu-Linie', ['gedachte Linie von', 'Nordost nach Südwest', 'Osten: ca. 43 % der Fläche', '→ ca. 94 % der Menschen'], '#1f2430', .5); },
+      say: 'Geografen ziehen gern eine gedachte Linie quer durch China, die Hu-Linie. Östlich davon liegt nur etwa dreiundvierzig Prozent der Fläche. Aber dort leben rund vierundneunzig Prozent der Menschen. Im riesigen Westen sind es nur etwa sechs Prozent.' },
+    { svg: () => A.bg() + A.title('Arbeit zieht Menschen an') +
+        A.box(310, 115, 180, 64, '🏭 Unternehmen', { d: .3, fill: '#fdecea' }) +
+        A.box(560, 200, 190, 64, '💼 Arbeitsplätze', { d: .9, fill: '#e8f0fd' }) +
+        A.box(310, 290, 180, 64, '🚶 Zuzug', { d: 1.5, fill: '#fff4d6' }) +
+        A.box(50, 200, 200, 64, '🏘️ Wohnungen,\nSchulen, Geschäfte', { d: 2.1, fill: '#e3f5ef', size: 15 }) +
+        A.arrow(490, 150, 600, 198, { d: .7 }) + A.arrow(640, 266, 492, 318, { d: 1.3 }) + A.arrow(310, 318, 170, 266, { d: 1.9 }) + A.arrow(160, 198, 308, 150, { d: 2.5 }) +
+        A.emoji(400, 245, '⚓', 44, 'a-pop', 2.9),
+      say: 'Natur allein erklärt aber nicht alles. Im Osten liegen die großen Städte, Industriegebiete und Häfen. Wo Unternehmen wachsen, entstehen Arbeitsplätze. Dorthin ziehen Menschen. Für sie werden Wohnungen, Schulen und Geschäfte gebaut. Und das lockt wieder neue Unternehmen an. So entstehen Ballungsräume, besonders an der Küste.' },
+    { svg: () => A.bg() + A.title('Warum leben die meisten im Osten?') +
+        A.box(60, 140, 220, 160, 'Natur\nEbenen, Flüsse,\nRegen, Böden', { icon: '🌿', d: .3, fill: '#e3f5ef', size: 15 }) +
+        A.label(320, 235, '+', { size: 60, d: 1 }) +
+        A.box(360, 140, 220, 160, 'Wirtschaft\nStädte, Häfen,\nArbeitsplätze', { icon: '🏭', d: 1.3, fill: '#e8f0fd', size: 15 }) +
+        A.label(615, 235, '=', { size: 60, d: 2 }) +
+        A.box(650, 150, 120, 140, 'dichter\nOsten', { icon: '👥', d: 2.4, fill: '#fff4d6' }) +
+        A.panda(370, 320, 1, 'a-pop', 3),
+      say: 'Fassen wir zusammen. Im Osten gibt es Ebenen, Flüsse, Regen und fruchtbare Böden. Dazu kommen Städte, Häfen und viele Arbeitsplätze. Natur und Wirtschaft verstärken sich gegenseitig. Deshalb lebt der weitaus größte Teil der Menschen im Osten Chinas.' }
+  ]
+});
+
+/* ---------- Hörtext ---------- */
+Kurs.audio('#aud2', {
+  id: 's2-audio', title: 'Warum leben die meisten Chinesen im Osten?', sub: 'Sachtext zum Anhören und Mitlesen',
+  paras: [
+    'Stell dir vor, du könntest dir frei aussuchen, wo du später einmal leben möchtest. Du würdest überlegen: Gibt es dort Arbeit? Gibt es Schulen, Geschäfte und Ärzte? Wie gut sind die Verkehrsverbindungen? Gibt es genug Wasser? Genau solche Fragen helfen zu verstehen, warum die Bevölkerung Chinas sehr ungleich verteilt ist.',
+    { h: 'China ist riesig und vielfältig' },
+    'China gehört zu Ostasien und zählt zu den größten Staaten der Erde. Zwischen dem Westen und dem Osten gibt es große Unterschiede. Im Westen liegen hohe Gebirge und Hochländer, zum Beispiel das Tibetische Hochland. Außerdem gibt es große trockene Gebiete und Wüsten. Dort ist das Leben schwieriger: Es gibt weniger Wasser, die Wege sind weit und Landwirtschaft ist nur eingeschränkt möglich.',
+    'Einen größeren Raum, der durch natürliche Merkmale wie Landschaft, Klima, Böden und Wasser geprägt ist, nennt man Naturraum.',
+    { h: 'Warum ist der Osten günstiger?' },
+    'Im Osten gibt es viele Ebenen und große Flüsse. Besonders wichtig sind der Huang He und der Jangtsekiang. Wasser ist für Menschen unverzichtbar: als Trinkwasser, für Landwirtschaft, Industrie und Städte.',
+    'In vielen Teilen des Ostens fällt außerdem mehr Regen als im trockenen Westen. Ein Grund dafür ist der Monsun. Das ist ein Windsystem, dessen Richtung sich im Jahresverlauf ändert. Im Sommer bringen feuchte Luftmassen vom Meer viel Regen. Wo genug Wasser vorhanden ist und die Böden fruchtbar sind, kann man leichter Landwirtschaft betreiben. Deshalb entstanden im Osten schon früh dicht besiedelte Räume.',
+    { h: 'Bevölkerungsdichte' },
+    'Die Bevölkerungsdichte gibt an, wie viele Menschen durchschnittlich auf einer bestimmten Fläche leben. Meist wird sie in Einwohnern pro Quadratkilometer angegeben. In China ist die Bevölkerungsdichte im Osten und besonders an der Küste viel höher als in großen Teilen des Westens.',
+    { h: 'Natur allein erklärt nicht alles' },
+    'Im Osten liegen auch viele der wichtigsten Städte, Industriegebiete und Häfen Chinas. Dort gibt es besonders viele Arbeitsplätze. Unternehmen finden Straßen, Bahnlinien, Häfen, Flughäfen und viele Kunden. Dadurch ziehen weitere Menschen in diese Räume. Ein Gebiet, in dem viele Menschen, Städte, Arbeitsplätze und Verkehrswege auf engem Raum zusammenkommen, nennt man Ballungsraum.',
+    'Viele Waren aus China werden ins Ausland verkauft. Dafür sind große Häfen wichtig. Wo Unternehmen wachsen, entstehen Arbeitsplätze. Wo Arbeitsplätze entstehen, ziehen Menschen hin. Und wo viele Menschen leben, werden Wohnungen, Schulen, Geschäfte und Verkehrswege gebaut. Natur und Wirtschaft beeinflussen sich also gegenseitig.',
+    { h: 'Was hat das mit dir zu tun?' },
+    'Wenn du ein Smartphone, Kopfhörer oder Kleidung aus China kaufst, stammen diese Produkte häufig aus den wirtschaftlich starken Räumen im Osten des Landes. Dort befinden sich viele Fabriken, Häfen und Großstädte.'
+  ]
+});
+
+/* ---------- Schaubilder ---------- */
+Kurs.figure('#map2', {
+  title: 'Wo leben die Menschen in China?',
+  sub: 'Jeder Punkt steht für sehr viele Menschen. Die gestrichelte Linie ist die Hu-Linie.',
+  svg: '<rect width="800" height="450" fill="var(--sea)" rx="12"/>' +
+    Kurs.map({ x: 10, y: 10, w: 560, h: 430, dots: 600, hu: true, cities: ['Peking', 'Shanghai', 'Guangzhou', 'Chengdu', 'Lhasa', 'Ürümqi'], fill: 'var(--land)' }) +
+    '<g font-weight="800"><rect x="590" y="80" width="195" height="120" rx="12" fill="var(--card)" stroke="var(--line)" stroke-width="2"/>' +
+    '<text x="605" y="110" font-size="17" fill="var(--jade)">Osten (rechts)</text><text x="605" y="140" font-size="15" fill="var(--ink)">ca. 43 % der Fläche</text><text x="605" y="168" font-size="15" fill="var(--ink)">ca. 94 % der Menschen</text>' +
+    '<rect x="590" y="220" width="195" height="120" rx="12" fill="var(--card)" stroke="var(--line)" stroke-width="2"/>' +
+    '<text x="605" y="250" font-size="17" fill="var(--gold)">Westen (links)</text><text x="605" y="280" font-size="15" fill="var(--ink)">ca. 57 % der Fläche</text><text x="605" y="308" font-size="15" fill="var(--ink)">ca. 6 % der Menschen</text></g>',
+  source: 'vereinfachte Darstellung nach der Hu-Linie (Hu Huanyong 1935); Anteile gerundet'
+});
+
+Kurs.bars('#chart2', {
+  title: 'Bevölkerungsdichte im Vergleich',
+  sub: 'Einwohner je km², ausgewählte Provinzen Chinas und Deutschland (gerundet)',
+  items: [
+    { label: 'Jiangsu (Osten)', value: 790, hi: true },
+    { label: 'Guangdong (Süden)', value: 710, hi: true },
+    { label: 'Shandong (Osten)', value: 650, hi: true },
+    { label: 'Deutschland', value: 233, color: 'var(--jade)' },
+    { label: 'China (Durchschnitt)', value: 147, color: 'var(--gold)' },
+    { label: 'Xinjiang (Westen)', value: 16 },
+    { label: 'Qinghai (Westen)', value: 8 },
+    { label: 'Tibet (Westen)', value: 3 }
+  ],
+  unitShort: 'E/km²', labelW: 170, dec: 0,
+  source: 'Nationales Statistikamt China / Destatis; Werte gerundet'
+});
+
+Kurs.analyse('#ana2', {
+  id: 's2-chart',
+  steps: [
+    { label: 'Beschreiben', type: 'mc', q: 'Was zeigt das Balkendiagramm?',
+      o: ['Wie viele Menschen durchschnittlich auf einem km² in verschiedenen Gebieten leben', 'Wie viele Menschen insgesamt in jeder Provinz leben', 'Wie groß die Provinzen sind'],
+      a: 0, wrong: 'Achtung, typischer Fehler: Bevölkerungsdichte ist nicht die Einwohnerzahl! Schau auf die Einheit „Einwohner je km²“.',
+      e: 'Es geht um die Bevölkerungsdichte in Einwohnern pro km². Die Gesamtzahl der Einwohner steht nicht im Diagramm.' },
+    { label: 'Ablesen', type: 'num', q: 'Wie viele Menschen leben in Jiangsu auf einem km² <b>mehr</b> als in Deutschland?', a: 557, tol: 5, unit: 'Einwohner',
+      e: '790 − 233 = 557. Jiangsu ist mehr als dreimal so dicht besiedelt wie Deutschland.' },
+    { label: 'Erklären', type: 'open', q: 'Erkläre, warum Jiangsu im Osten so viel dichter besiedelt ist als Tibet im Westen. Nutze natürliche <b>und</b> wirtschaftliche Gründe.',
+      check: 'Ebenen/Flüsse/Regen · Städte/Häfen/Arbeitsplätze · Tibet: hoch, kühl, trocken',
+      model: 'Jiangsu liegt im Osten in einer Ebene am Jangtsekiang. Dort gibt es genug Wasser, Monsunregen und fruchtbare Böden. Außerdem liegen dort große Städte, Fabriken und Häfen mit vielen Arbeitsplätzen. Tibet dagegen ist ein Hochland: Es ist kühl, trocken, die Wege sind weit und es gibt wenige Arbeitsplätze. Deshalb leben dort nur sehr wenige Menschen.' },
+    { label: 'Beurteilen', type: 'open', q: 'Ein Mitschüler sagt: „In China ist es überall total eng.“ Nimm Stellung mithilfe der Karte und des Diagramms.',
+      check: 'Durchschnitt (147) nennen · große Unterschiede Ost/West · eigenes Urteil',
+      model: 'Die Aussage stimmt nur teilweise. Im Osten, z. B. in Jiangsu, ist es mit ca. 790 Einwohnern je km² wirklich sehr eng. Im Westen, z. B. in Tibet, leben aber nur ca. 3 Menschen auf einem km². Der Durchschnitt von ca. 147 ist sogar niedriger als in Deutschland. Man muss also genau unterscheiden, welche Region gemeint ist.' }
+  ],
+  summary: 'Du hast erkannt: Ein Durchschnittswert kann täuschen – in China gibt es extrem dichte und fast leere Räume.'
+});
+
+/* ---------- Übungen ---------- */
+Kurs.sort('#sort2', {
+  id: 's2-sort', tag: 'Ursachen ordnen',
+  prompt: 'Warum leben so viele Menschen im Osten? Ordne die Gründe zu.',
+  cats: [{ id: 'nat', label: '🌿 Natürliche Gründe<br><small>Landschaft, Klima, Wasser, Böden</small>' }, { id: 'wir', label: '🏭 Wirtschaftliche Gründe<br><small>Arbeit, Verkehr, Städte</small>' }],
+  items: [
+    { t: 'weite Ebenen', c: 'nat' },
+    { t: 'große Flüsse wie der Jangtsekiang', c: 'nat' },
+    { t: 'Monsunregen im Sommer', c: 'nat' },
+    { t: 'fruchtbare Böden', c: 'nat' },
+    { t: 'große Häfen für den Export', c: 'wir' },
+    { t: 'viele Fabriken und Arbeitsplätze', c: 'wir' },
+    { t: 'Straßen, Bahnlinien, Flughäfen', c: 'wir' },
+    { t: 'viele Kunden in großen Städten', c: 'wir' }
+  ],
+  explain: 'Beides hängt zusammen: Wo die Natur günstig ist, entstanden früh Siedlungen – und dort wuchsen später Städte, Industrie und Häfen.'
+});
+
+Kurs.cloze('#cloze2', {
+  id: 's2-cloze', tag: 'Merksatz',
+  prompt: 'Vervollständige den Text mit den passenden Fachbegriffen. Achtung: Drei Wörter bleiben übrig!',
+  text: 'Die Bevölkerung Chinas ist sehr {ungleich} verteilt. Der Westen ist in vielen Gebieten hoch, {trocken} und schwer zugänglich. Im Osten gibt es mehr {Ebenen}, Flüsse und fruchtbare Böden. Der {Monsun} bringt im Sommer viel Regen. Dort liegen auch große Städte, Industrie und {Häfen}. Wie viele Menschen durchschnittlich auf einem km² leben, nennt man {Bevölkerungsdichte}. Ein Gebiet mit vielen Menschen, Arbeitsplätzen und Verkehrswegen auf engem Raum heißt {Ballungsraum}.',
+  extra: ['gleichmäßig', 'Einwohnerzahl', 'Wüsten'],
+  explain: 'Genau so steht es im Merksatz. Lies ihn unten nochmal laut vor!'
+});
+
+/* ---------- Quiz ---------- */
+Kurs.quiz('#quiz2', {
+  id: 's2-quiz',
+  questions: [
+    { q: 'Was gibt die <b>Bevölkerungsdichte</b> an?', o: ['Wie viele Menschen durchschnittlich auf einem km² leben', 'Wie viele Menschen insgesamt in einem Land leben', 'Wie schnell eine Bevölkerung wächst'], a: 0, e: 'Typischer Fehler: Dichte ≠ Einwohnerzahl. Ein Land kann viele Einwohner haben und trotzdem dünn besiedelt sein.' },
+    { q: 'Welche Landschaft prägt große Teile des <b>Westens</b> Chinas?', o: ['Hochgebirge, Hochland und Wüsten', 'Weite Ebenen mit großen Flüssen', 'Regenwald und Sümpfe'], a: 0, e: 'Zum Beispiel das Tibetische Hochland und große Trockengebiete.' },
+    { q: 'Was ist der <b>Monsun</b>?', o: ['Ein Windsystem, das im Jahr seine Richtung wechselt', 'Ein großer Fluss im Osten Chinas', 'Ein Gebirge im Westen'], a: 0, e: 'Im Sommer bringt er feuchte Meeresluft und viel Regen in den Osten und Süden.' },
+    { q: 'Wie heißen zwei große Flüsse im Osten Chinas?', o: ['Huang He und Jangtsekiang', 'Nil und Amazonas', 'Donau und Rhein'], a: 0, e: 'Sie liefern Wasser für Landwirtschaft, Industrie und Städte.' },
+    { q: 'Ungefähr wie viele Menschen in China leben östlich der Hu-Linie?', o: ['ca. 94 %', 'ca. 50 %', 'ca. 20 %'], a: 0, e: 'Auf nur ca. 43 % der Fläche leben rund 94 % der Menschen.' },
+    { q: 'Was ist ein <b>Ballungsraum</b>?', o: ['Gebiet mit vielen Menschen, Städten, Arbeitsplätzen und Verkehrswegen auf engem Raum', 'Ein großes Sportstadion', 'Ein dünn besiedeltes Gebiet auf dem Land'], a: 0, e: 'Beispiele findet man besonders an der chinesischen Ostküste.' },
+    { q: 'Welche Aussage ist <b>richtig</b>?', o: ['Natur und Wirtschaft verstärken sich gegenseitig', 'Nur das Klima entscheidet, wo Menschen leben', 'Häfen spielen für die Verteilung keine Rolle'], a: 0, e: 'Wo Arbeitsplätze entstehen, ziehen Menschen hin – und das lockt wieder neue Unternehmen an.' }
+  ]
+});
+
+Kurs.flash('#flash2', [
+  ['Naturraum', 'Raum mit bestimmten natürlichen Merkmalen wie Landschaft, Klima, Wasser und Böden.'],
+  ['Bevölkerungsdichte', 'Zahl der Menschen, die durchschnittlich auf einer bestimmten Fläche leben (Einwohner je km²).'],
+  ['Monsun', 'Windsystem, das seine Richtung im Jahresverlauf ändert und in Teilen Asiens starke Regenzeiten bringt.'],
+  ['Ballungsraum', 'Gebiet mit vielen Menschen, Städten, Arbeitsplätzen und Verkehrswegen auf engem Raum.'],
+  ['Küstenraum', 'Gebiet in der Nähe des Meeres.'],
+  ['Infrastruktur', 'Einrichtungen wie Straßen, Bahnlinien, Häfen, Stromnetze und Schulen, die ein Gebiet funktionsfähig machen.']
+]);
+</script>
+</body>
+</html>

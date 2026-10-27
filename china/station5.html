@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ein Kind – und dann?</title>
+<link rel="stylesheet" href="kurs.css">
+</head>
+<body>
+<main>
+  <section class="hero">
+    <div class="kicker">Station 5 von 5 · GPG M10 · China</div>
+    <h1>👨‍👩‍👦 Ein Kind – und dann?</h1>
+    <p>35 Jahre lang durfte in China fast jede Familie nur ein Kind bekommen. Was hat das mit den Menschen gemacht – und warum spürt China die Folgen bis heute?</p>
+    <div class="deco">👶</div>
+  </section>
+
+  <div class="question">❓ <span>Frage der Station: Was hat Chinas Ein-Kind-Politik mit den Menschen gemacht?</span></div>
+
+  <div id="tip5"></div>
+
+  <section class="section" id="start">
+    <div class="step-head"><div class="num">🎯</div><h2>Aufwärmen</h2></div>
+    <div id="est5"></div>
+  </section>
+
+  <section class="section" data-act="s5-audio">
+    <div class="step-head"><div class="num">🎧</div><h2>Eine Sprachnachricht aus Chengdu</h2><span class="done-tag">✔ erledigt</span></div>
+    <p class="muted">Li Wei ist 16 und wohnt in Chengdu, einer Millionenstadt im Westen Chinas. Er schickt seinem Austauschpartner in Deutschland eine Sprachnachricht. (Li Wei ist eine Beispielfigur – aber Millionen chinesische Jugendliche könnten dasselbe erzählen.)</p>
+    <div id="aud5"></div>
+    <div id="a1" style="margin-top:14px"></div>
+  </section>
+
+  <section class="section" data-act="s5-video" id="film">
+    <div class="step-head"><div class="num">🎬</div><h2>Erklärfilm: Die Ein-Kind-Politik</h2><span class="done-tag">✔ erledigt</span></div>
+    <div id="vid5"></div>
+  </section>
+
+  <section class="section" data-act="s5-chart">
+    <div class="step-head"><div class="num">📊</div><h2>Schaubilder auswerten</h2><span class="done-tag">✔ erledigt</span></div>
+    <div id="chart5a"></div>
+    <div id="chart5b" style="margin-top:14px"></div>
+    <div id="ana5" style="margin-top:14px"></div>
+  </section>
+
+  <section class="section" data-act="s5-chain">
+    <div class="step-head"><div class="num">⛓️</div><h2>Zwei Ketten, acht Karten</h2><span class="done-tag">✔ erledigt</span></div>
+    <div id="chain"></div>
+    <div id="chain1" style="margin-top:14px"></div>
+    <div id="chain2" style="margin-top:14px"></div>
+    <div id="a2b" style="margin-top:14px"></div>
+  </section>
+
+  <section class="section" data-act="s5-421">
+    <div class="step-head"><div class="num">👴</div><h2>Das 4-2-1-Schema</h2><span class="done-tag">✔ erledigt</span></div>
+    <div id="fig421"></div>
+    <div id="cl421" style="margin-top:14px"></div>
+    <div id="op421" style="margin-top:14px"></div>
+    <div id="tip421"></div>
+  </section>
+
+  <section class="section" data-act="s5-debate">
+    <div class="step-head"><div class="num">⚖️</div><h2>Die Streitfrage</h2><span class="done-tag">✔ erledigt</span></div>
+    <div id="deb5"></div>
+  </section>
+
+  <section class="section" data-act="s5-quiz">
+    <div class="step-head"><div class="num">✅</div><h2>Check: Was weißt du jetzt?</h2><span class="done-tag">✔ bestanden</span></div>
+    <div id="quiz5"></div>
+  </section>
+
+  <section class="section">
+    <div class="merk">
+      <h3>📌 Merksatz</h3>
+      <p>Von etwa 1980 bis 2015 galt in China die <b>Ein-Kind-Politik</b>. Die Zahl der Kinder je Frau fiel von rund 6 auf heute 1,0. Die Folgen spürt das Land bis heute: Es fehlen Frauen (<b>Männerüberschuss</b>), viele Einzelkinder müssen später allein für Eltern und Großeltern sorgen (<b>4-2-1-Problem</b>), die Bevölkerung wird älter und schrumpft. Obwohl wieder drei Kinder erlaubt sind, steigt die Geburtenzahl kaum. <b>Eine Bevölkerungspolitik lässt sich leichter einschalten als ausschalten.</b></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="step-head"><div class="num">🃏</div><h2>Fachbegriffe-Karten</h2></div>
+    <div id="flash5"></div>
+  </section>
+
+  <nav class="nextnav">
+    <a class="btn ghost" href="station4.html">← Station 4</a>
+    <a class="btn gold" href="spielplatz.html">🧩 Zum Rätsel-Spielplatz</a>
+    <a class="btn" href="abschluss.html">Zum Abschlusstest →</a>
+  </nav>
+</main>
+
+<script src="kurs.js"></script>
+<script>
+const A = Kurs.Art;
+Kurs.init({ station: 's5' });
+
+Kurs.tip('#tip5', '<b>Letzte Station!</b> Hier geht es um echte Familien. Familien sehen ganz unterschiedlich aus – bei dir, bei mir und in China. Alles, was du hier über deine eigene Familie aufschreibst, bleibt bei dir. 🐼');
+
+Kurs.estimate('#est5', {
+  id: 's5-est',
+  q: 'Heute leben in China rund <b>1.413 Millionen</b> Menschen. Wie viele werden es laut Vereinten Nationen im Jahr <b>2100</b> noch sein?',
+  min: 0, max: 1500, step: 10, a: 633, unit: 'Mio.',
+  e: 'Das ist weniger als die Hälfte von heute – ein Minus von rund 55 Prozent. Wie kann das sein? Das findest du in dieser Station heraus.',
+  compare: [{ label: 'heute', value: 1413 }]
+});
+
+/* ---------- A1: Sprachnachricht ---------- */
+Kurs.audio('#aud5', {
+  id: 's5-audio', title: 'Sprachnachricht von Li Wei (16)', sub: 'Hörtext · Einzelarbeit · danach die Fragen unten beantworten',
+  src: 'audio/BE-07_LiWei.mp3',
+  paras: [
+    'Hey! Hier ist Li Wei aus Chengdu. Du wolltest wissen, wie meine Familie so ist. Also: Ich habe keine Geschwister. Fast niemand in meiner Klasse hat welche.',
+    'Dafür habe ich sechs Erwachsene um mich herum: meine Mutter, meinen Vater und vier Großeltern. Mein Opa bringt mich jeden Tag zur Schule. Meine Oma kocht abends mein Lieblingsessen. Und wenn es Zeugnisse gibt, schauen alle sechs drauf.',
+    'Bei uns gibt es dafür sogar einen Spitznamen: kleiner Kaiser. Ein Kind, um das sich alles dreht. Das klingt lustig, aber es ist auch schwer. Wenn ich eine schlechte Note habe, wissen es sofort sechs Leute.',
+    'Manchmal denke ich an später. Meine Eltern haben noch Geschwister, mit denen sie sich die Pflege der Großeltern teilen können. Ich habe niemanden. In dreißig Jahren bin ich der Einzige, der für alle sechs da ist.',
+    'Na ja, genug von mir. Jetzt bist du dran: Wie viele Erwachsene schauen bei dir auf das Zeugnis? Schick mir eine Sprachnachricht zurück. Tschüss!'
+  ]
+});
+
+Kurs.quiz('#a1', {
+  id: 's5-a1', shuffle: false, pass: 5, xp: 15,
+  questions: [
+    { q: 'a) Wie viele Geschwister hat Li Wei?', o: ['keine', 'eins', 'zwei'], a: 0, e: 'Li Wei ist Einzelkind – wie fast alle in seiner Klasse.' },
+    { q: 'a) Wie viele Erwachsene kümmern sich um ihn?', o: ['sechs', 'vier', 'zwei'], a: 0, e: 'Mutter, Vater und vier Großeltern – also sechs.' },
+    { q: 'b) Was ist mit „kleiner Kaiser“ gemeint?', o: ['Ein Einzelkind, um das sich alle drehen – verwöhnt, aber auch unter Druck', 'Ein besonders reiches Kind', 'Ein Kind aus einer alten Kaiserfamilie'], a: 0, e: 'Der Spitzname ist halb liebevoll, halb spöttisch: Das Kind bekommt alles – und alle schauen auf es.' },
+    { q: 'c) Tatsache oder Gefühl? <i>„Ich habe keine Geschwister.“</i>', o: ['Tatsache', 'Gefühl'], a: 0, e: 'Das kann man nachprüfen.' },
+    { q: 'c) Tatsache oder Gefühl? <i>„Mein Opa bringt mich jeden Tag zur Schule.“</i>', o: ['Tatsache', 'Gefühl'], a: 0, e: 'Auch das ist nachprüfbar.' },
+    { q: 'c) Tatsache oder Gefühl? <i>„Das klingt lustig, aber es ist auch schwer.“</i>', o: ['Tatsache', 'Gefühl'], a: 1, e: 'Wie schwer sich etwas anfühlt, kann man nicht nachprüfen.' },
+    { q: 'c) Tatsache oder Gefühl? <i>„In dreißig Jahren bin ich der Einzige, der für alle sechs da ist.“</i>', o: ['Tatsache', 'Gefühl'], a: 1, e: 'Das ist der Streitfall: Die Zahl sechs ist nachprüfbar, aber „in dreißig Jahren“ ist eine Vermutung über die Zukunft – also ein Gefühl, genauer: eine Sorge. Wenn du „Tatsache“ gewählt hast und das begründen kannst, hast du trotzdem verstanden, worum es geht.' }
+  ]
+});
+
+/* ---------- Erklärfilm ---------- */
+Kurs.video('#vid5', {
+  id: 's5-video', title: 'Ein Kind – und dann?', next: '#chart5a',
+  scenes: [
+    { svg: () => A.bg('#eaf3fb') + Kurs.map({ x: 20, y: 40, w: 430, h: 320, cities: ['Peking', 'Chengdu'], cityDelay: .6 }) +
+        A.box(480, 60, 290, 80, '1,413 Mrd. Menschen', { icon: '👥', iconSize: 26, d: 1.2, size: 18 }) +
+        A.box(480, 160, 290, 80, 'fast jeder 6. Mensch der Erde', { icon: '🌏', iconSize: 26, d: 2, size: 16 }) +
+        A.box(480, 260, 290, 80, 'seit April 2023: Indien vorn', { icon: '🇮🇳', iconSize: 26, d: 2.8, size: 16, fill: '#fff4d6' }),
+      say: 'In China leben rund 1,413 Milliarden Menschen. Das ist fast jeder sechste Mensch der Erde. Lange war China das bevölkerungsreichste Land der Welt. Im April 2023 hat Indien es überholt. Und seitdem schrumpft China: Allein 2025 hatte es 3,4 Millionen Menschen weniger als im Jahr davor.' },
+    { svg: () => A.bg() + A.title('1960er-Jahre: rund 6 Kinder je Frau') +
+        ['👧', '👦', '👧', '👦', '👶', '👧'].map((e, i) => A.emoji(150 + i * 100, 200, e, 64, 'a-pop', .4 + i * .25)).join('') +
+        A.emoji(400, 300, '🍚', 60, 'a-pop', 2.2) +
+        A.label(400, 360, '„Wie sollen wir so viele Menschen ernähren?“', { size: 22, fill: '#c0392b', d: 2.8, cls: 'a-up' }),
+      say: 'In den 1960er-Jahren bekam eine Frau in China im Durchschnitt rund sechs Kinder. Die Regierung bekam Angst: Wie soll ein Land so viele Menschen ernähren? Ihre Antwort war eine der härtesten Bevölkerungspolitiken der Weltgeschichte.' },
+    { svg: () => A.bg() + A.title('Ab 1980: ein Kind pro Familie') +
+        A.box(300, 110, 200, 130, 'Die Regel', { icon: '👨‍👩‍👦', iconSize: 44, d: .3, fill: '#fdecea' }) +
+        A.box(60, 270, 200, 90, 'hohe Geldstrafen', { icon: '💶', iconSize: 28, d: 1.2 }) +
+        A.box(300, 270, 200, 90, 'Job verloren', { icon: '💼', iconSize: 28, d: 1.8 }) +
+        A.box(540, 270, 200, 90, 'Wohnung verloren', { icon: '🏠', iconSize: 28, d: 2.4 }) +
+        A.arrow(360, 240, 190, 268, { d: 1 }) + A.arrow(400, 240, 400, 268, { d: 1.6 }) + A.arrow(440, 240, 610, 268, { d: 2.2 }),
+      say: 'Von etwa 1980 bis 2015 galt die Ein-Kind-Politik: Jede Familie durfte nur ein Kind bekommen. Wer sich nicht daran hielt, musste hohe Geldstrafen zahlen. Manche verloren ihren Arbeitsplatz, manche ihre Wohnung. Auf dem Land und bei Minderheiten gab es Ausnahmen, aber der Druck war überall zu spüren.' },
+    { svg: () => A.bg() + A.title('Kinder je Frau in China') +
+        '<line x1="80" y1="320" x2="740" y2="320" stroke="#1f2430" stroke-width="3"/>' +
+        [['1960er', 6, '≈ 6'], ['1970er', 4.1, '4,1'], ['1980er', 2.7, '2,7'], ['2010er', 1.7, '1,7'], ['heute', 1.0, '1,0']].map((b, i) => {
+          const x = 120 + i * 125, hh = b[1] * 34, y = 320 - hh;
+          return '<rect class="a-grow" style="--d:' + (.4 + i * .5) + 's" x="' + x + '" y="' + y + '" width="80" height="' + hh + '" rx="8" fill="' + (i === 4 ? '#c0392b' : '#2d6cdf') + '"/>' +
+            A.label(x + 40, y - 10, b[2], { size: 22, d: .9 + i * .5 }) +
+            A.label(x + 40, 345, b[0], { size: 16, weight: 700, d: .4 + i * .5 });
+        }).join(''),
+      say: 'Die Zahl der Kinder je Frau fiel schnell: In den 1970er-Jahren waren es noch 4,1, in den 1980er-Jahren 2,7, danach bis in die 2010er-Jahre rund 1,7. Heute liegt sie bei 1,0. Das ist einer der niedrigsten Werte der Welt.' },
+    { svg: () => A.bg() + A.title('Folge 1: Es fehlen Frauen') +
+        A.box(110, 120, 250, 170, '103,6 Männer', { icon: '👨', iconSize: 56, d: .3, fill: '#e8f0fd', size: 22 }) +
+        A.box(440, 120, 250, 170, '100 Frauen', { icon: '👩', iconSize: 56, d: .8, fill: '#fdecea', size: 22 }) +
+        A.label(400, 330, '≈ 31 Millionen mehr Männer als Frauen', { size: 24, fill: '#c0392b', d: 1.8, cls: 'a-up' }) +
+        A.label(400, 362, 'weltweit: 101,0 Männer je 100 Frauen', { size: 17, fill: '#5a6170', d: 2.6 }),
+      say: 'Die erste Folge sieht man erst, wenn man nachzählt: Es fehlen Frauen. In vielen Familien galt ein Sohn als wichtiger, weil er die Eltern im Alter versorgen sollte. Wenn nur ein Kind erlaubt ist, entscheiden sich Familien gezielt für einen Sohn. Heute kommen auf 100 Frauen 103,6 Männer. Das sind knapp 31 Millionen mehr Männer als Frauen.' },
+    { svg: () => A.bg() + A.label(400, 40, 'Folge 2: Das 4-2-1-Problem', { size: 30, weight: 900, cls: 'a-up' }) +
+        ['Oma', 'Opa', 'Oma', 'Opa'].map((t, i) => A.box(40 + i * 190, 70, 150, 60, t, { d: .3 + i * .2, size: 18, fill: '#fff4d6' })).join('') +
+        A.box(125, 185, 170, 60, 'Vater', { d: 1.3, size: 18, fill: '#e8f0fd' }) + A.box(505, 185, 170, 60, 'Mutter', { d: 1.5, size: 18, fill: '#e8f0fd' }) +
+        A.box(310, 300, 180, 64, 'Li Wei', { d: 2, size: 20, fill: '#fdecea' }) +
+        A.arrow(360, 300, 230, 248, { d: 2.6 }) + A.arrow(440, 300, 570, 248, { d: 2.8 }) +
+        A.arrow(180, 185, 120, 133, { d: 3.2 }) + A.arrow(240, 185, 300, 133, { d: 3.4 }) + A.arrow(560, 185, 500, 133, { d: 3.6 }) + A.arrow(620, 185, 690, 133, { d: 3.8 }) +
+        A.label(660, 330, '→ sorgt später für', { size: 15, fill: '#c0392b', d: 4.2, anchor: 'start' }),
+      say: 'Die zweite Folge heißt 4-2-1-Problem. Ein Kind hat zwei Eltern und vier Großeltern. Solange alle gesund sind, ist das schön. Aber es dreht sich um: Wenn Li Wei 45 ist, kann er allein für sechs alte Menschen verantwortlich sein. Seine Eltern hatten dafür noch Geschwister. Er hat keine.' },
+    { svg: () => A.bg() + A.title('Folge 3: China wird alt') +
+        A.box(80, 120, 290, 200, 'bis 2040:\nmehr als jeder 4.\nist über 60', { icon: '👵👴', iconSize: 40, d: .4, fill: '#fff4d6', size: 18 }) +
+        A.box(430, 120, 290, 200, 'bis 2050:\n¼ weniger Menschen\nim Arbeitsalter', { icon: '🧑‍🏭', iconSize: 40, d: 1.4, fill: '#e8f0fd', size: 18 }) +
+        A.label(400, 365, 'Wer pflegt? Wer arbeitet? Wer zahlt?', { size: 24, fill: '#c0392b', d: 2.4, cls: 'a-up' }),
+      say: 'Die dritte Folge betrifft das ganze Land. Bis 2040 wird mehr als jeder vierte Mensch in China über 60 Jahre alt sein. Bis 2050 soll die Zahl der Menschen im arbeitsfähigen Alter um etwa ein Viertel sinken. Wer pflegt dann, wer arbeitet, wer zahlt? Diese Frage stellt sich übrigens auch in Deutschland.' },
+    { svg: () => A.bg() + A.title('Der Schalter geht nicht zurück') +
+        '<g class="a-pop" style="--d:.3s"><rect x="340" y="120" width="120" height="200" rx="24" fill="#fff" stroke="#1f2430" stroke-width="4"/>' +
+        '<rect x="370" y="150" width="60" height="140" rx="14" fill="#e6dfd3" stroke="#1f2430" stroke-width="3"/>' +
+        '<rect x="374" y="228" width="52" height="58" rx="10" fill="#c0392b"/></g>' +
+        A.label(185, 180, 'EIN: schnell', { size: 22, fill: '#1f8a70', d: 1 }) + A.label(185, 210, 'Geburten sinken', { size: 16, weight: 700, fill: '#5a6170', d: 1.2 }) +
+        A.label(620, 180, 'AUS: klappt nicht', { size: 22, fill: '#c0392b', d: 2 }) + A.label(620, 210, 'seit 2016 wieder erlaubt', { size: 16, weight: 700, fill: '#5a6170', d: 2.2 }) +
+        A.label(400, 360, '2025: nur 5,63 Geburten je 1.000 Einwohner – Rekordtief', { size: 20, d: 3, cls: 'a-up' }),
+      say: 'Seit 2016 darf man wieder zwei Kinder bekommen, seit 2021 sogar drei. Die Regierung wirbt dafür und zahlt Geld. Trotzdem passiert fast nichts: 2025 wurden nur 5,63 Geburten je tausend Einwohner gezählt, ein Rekordtief. Wohnungen und Ausbildung sind teuer, und eine ganze Generation kennt Familie nur mit einem Kind. Deshalb gilt: Eine Bevölkerungspolitik lässt sich leichter einschalten als ausschalten. Und jetzt die große Frage: Darf ein Staat überhaupt vorschreiben, wie viele Kinder Menschen bekommen? Das entscheidest du gleich selbst.' }
+  ]
+});
+
+/* ---------- Schaubilder ---------- */
+Kurs.columns('#chart5a', {
+  title: 'Kinder je Frau',
+  sub: 'China im Lauf der Zeit und Deutschland heute (Durchschnitt)',
+  items: [
+    { label: '1960er', value: 6, color: 'var(--sky)' },
+    { label: '1970er', value: 4.1, color: 'var(--sky)' },
+    { label: '1980er', value: 2.7, color: 'var(--sky)' },
+    { label: '2010er', value: 1.7, color: 'var(--sky)' },
+    { label: 'heute', value: 1.0, color: 'var(--red)', sub: 'China' },
+    { label: 'heute', value: 1.32, color: 'var(--jade)', sub: 'Deutschland' }
+  ],
+  max: 7, yStep: 1, dec: 2, yLabel: 'Kinder je Frau',
+  source: 'UN World Population Prospects 2024 · Destatis · INED; Werte gerundet'
+});
+Kurs.pyramid('#chart5b', {
+  title: 'Bevölkerungspyramide China',
+  sub: 'Menschen je Altersgruppe in Millionen (vereinfacht, gerundet)',
+  groups: ['0–9', '10–19', '20–29', '30–39', '40–49', '50–59', '60–69', '70–79', '80+'],
+  men:   [63, 92, 82, 112, 96, 120, 78, 42, 15],
+  women: [57, 80, 74, 106, 92, 117, 80, 47, 22],
+  max: 125, unit: 'in Millionen',
+  mark: { groups: ['40–49'], label: 'erste Ein-Kind-Jahrgänge' },
+  source: 'nach UN World Population Prospects 2024, stark vereinfacht'
+});
+Kurs.analyse('#ana5', {
+  id: 's5-chart',
+  steps: [
+    { label: 'Beschreiben', type: 'mc', q: 'Was zeigt die Bevölkerungspyramide?',
+      o: ['Wie viele Männer und Frauen in jeder Altersgruppe leben – unten die Jüngsten, oben die Ältesten', 'Wie sich die Bevölkerung von 1940 bis heute entwickelt hat – unten das älteste Jahr', 'Wie viele Kinder jede Familie hat'],
+      a: 0, wrong: 'Achtung, typischer Fehler: Die Pyramide ist keine Zeitachse! Sie zeigt Altersgruppen, nicht Jahre.',
+      e: 'Die Pyramide ist ein Foto von heute: Jede Reihe ist eine Altersgruppe.' },
+    { label: 'Ablesen', type: 'num', q: 'Linkes Diagramm: Um wie viel ist die Zahl der Kinder je Frau von den 1970er-Jahren bis heute gesunken?', a: 3.1, tol: 0.05, unit: 'Kinder je Frau',
+      e: '4,1 − 1,0 = 3,1. In etwa 50 Jahren ist die Kinderzahl auf ein Viertel gefallen.' },
+    { label: 'Verstehen', type: 'mc', q: 'Was bedeutet der Wert <b>1,0</b> für China heute?',
+      o: ['Eine Frau bekommt im Durchschnitt ein Kind', 'Es gibt 1 Geburt je 1.000 Einwohner', 'Jede Familie hat genau ein Kind'],
+      a: 0, wrong: 'Typischer Fehler! 1,0 ist die Kinderzahl je Frau. Die Geburtenziffer ist etwas anderes: 5,63 Geburten je 1.000 Einwohner (2025).',
+      e: 'Es ist ein Durchschnitt: Manche Frauen haben zwei Kinder, manche keins. Die Geburtenziffer (5,63 je 1.000 Einwohner) ist eine andere Zahl.' },
+    { label: 'Erklären', type: 'open', q: 'Rechtes Diagramm: Die Gruppe der 40- bis 49-Jährigen ist schmaler als die Gruppen darüber und darunter. Erkläre, woran das liegt.',
+      check: 'Ein-Kind-Politik ab 1980 · weniger Geburten · Alter heute passt dazu',
+      model: 'Die 40- bis 49-Jährigen wurden ungefähr ab 1980 geboren. Das sind die ersten Jahrgänge der Ein-Kind-Politik. Weil Familien nur noch ein Kind bekommen durften, wurden weniger Kinder geboren – deshalb ist diese Altersgruppe kleiner. Man nennt das eine Einschnürung.' },
+    { label: 'Beurteilen', type: 'open', q: 'Was bedeuten beide Schaubilder für Chinas Zukunft? Nenne mindestens eine Folge und begründe.',
+      check: 'viele Ältere · wenige Kinder · Pflege/Arbeit/Rente · Schrumpfen',
+      model: 'Die große Gruppe der 50- bis 59-Jährigen geht bald in Rente. Gleichzeitig gibt es sehr wenige Kinder, weil eine Frau im Schnitt nur noch ein Kind bekommt. Deshalb wird China älter und schrumpft. Es fehlen Arbeitskräfte und Menschen, die die Alten pflegen – und weniger Menschen müssen die Renten bezahlen.' }
+  ],
+  summary: 'Du hast zwei Schaubilder verbunden – und typische Fehler (Zeitachse, Geburtenziffer) vermieden. Stark!'
+});
+
+/* ---------- A2: Zwei Ketten ---------- */
+const CARDS = {
+  A: 'A · Heute leben 31 Millionen mehr Männer als Frauen.',
+  B: 'B · Eine Frau bekommt rund sechs Kinder (1960er-Jahre).',
+  C: 'C · Es kommen mehr Jungen als Mädchen zur Welt.',
+  D: 'D · 2025 schrumpft China um 3,4 Millionen Menschen.',
+  E: 'E · Ein Sohn soll die Eltern im Alter versorgen.',
+  F: 'F · Die Kinderzahl je Frau fällt von 4,1 auf 1,0.',
+  G: 'G · Ab 1980 gilt: ein Kind pro Familie, sonst Strafe.',
+  H: 'H · Familien entscheiden sich gezielt für einen Sohn.'
+};
+Kurs.sort('#chain', {
+  id: 's5-chain', tag: 'Partnerarbeit · Ursache und Folge',
+  prompt: 'Acht Karten, zwei Ketten: Welche Karte gehört zu welcher Kette? Jede Kette hat genau vier Karten.',
+  cats: [{ id: 'k1', label: '📉 Kette 1<br><small>erklärt, warum China schrumpft</small>' }, { id: 'k2', label: '♂️ Kette 2<br><small>erklärt den Männerüberschuss</small>' }],
+  items: [
+    { t: CARDS.B, c: 'k1' }, { t: CARDS.G, c: 'k1' }, { t: CARDS.F, c: 'k1' }, { t: CARDS.D, c: 'k1' },
+    { t: CARDS.E, c: 'k2' }, { t: CARDS.H, c: 'k2' }, { t: CARDS.C, c: 'k2' }, { t: CARDS.A, c: 'k2' }
+  ],
+  explain: 'Profi-Hinweis: Karte G (die Ein-Kind-Regel) steht eigentlich am Anfang <i>beider</i> Ketten – ohne sie hätten sich Familien nicht zwischen Sohn und Tochter „entscheiden“ müssen. Wer das bemerkt, hat die Aufgabe richtig verstanden.'
+});
+Kurs.order('#chain1', {
+  id: 's5-chain1', tag: 'Bonus · Kette 1', xp: 10,
+  prompt: 'Lege Kette 1 in die richtige Reihenfolge: <b>Ursache → Maßnahme → sofortige Folge → Spätfolge</b>.',
+  items: [CARDS.B, CARDS.G, CARDS.F, CARDS.D],
+  explain: 'Viele Kinder und die Sorge um die Ernährung → Ein-Kind-Regel → Kinderzahl fällt → China schrumpft (2100 nur noch 633 Mio.).'
+});
+Kurs.order('#chain2', {
+  id: 's5-chain2', tag: 'Bonus · Kette 2', xp: 10,
+  prompt: 'Und jetzt Kette 2: <b>Ursache → Maßnahme → sofortige Folge → Spätfolge</b>.',
+  items: [CARDS.E, CARDS.H, CARDS.C, CARDS.A],
+  explain: 'Ein Sohn soll die Eltern versorgen → Familien wählen gezielt einen Sohn → mehr Jungen werden geboren → heute 31 Mio. mehr Männer, Millionen finden keine Partnerin.'
+});
+Kurs.open('#a2b', {
+  id: 's5-a2b', tag: 'Bonus · A2 b)', xp: 10,
+  prompt: 'Seit 2016 sind wieder mehrere Kinder erlaubt. Warum steigt die Geburtenzahl trotzdem kaum? Nenne zwei Gründe.',
+  placeholder: 'Ein Grund ist … Außerdem …',
+  model: '<b>Mögliche Gründe:</b><ul><li>Wohnungen und Ausbildung sind sehr teuer.</li><li>Viele Frauen haben Berufe, in die ein zweites Kind schwer hineinpasst.</li><li>Eine ganze Generation kennt Familie nur mit einem Kind – das gilt als normal.</li><li>Es fehlen Frauen in dem Alter, in dem Menschen Kinder bekommen.</li></ul><b>Kernsatz:</b> Eine Bevölkerungspolitik lässt sich leichter einschalten als ausschalten. Ein Staat kann Geburten schnell senken – sie wieder anzuheben, gelingt bisher keinem Land.'
+});
+
+/* ---------- A3: 4-2-1-Schema ---------- */
+Kurs.figure('#fig421', {
+  title: 'Das 4-2-1-Schema',
+  sub: 'Ein Pfeil bedeutet: sorgt später für. Vier Felder fehlen – welche?',
+  viewBox: '0 0 800 400',
+  svg: A.label(400, 22, 'Großeltern', { size: 16, fill: '#5a6170' }) +
+    A.box(20, 35, 170, 60, 'Großmutter', { size: 17, fill: '#fff4d6' }) + A.box(210, 35, 170, 60, 'Großvater', { size: 17, fill: '#fff4d6' }) +
+    A.box(420, 35, 170, 60, '?', { size: 26, fill: '#fff', stroke: '#c0392b', color: '#c0392b' }) + A.box(610, 35, 170, 60, '?', { size: 26, fill: '#fff', stroke: '#c0392b', color: '#c0392b' }) +
+    A.label(400, 160, 'Eltern', { size: 16, fill: '#5a6170' }) +
+    A.box(115, 170, 170, 60, 'Vater', { size: 17, fill: '#e8f0fd' }) + A.box(515, 170, 170, 60, '?', { size: 26, fill: '#fff', stroke: '#c0392b', color: '#c0392b' }) +
+    A.label(400, 290, 'Kind', { size: 16, fill: '#5a6170' }) +
+    A.box(315, 305, 170, 60, '?', { size: 26, fill: '#fff', stroke: '#c0392b', color: '#c0392b' }) +
+    A.arrow(370, 305, 230, 233, {}) + A.arrow(430, 305, 570, 233, {}) +
+    A.arrow(170, 170, 110, 98, {}) + A.arrow(230, 170, 290, 98, {}) + A.arrow(570, 170, 510, 98, {}) + A.arrow(630, 170, 690, 98, {}) +
+    A.label(790, 390, '→ sorgt später für', { size: 14, fill: '#c0392b', anchor: 'end' }),
+  source: 'BE-07, Arbeitsblatt A 3'
+});
+Kurs.cloze('#cl421', {
+  id: 's5-421', tag: 'Grafik · Einzelarbeit',
+  prompt: 'Ergänze das Schema: Wer fehlt in den Feldern mit dem Fragezeichen?',
+  text: 'Oben rechts fehlen die zweite {Großmutter} und der zweite {Großvater} – die andere Seite der Familie. In der Mitte fehlt neben dem Vater die {Mutter}. Ganz unten steht das {Kind}, also Li Wei. Insgesamt kommen {6} Erwachsene auf {1} Kind.',
+  extra: ['Bruder', 'Schwester', '4', 'Tante'],
+  explain: 'Die Pfeile zeigen vom Kind zu beiden Eltern und von jedem Elternteil zu seinen beiden Eltern. Später sorgt dieses eine Kind für alle sechs.'
+});
+Kurs.open('#op421', {
+  id: 's5-421b', tag: 'Bonus · A3 b)', xp: 10,
+  prompt: 'Erkläre in zwei Sätzen, was am 4-2-1-Schema ein Problem ist. Tipp: Denk an heute <i>und</i> an später.',
+  placeholder: 'Solange … Aber wenn …',
+  model: '<b>Drei mögliche Antworten:</b><ul><li>„Solange alle gesund sind, ist das schön. Aber wenn sie alt werden, muss ein Einziger für sechs Menschen sorgen.“</li><li>„Das Kind hat sechs Leute, die auf seine Noten schauen. Später hat es niemanden, mit dem es sich die Pflege teilen kann.“</li><li>„Früher haben sich mehrere Geschwister die Eltern geteilt. Jetzt bleibt alles an einem hängen – Zeit, Geld und Verantwortung.“</li></ul>'
+});
+Kurs.tip('#tip421', '<b>Und bei dir?</b> Zeichne auf ein Blatt dein eigenes Schema: Kinder, Eltern, Großeltern in deiner Familie. Wie viele teilen sich bei dir die Verantwortung? Das wird nicht bewertet und niemand muss es zeigen. Jede Familie ist anders – zeichne sie so, wie sie für dich ist. 💛');
+
+/* ---------- A4: Streitfrage ---------- */
+Kurs.open('#deb5', {
+  id: 's5-debate', tag: 'Streitfrage · Partnerarbeit', xp: 20, minWords: 5,
+  prompt: 'Darf ein Staat vorschreiben, wie viele Kinder Menschen bekommen? Sammle Argumente für <b>beide</b> Seiten – auch für die, die du nicht teilst.',
+  text: '<p class="small muted">💡 Ideen zum Weiterdenken: Angst vor Hunger · Freiheit der Familie · Wer pflegt die Alten? · Menschenrechte · Strafen und Kontrolle</p><p class="small"><b>Wichtig:</b> Hier gibt es kein richtiges oder falsches Ergebnis. Es zählt, wie gut du begründest – und dass du beide Seiten bedenkst. Am Ende schreibst du deinen eigenen Schlusssatz: <i>„Ich finde, ein Staat darf/darf nicht …, weil …“</i></p>',
+  two: ['✅ Ja, ein Staat darf das – weil …', '❌ Nein, ein Staat darf das nicht – weil …'],
+  button: 'Fertig – Argumente vergleichen',
+  model: '<div class="grid2"><div><b>Ja, weil …</b><ul><li>die Regierung 1980 fürchtete, das Land nicht ernähren zu können.</li><li>der Staat die Folgen mitträgt: Schulen, Wohnungen, Wasser, Renten.</li><li>was alle betrifft, auch alle verpflichten darf – wie beim Klimaschutz.</li><li>die Politik gewirkt hat: Die Kinderzahl sank tatsächlich.</li></ul></div><div><b>Nein, weil …</b><ul><li>die Zahl der Kinder die persönlichste Entscheidung überhaupt ist.</li><li>die Regel mit Strafen, Jobverlust und Wohnungsverlust durchgesetzt wurde.</li><li>die Folgen genau die treffen, die nichts entschieden haben: 31 Mio. Männer ohne Partnerin, Einzelkinder mit sechs Alten.</li><li>der Staat eine solche Politik nicht mehr zurücknehmen kann.</li></ul></div></div><p><b>Drei mögliche Schlusssätze:</b></p><ul><li>„Ich finde, ein Staat darf das nicht, weil niemand für mich entscheiden darf, ob ich Kinder bekomme.“</li><li>„Ich finde, ein Staat darf das in einer echten Notlage, aber er muss es wieder beenden, bevor es zur Gewohnheit wird.“</li><li>„Ich finde, ein Staat darf werben und Geld geben, aber nicht bestrafen.“</li></ul><p class="small muted">Jetzt du: Schreib deinen eigenen Schlusssatz auf – egal, welche Seite du wählst.</p>'
+});
+
+/* ---------- Quiz ---------- */
+Kurs.quiz('#quiz5', {
+  id: 's5-quiz',
+  questions: [
+    { q: 'Wann galt in China die Ein-Kind-Politik?', o: ['etwa von 1980 bis 2015', 'von 1900 bis 1950', 'sie gilt bis heute'], a: 0, e: 'Sie endete erst 2015 – seit 2016 sind zwei, seit 2021 drei Kinder erlaubt.' },
+    { q: 'Warum führte die Regierung die Ein-Kind-Politik ein?', o: ['Sie hatte Angst, die vielen Menschen nicht ernähren zu können', 'Es gab zu wenige Kinder', 'Familien wollten weniger Kinder'], a: 0, e: 'In den 1960er-Jahren bekam eine Frau rund sechs Kinder.' },
+    { q: 'Wie viele Kinder bekommt eine Frau in China heute im Durchschnitt?', o: ['1,0', '1,7', '2,7'], a: 0, e: 'Einer der niedrigsten Werte der Welt. In Deutschland sind es 1,32.' },
+    { q: 'Was beschreibt das <b>4-2-1-Problem</b>?', o: ['Ein Kind muss später allein für zwei Eltern und vier Großeltern sorgen', 'Vier Kinder teilen sich zwei Zimmer', 'Eine Familie bekommt 4 Mal 2 Kinder'], a: 0, e: '4 Großeltern – 2 Eltern – 1 Kind.' },
+    { q: 'Warum gibt es in China knapp 31 Millionen mehr Männer als Frauen?', o: ['Viele Familien entschieden sich gezielt für einen Sohn', 'Männer werden in China älter', 'Viele Frauen sind ausgewandert'], a: 0, e: 'Ein Sohn sollte die Eltern im Alter versorgen – bei nur einem erlaubten Kind wurde gezielt gewählt.' },
+    { q: 'Welche Aussage stimmt?', o: ['Indien hat China im April 2023 als bevölkerungsreichstes Land überholt', 'China ist bis heute das Land mit den meisten Einwohnern', 'Chinas Bevölkerung wächst jedes Jahr stark'], a: 0, e: '2025 schrumpfte China sogar um 3,4 Millionen Menschen.' },
+    { q: 'Was bedeutet der Satz „Eine Bevölkerungspolitik lässt sich leichter einschalten als ausschalten“?', o: ['Geburten kann man schnell senken, aber kaum wieder steigern', 'Man kann Gesetze jederzeit ändern', 'Mehr Kinder kann man einfach anordnen'], a: 0, e: 'Obwohl wieder drei Kinder erlaubt sind, gab es 2025 nur 5,63 Geburten je 1.000 Einwohner – ein Rekordtief.' }
+  ]
+});
+
+Kurs.flash('#flash5', [
+  ['Ein-Kind-Politik', 'Regel in China (ca. 1980–2015): Jede Familie durfte nur ein Kind bekommen, sonst drohten Strafen.'],
+  ['Kinder je Frau', 'Durchschnittliche Zahl der Kinder, die eine Frau im Leben bekommt. China heute: 1,0.'],
+  ['Medianalter', 'Teilt die Bevölkerung in zwei gleich große Hälften: Die eine ist jünger, die andere älter. China: 40,6 Jahre.'],
+  ['Männerüberschuss', 'Es leben mehr Männer als Frauen. China: 103,6 Männer je 100 Frauen.'],
+  ['4-2-1-Problem', '4 Großeltern, 2 Eltern, 1 Kind: Später muss ein Einzelkind allein für sechs Ältere sorgen.'],
+  ['„kleiner Kaiser“', 'Spitzname für Einzelkinder in China: alle drehen sich um sie – verwöhnt, aber unter Druck.'],
+  ['Bevölkerungspolitik', 'Maßnahmen eines Staates, um die Zahl der Geburten oder Menschen zu beeinflussen.'],
+  ['Alterung', 'Der Anteil alter Menschen an der Bevölkerung wächst, weil weniger Kinder geboren werden und Menschen länger leben.']
+]);
+</script>
+</body>
+</html>

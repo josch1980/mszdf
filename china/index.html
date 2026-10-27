@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Selbstlernkurs China</title>
+<link rel="stylesheet" href="kurs.css">
+<style>
+  .hero.big { padding: 34px 24px 30px; background: linear-gradient(135deg, #c0392b 0%, #8e1f15 60%, #5e140d 100%); }
+  .hero.big h1 { font-size: clamp(2rem, 6vw, 3.2rem); }
+  .hero .mapdeco { position: absolute; right: -30px; top: 10px; width: 380px; opacity: .16; pointer-events: none; }
+  .namebox { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 14px; }
+  .namebox input { max-width: 260px; background: rgba(255,255,255,.95); color: #1f2430; border: 0; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 0 0 22px; }
+  .stat { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 12px; text-align: center; box-shadow: var(--shadow); }
+  .stat b { display: block; font-size: 1.7rem; font-weight: 900; color: var(--red); line-height: 1.1; }
+  .stat span { font-size: .8rem; color: var(--ink-2); }
+  .how { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
+  .how div { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 12px; text-align: center; font-size: .9rem; }
+  .how div i { display: block; font-style: normal; font-size: 1.8rem; }
+  .path { position: relative; display: grid; gap: 14px; padding-left: 34px; }
+  .path::before { content: ""; position: absolute; left: 15px; top: 20px; bottom: 20px; width: 4px; border-radius: 2px; background: repeating-linear-gradient(var(--gold) 0 10px, transparent 10px 18px); }
+  .stop { position: relative; display: flex; gap: 14px; align-items: center; text-decoration: none; color: var(--ink); background: var(--card); border: 2px solid var(--line); border-radius: 18px; padding: 14px 16px; box-shadow: var(--shadow); transition: transform .15s, border-color .2s; }
+  .stop:hover { transform: translateX(4px); border-color: var(--red); }
+  .stop::before { content: ""; position: absolute; left: -27px; top: 50%; width: 16px; height: 16px; margin-top: -8px; border-radius: 50%; background: var(--card); border: 4px solid var(--gold); }
+  .stop.done::before { background: var(--ok); border-color: var(--ok); }
+  .stop .em { flex: none; width: 58px; height: 58px; border-radius: 16px; display: grid; place-items: center; font-size: 1.9rem; background: var(--red-soft); }
+  .stop .tx { flex: 1; min-width: 0; }
+  .stop .tx small { display: block; color: var(--ink-2); font-weight: 800; letter-spacing: .06em; text-transform: uppercase; font-size: .72rem; }
+  .stop .tx b { display: block; font-size: 1.08rem; }
+  .stop .tx .ic { font-size: .85rem; color: var(--ink-2); }
+  .ring { flex: none; width: 52px; height: 52px; }
+  .ring circle { fill: none; stroke-width: 6; }
+  .ring .bg { stroke: var(--line); }
+  .ring .fg { stroke: var(--ok); stroke-linecap: round; transform: rotate(-90deg); transform-origin: center; transition: stroke-dashoffset 1s; }
+  .ring text { font-size: 13px; font-weight: 800; fill: var(--ink); }
+  .stop.game .em { background: var(--plum-soft); }
+  .stop.final .em { background: var(--gold-soft); }
+  .badges { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+  .badge { text-align: center; padding: 14px 8px; border-radius: 16px; background: var(--card); border: 2px dashed var(--line); font-size: .85rem; font-weight: 800; color: var(--ink-2); }
+  .badge i { display: block; font-style: normal; font-size: 2.2rem; filter: grayscale(1); opacity: .35; }
+  .badge.got { border-style: solid; border-color: var(--gold); color: var(--ink); background: var(--gold-soft); }
+  .badge.got i { filter: none; opacity: 1; }
+  details.teacher { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 14px 18px; }
+  details.teacher summary { cursor: pointer; font-weight: 800; }
+  details.teacher table { width: 100%; border-collapse: collapse; font-size: .9rem; margin: 10px 0; }
+  details.teacher td, details.teacher th { border-bottom: 1px solid var(--line); padding: 6px 4px; text-align: left; vertical-align: top; }
+</style>
+</head>
+<body>
+<main>
+  <section class="hero big">
+    <svg class="mapdeco" id="mapdeco" viewBox="0 0 800 520" aria-hidden="true"></svg>
+    <div class="kicker">GPG M10 · Selbstlernkurs · Lebensraum Erde</div>
+    <h1>🐼 China entdecken</h1>
+    <p>Warum steckt so viel China in deinem Zimmer? Warum leben fast alle Chinesen im Osten? Und was hat ein einziges Kind pro Familie mit einem ganzen Land gemacht? Finde es heraus – mit Filmen, Hörtexten, Schaubildern, Rätseln und Spielen.</p>
+    <div class="namebox">
+      <label for="nm" class="small" style="font-weight:800">Dein Vorname (für die Urkunde):</label>
+      <input type="text" id="nm" placeholder="Vorname" maxlength="40" autocomplete="given-name">
+    </div>
+  </section>
+
+  <div class="stats">
+    <div class="stat"><b id="stXp">0</b><span>⭐ XP gesammelt</span></div>
+    <div class="stat"><b id="stDone">0 %</b><span>📈 Kurs geschafft</span></div>
+    <div class="stat"><b id="stBadge">0 / 5</b><span>🏅 Abzeichen</span></div>
+  </div>
+
+  <div id="tip0"></div>
+
+  <section class="section">
+    <h2>So funktioniert jede Station</h2>
+    <div class="how">
+      <div><i>🎬</i>Erklärfilm anschauen</div>
+      <div><i>🎧</i>Hörtext anhören &amp; mitlesen</div>
+      <div><i>📊</i>Schaubild auswerten</div>
+      <div><i>🧩</i>Üben, sortieren, knobeln</div>
+      <div><i>✅</i>Check-Quiz bestehen</div>
+      <div><i>🏅</i>Abzeichen holen</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Dein Lernweg</h2>
+    <div class="path" id="path"></div>
+  </section>
+
+  <section class="section">
+    <h2>Deine Abzeichen</h2>
+    <div class="badges" id="badges"></div>
+  </section>
+
+  <section class="section">
+    <details class="teacher">
+      <summary>👩‍🏫 Für Lehrkräfte: Aufbau, Einsatz &amp; Hinweise</summary>
+      <p style="margin-top:10px">Der Kurs bündelt die Stunden 1–4 der China-Sequenz (M10) und die Stunde BE-07 „Ein Kind – und dann?“. Jede Station folgt demselben Ablauf: Leitfrage → Schätzfrage → Erklärfilm → Hörtext → Schaubild auswerten (Beschreiben – Erklären – Beurteilen) → Übungen → Check-Quiz → Merksatz &amp; Fachbegriffe.</p>
+      <table>
+        <tr><th>Station</th><th>Inhalt</th><th>Bezug</th></tr>
+        <tr><td>1 Alltag</td><td>Made in China, Globalisierung, Lieferkette, Import/Export</td><td>Stunde 1</td></tr>
+        <tr><td>2 Osten</td><td>Naturraum, Monsun, Bevölkerungsdichte, Hu-Linie, Ballungsräume</td><td>Stunde 2</td></tr>
+        <tr><td>3 Werkbank</td><td>Öffnung, Sonderwirtschaftszonen, Shenzhen, Massenproduktion, Export</td><td>Stunde 3</td></tr>
+        <tr><td>4 Städte</td><td>Land-Stadt-Wanderung, Urbanisierung, Megastädte, Hukou</td><td>Stunde 4</td></tr>
+        <tr><td>5 Ein Kind</td><td>Ein-Kind-Politik, 4-2-1-Problem, Männerüberschuss, Streitfrage</td><td>BE-07 (AB A1–A4)</td></tr>
+      </table>
+      <ul class="small">
+        <li><b>Audio:</b> Hörtexte und Filme nutzen die Vorlesestimme des Geräts (funktioniert auf Smartphones, Tablets, in Chrome, Edge und Safari). Die Stimme lässt sich unten auf jeder Seite wechseln. Die Original-Sprachnachricht von Li Wei kann als <code>china/audio/BE-07_LiWei.mp3</code> abgelegt werden – dann spielt Station 5 automatisch diese Datei ab.</li>
+        <li><b>Daten:</b> Alle Zahlen sind gerundet und mit Quelle angegeben (Destatis, UN, WTO, Nationales Statistikamt China). Die Bevölkerungspyramide ist vereinfacht.</li>
+        <li><b>Datenschutz:</b> Keine Anmeldung, kein Server. Fortschritt und Name werden nur im Browser des Schülergeräts gespeichert.</li>
+        <li><b>Bewertung:</b> Offene Aufgaben werden mit einer Musterlösung verglichen (Selbstkontrolle). Die Streitfrage in Station 5 bleibt bewusst offen.</li>
+      </ul>
+      <button class="btn ghost small" id="resetBtn">Fortschritt auf diesem Gerät löschen</button>
+    </details>
+  </section>
+</main>
+
+<script src="kurs.js"></script>
+<script>
+Kurs.init({ home: true, title: 'Selbstlernkurs China' });
+const S = Kurs.state(), h = Kurs.h;
+
+document.getElementById('mapdeco').innerHTML = Kurs.map({ w: 800, h: 520, fill: '#fff', labels: false });
+
+const nm = document.getElementById('nm');
+nm.value = S.name || '';
+nm.addEventListener('change', () => { Kurs.setName(nm.value.trim()); Kurs.toast('Hallo ' + (nm.value.trim() || 'du') + '! 👋'); });
+
+const greet = S.name ? 'Willkommen zurück, <b>' + Kurs.esc(S.name) + '</b>!' : '<b>Ni hao!</b> Ich bin Pandi, dein Kursbegleiter.';
+const firstOpen = Kurs.STATIONS.find(s => Kurs.stationProgress(s).done < s.acts.length);
+Kurs.tip('#tip0', greet + ' ' + (firstOpen
+  ? 'Weiter geht’s mit <a href="' + firstOpen.file + '"><b>Station ' + (Kurs.STATIONS.indexOf(firstOpen) + 1) + ': ' + firstOpen.title + '</b></a>. Du kannst die Stationen aber auch in beliebiger Reihenfolge machen.'
+  : 'Du hast alle Stationen geschafft – jetzt ab zum <a href="abschluss.html"><b>Abschlusstest</b></a> und hol dir deine Urkunde! 🎓'));
+
+function ring(p) {
+  const r = 22, c = 2 * Math.PI * r;
+  return '<svg class="ring" viewBox="0 0 52 52"><circle class="bg" cx="26" cy="26" r="' + r + '"/><circle class="fg" cx="26" cy="26" r="' + r + '" stroke-dasharray="' + c + '" stroke-dashoffset="' + (c * (1 - p / 100)) + '"/><text x="26" y="30" text-anchor="middle">' + p + '%</text></svg>';
+}
+const path = document.getElementById('path');
+const icons = { video: '🎬', audio: '🎧', chart: '📊', quiz: '✅' };
+Kurs.STATIONS.forEach((s, i) => {
+  const pr = Kurs.stationProgress(s);
+  const a = h('a', { class: 'stop' + (pr.done === pr.total ? ' done' : ''), href: s.file },
+    h('div', { class: 'em' }, s.emoji),
+    h('div', { class: 'tx' }, h('small', null, 'Station ' + (i + 1) + ' · ' + s.short), h('b', null, s.title),
+      h('span', { class: 'ic' }, s.acts.map(id => (Kurs.isDone(id) ? '✔' : '○')).join(' ') + '  ·  ' + pr.done + '/' + pr.total + ' Aufgaben')));
+  a.insertAdjacentHTML('beforeend', ring(pr.pct));
+  path.append(a);
+});
+const gamesDone = Kurs.EXTRA.games.filter(Kurs.isDone).length;
+path.append(h('a', { class: 'stop game' + (gamesDone === Kurs.EXTRA.games.length ? ' done' : ''), href: 'spielplatz.html' },
+  h('div', { class: 'em' }, '🧩'),
+  h('div', { class: 'tx' }, h('small', null, 'Zwischendurch · Spaß'), h('b', null, 'Rätsel-Spielplatz'), h('span', { class: 'ic' }, 'Kreuzworträtsel, Memory, Wortsuche, Emoji-Rätsel, Speed-Quiz · ' + gamesDone + '/' + Kurs.EXTRA.games.length + ' gespielt'))));
+path.append(h('a', { class: 'stop final' + (Kurs.isDone('final') ? ' done' : ''), href: 'abschluss.html' },
+  h('div', { class: 'em' }, '🎓'),
+  h('div', { class: 'tx' }, h('small', null, 'Ziel'), h('b', null, 'Abschlusstest & Urkunde'), h('span', { class: 'ic' }, Kurs.isDone('final') ? 'Bestanden! Urkunde jederzeit druckbar.' : '15 Fragen aus allen Stationen'))));
+
+const bd = document.getElementById('badges');
+let got = 0;
+Kurs.STATIONS.forEach(s => {
+  const g = Kurs.isDone('badge-' + s.id); if (g) got++;
+  bd.append(h('div', { class: 'badge' + (g ? ' got' : '') }, h('i', null, s.emoji), s.badge));
+});
+bd.append(h('div', { class: 'badge' + (Kurs.isDone('final') ? ' got' : '') }, h('i', null, '🎓'), 'China-Experte'));
+
+const all = Kurs.STATIONS.flatMap(s => s.acts);
+document.getElementById('stXp').textContent = S.xp;
+document.getElementById('stDone').textContent = Math.round(100 * all.filter(Kurs.isDone).length / all.length) + ' %';
+document.getElementById('stBadge').textContent = got + ' / ' + Kurs.STATIONS.length;
+
+document.getElementById('resetBtn').onclick = () => {
+  if (confirm('Wirklich den gesamten Fortschritt auf diesem Gerät löschen?')) { Kurs.reset(); location.reload(); }
+};
+</script>
+</body>
+</html>

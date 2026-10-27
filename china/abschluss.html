@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abschlusstest China</title>
+<link rel="stylesheet" href="kurs.css">
+<style>
+  .hero.fin { background: linear-gradient(135deg, #e9a319 0%, #b46f00 100%); color: #2a1d00; }
+  .checklist { display: grid; gap: 6px; }
+  .checklist a { display: flex; justify-content: space-between; gap: 10px; text-decoration: none; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 8px 12px; }
+  .checklist a b { white-space: nowrap; }
+  .cert {
+    position: relative; background: #fffdf6; color: #1f2430; border-radius: 10px; padding: 34px 28px; text-align: center;
+    border: 10px solid #c0392b; outline: 3px solid #e9a319; outline-offset: -20px; box-shadow: var(--shadow); overflow: hidden;
+  }
+  .cert .seal { position: absolute; right: 22px; bottom: 22px; width: 96px; height: 96px; border-radius: 50%; background: #c0392b; color: #fff; display: grid; place-items: center; font-weight: 900; font-size: .8rem; line-height: 1.1; transform: rotate(-12deg); box-shadow: 0 0 0 4px #e9a319; }
+  .cert .seal span { font-size: 1.8rem; display: block; }
+  .cert h2 { font-size: clamp(1.6rem, 5vw, 2.4rem); letter-spacing: .08em; color: #c0392b; margin: 6px 0; }
+  .cert .who { font-size: clamp(1.5rem, 5vw, 2.2rem); font-weight: 900; border-bottom: 2px solid #1f2430; display: inline-block; padding: 0 20px 4px; margin: 10px 0 12px; min-width: 60%; }
+  .cert .bd { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin: 14px 0; font-size: 1.8rem; }
+  .cert .bd span { display: grid; justify-items: center; font-size: .65rem; font-weight: 800; max-width: 88px; }
+  .cert .bd span i { font-style: normal; font-size: 1.8rem; }
+  .cert .sig { display: flex; justify-content: space-around; margin-top: 26px; font-size: .85rem; }
+  .cert .sig div { border-top: 1px solid #1f2430; padding-top: 4px; min-width: 150px; }
+  .cert .deco-cn { position: absolute; left: -40px; top: -20px; width: 260px; opacity: .08; }
+  @media (max-width: 560px) {
+    .cert { padding: 28px 16px; }
+    .cert .seal { position: static; margin: 16px auto 0; width: 84px; height: 84px; }
+  }
+  @media print {
+    body * { visibility: hidden; }
+    #certWrap, #certWrap * { visibility: visible; }
+    #certWrap { position: absolute; left: 0; top: 0; width: 100%; }
+    .cert { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <section class="hero fin">
+    <div class="kicker">Das Finale</div>
+    <h1>🎓 Abschlusstest</h1>
+    <p>15 Fragen quer durch alle fünf Stationen. Ab 10 richtigen Antworten bekommst du deine Urkunde als „China-Experte“ – zum Ausdrucken oder als PDF.</p>
+    <div class="deco">🏆</div>
+  </section>
+
+  <section class="section">
+    <h2>Bist du bereit?</h2>
+    <div class="checklist" id="check"></div>
+    <div id="tipF"></div>
+  </section>
+
+  <section class="section" data-act="final">
+    <div class="step-head"><div class="num">📝</div><h2>Der Test</h2><span class="done-tag">✔ bestanden</span></div>
+    <div id="finalQuiz"></div>
+  </section>
+
+  <section class="section" data-act="final-reflect">
+    <div class="step-head"><div class="num">💭</div><h2>Die große Frage</h2><span class="done-tag">✔ erledigt</span></div>
+    <div id="reflect"></div>
+  </section>
+
+  <section class="section hidden" id="certSec">
+    <div class="step-head"><div class="num">📜</div><h2>Deine Urkunde</h2></div>
+    <div class="row" style="margin-bottom:12px">
+      <label for="cname" style="font-weight:800">Name auf der Urkunde:</label>
+      <input type="text" id="cname" maxlength="40" style="max-width:260px">
+      <button class="btn gold" onclick="window.print()">🖨️ Drucken / als PDF speichern</button>
+    </div>
+    <div id="certWrap"></div>
+  </section>
+
+  <nav class="nextnav">
+    <a class="btn ghost" href="index.html">← Zur Kursübersicht</a>
+    <a class="btn ghost" href="spielplatz.html">🧩 Rätsel-Spielplatz</a>
+  </nav>
+</main>
+
+<script src="kurs.js"></script>
+<script>
+Kurs.init({ title: 'Abschlusstest & Urkunde' });
+const { h, $, shuffle } = Kurs;
+const S = Kurs.state();
+
+/* Checkliste */
+const ck = $('#check');
+Kurs.STATIONS.forEach((s, i) => {
+  const p = Kurs.stationProgress(s);
+  ck.append(h('a', { href: s.file }, h('span', null, s.emoji + ' Station ' + (i + 1) + ': ' + s.title), h('b', null, p.done === p.total ? '✔ fertig' : p.done + '/' + p.total)));
+});
+const open = Kurs.STATIONS.filter(s => Kurs.stationProgress(s).done < s.acts.length).length;
+Kurs.tip('#tipF', open ? 'Du hast noch ' + open + ' Station' + (open > 1 ? 'en' : '') + ' nicht ganz fertig. Du kannst den Test trotzdem schon machen – und ihn beliebig oft wiederholen.' : 'Alle Stationen geschafft – du bist bestens vorbereitet. Viel Erfolg! 🍀');
+
+/* Fragenpool: pro Station 3 zufällige Fragen */
+const POOL = {
+  s1: [
+    { q: 'Was bedeutet „Made in China“ genau?', o: ['Das Produkt wurde in China hergestellt oder zusammengesetzt', 'Alle Bauteile kommen aus China', 'Die Marke ist chinesisch'], a: 0, e: 'Bauteile können aus vielen Ländern stammen.' },
+    { q: 'Welche Reihenfolge einer Lieferkette stimmt?', o: ['Fabrik → Hafen → Schiff → Lager → Paketdienst', 'Hafen → Fabrik → Lager → Schiff → Paketdienst', 'Lager → Schiff → Fabrik → Hafen → Paketdienst'], a: 0, e: 'So reist ein Produkt aus China zu dir.' },
+    { q: 'Ein deutsches Unternehmen verkauft Maschinen nach China. Das ist für Deutschland …', o: ['ein Export', 'ein Import', 'eine Lieferkette'], a: 0, e: 'Export = Verkauf ins Ausland.' },
+    { q: 'Was beschreibt Globalisierung?', o: ['Die weltweite Verbindung von Ländern, Firmen und Menschen', 'Den Umzug vom Land in die Stadt', 'Die Herstellung großer Mengen'], a: 0, e: 'Waren, Geld und Informationen reisen über Grenzen.' },
+    { q: 'Aus welchem Land hat Deutschland 2023 die meisten Waren importiert?', o: ['China', 'USA', 'Frankreich'], a: 0, e: 'Rund 157 Mrd. € – Platz 1.' }
+  ],
+  s2: [
+    { q: 'Warum leben die meisten Menschen im Osten Chinas?', o: ['Ebenen, Flüsse, Regen und viele Arbeitsplätze', 'Im Osten gibt es die höchsten Gebirge', 'Im Westen ist das Wohnen verboten'], a: 0, e: 'Natur und Wirtschaft wirken zusammen.' },
+    { q: 'Was gibt die Bevölkerungsdichte an?', o: ['Wie viele Menschen durchschnittlich auf einem km² leben', 'Wie viele Menschen insgesamt in einem Land leben', 'Wie schnell eine Stadt wächst'], a: 0, e: 'Einheit: Einwohner je km².' },
+    { q: 'Was ist der Monsun?', o: ['Ein Windsystem, das im Sommer viel Regen bringt', 'Ein Fluss in Westchina', 'Eine Wüste in Tibet'], a: 0, e: 'Feuchte Meeresluft bringt Regen nach Ost- und Südchina.' },
+    { q: 'Wie heißen die zwei großen Flüsse im Osten Chinas?', o: ['Huang He und Jangtsekiang', 'Nil und Amazonas', 'Rhein und Donau'], a: 0, e: 'Sie liefern Wasser für Landwirtschaft, Städte und Industrie.' },
+    { q: 'Was beschreibt die Hu-Linie ungefähr?', o: ['Östlich von ihr leben ca. 94 % der Menschen', 'Sie ist Chinas Grenze zu Indien', 'Sie trennt Nord- und Südchina nach Sprache'], a: 0, e: 'Eine gedachte Linie von Nordost nach Südwest.' }
+  ],
+  s3: [
+    { q: 'Was war ein wichtiger Wendepunkt für Chinas Wirtschaft?', o: ['Die Öffnung für Handel und ausländische Firmen ab Ende der 1970er', 'Der Bau der Chinesischen Mauer', 'Die Olympischen Spiele 2008'], a: 0, e: 'Danach kamen Investitionen und Fabriken.' },
+    { q: 'Was ist eine Sonderwirtschaftszone?', o: ['Ein Gebiet mit besonderen Regeln, um Firmen anzulocken', 'Ein Naturschutzgebiet', 'Eine Zone ohne Arbeitsplätze'], a: 0, e: 'Bekanntestes Beispiel: Shenzhen.' },
+    { q: 'Warum senkt Massenproduktion die Kosten pro Stück?', o: ['Feste Kosten verteilen sich auf sehr viele Stücke', 'Die Maschinen kosten nichts', 'Der Transport entfällt'], a: 0, e: 'Wie beim T-Shirt-Beispiel: 10 Stück vs. 1 Million.' },
+    { q: 'Was ist ein Zulieferer?', o: ['Eine Firma, die Bauteile für andere Firmen herstellt', 'Ein Paketbote', 'Ein Kunde im Laden'], a: 0, e: 'Z. B. für Displays, Akkus oder Kabel.' },
+    { q: 'Wo liegen die meisten der größten Containerhäfen der Welt?', o: ['In China', 'In Deutschland', 'In Südamerika'], a: 0, e: 'Shanghai ist der größte Containerhafen der Welt.' }
+  ],
+  s4: [
+    { q: 'Was bedeutet Urbanisierung?', o: ['Der Anteil der Stadtbevölkerung nimmt zu', 'Menschen ziehen aufs Land', 'Städte werden abgerissen'], a: 0, e: 'Auch Verstädterung genannt.' },
+    { q: 'Warum ziehen viele Menschen in Chinas Städte?', o: ['Arbeitsplätze, Ausbildung und bessere Versorgung', 'Weil Dörfer verboten sind', 'Weil Städte ruhiger sind'], a: 0, e: 'Sie hoffen auf höhere Einkommen und bessere Chancen.' },
+    { q: 'Welches Problem kann schnelles Stadtwachstum verursachen?', o: ['Wohnungsmangel, Staus und Luftverschmutzung', 'Zu viele freie Wohnungen', 'Zu wenig Menschen'], a: 0, e: 'Die Infrastruktur muss mitwachsen.' },
+    { q: 'Was ist der Hukou?', o: ['Chinas System der Haushaltsregistrierung', 'Ein chinesisches Neujahrsfest', 'Eine Megastadt'], a: 0, e: 'Wer umzieht, kann beim Zugang zu Leistungen Nachteile haben.' },
+    { q: 'Wie viel der Chinesen leben heute ungefähr in Städten?', o: ['etwa zwei Drittel', 'etwa ein Zehntel', 'fast alle'], a: 0, e: 'Rund 68,7 % – ca. 970 Mio. Menschen.' }
+  ],
+  s5: [
+    { q: 'Von wann bis wann galt Chinas Ein-Kind-Politik ungefähr?', o: ['ca. 1980 bis 2015', 'ca. 1900 bis 1950', 'Sie gilt bis heute'], a: 0, e: 'Seit 2016 zwei, seit 2021 drei Kinder erlaubt.' },
+    { q: 'Was ist das 4-2-1-Problem?', o: ['Ein Einzelkind muss später für zwei Eltern und vier Großeltern sorgen', 'Vier Kinder teilen sich ein Zimmer', 'Eine Familie hat vier Autos'], a: 0, e: 'Früher teilten sich Geschwister die Pflege.' },
+    { q: 'Warum leben in China heute mehr Männer als Frauen?', o: ['Viele Familien wollten bei nur einem Kind gezielt einen Sohn', 'Frauen wandern alle aus', 'Es werden immer mehr Mädchen geboren'], a: 0, e: 'Knapp 31 Mio. mehr Männer als Frauen.' },
+    { q: 'Wie viele Kinder bekommt eine Frau in China heute im Durchschnitt?', o: ['etwa 1,0', 'etwa 2,7', 'etwa 6'], a: 0, e: 'Einer der niedrigsten Werte der Welt.' },
+    { q: 'Was bedeutet: „Eine Bevölkerungspolitik lässt sich leichter einschalten als ausschalten“?', o: ['Geburten lassen sich schnell senken, aber kaum wieder anheben', 'Der Staat kann Geburten per Knopfdruck steigern', 'Bevölkerungspolitik hat keine Folgen'], a: 0, e: 'Trotz Erlaubnis für mehr Kinder steigt die Geburtenzahl kaum.' }
+  ]
+};
+const qs = Object.values(POOL).flatMap(p => shuffle(p).slice(0, 3));
+Kurs.quiz('#finalQuiz', {
+  id: 'final', xp: 50, pass: 10, shuffle: false, questions: shuffle(qs),
+  onDone: (r, n) => {
+    if (r >= 10) { Kurs.confetti(); showCert(); setTimeout(() => $('#certSec').scrollIntoView({ behavior: 'smooth' }), 600); }
+  }
+});
+
+Kurs.open('#reflect', {
+  id: 'final-reflect', xp: 25, minWords: 20, tag: 'Fazit',
+  prompt: 'Am Anfang stand die Frage: <i>Warum ist China für unseren Alltag so wichtig geworden – und welche Folgen hat das?</i> Beantworte sie jetzt mit deinem Wissen aus allen Stationen (mindestens 20 Wörter).',
+  placeholder: 'China ist für unseren Alltag wichtig, weil …',
+  model: '<b>So könnte ein starkes Fazit aussehen:</b><br>China ist zur „Werkbank der Welt“ geworden, weil es sich ab Ende der 1970er-Jahre geöffnet hat, viele Arbeitskräfte, Sonderwirtschaftszonen, Zulieferer und große Häfen hatte. Diese liegen vor allem im dicht besiedelten Osten, wo Ebenen, Flüsse und der Monsun gute Bedingungen bieten. Über Lieferketten kommen Smartphones, Kleidung und Elektronik zu uns. Das macht Produkte günstig, führt aber auch zu Abhängigkeit, Umweltbelastung durch Transporte und Fragen nach Arbeitsbedingungen. In China selbst sind dadurch riesige Städte gewachsen – mit Chancen und Problemen. Gleichzeitig altert die Bevölkerung wegen der Ein-Kind-Politik stark und schrumpft. Auch das wird Folgen für die Weltwirtschaft und damit für uns haben.'
+});
+
+function showCert() {
+  const st = Kurs.state();
+  $('#certSec').classList.remove('hidden');
+  const cn = $('#cname'); cn.value = st.name || '';
+  const draw = () => {
+    const best = st.best['final'] || 0;
+    const d = new Date().toLocaleDateString('de-DE', { day: '2-digit', month: 'long', year: 'numeric' });
+    $('#certWrap').innerHTML =
+      '<div class="cert">' +
+      '<svg class="deco-cn" viewBox="0 0 800 520" aria-hidden="true">' + Kurs.map({ w: 800, h: 520, fill: '#c0392b', labels: false }) + '</svg>' +
+      '<div style="font-size:2.6rem">🐼</div>' +
+      '<div style="letter-spacing:.2em;font-weight:800;font-size:.8rem">GPG M10 · SELBSTLERNKURS</div>' +
+      '<h2>URKUNDE</h2>' +
+      '<div>Hiermit wird bestätigt, dass</div>' +
+      '<div class="who">' + Kurs.esc(cn.value.trim() || '_______________') + '</div>' +
+      '<div>den Selbstlernkurs <b>„China entdecken“</b> erfolgreich abgeschlossen hat<br>und sich damit den Titel <b style="color:#c0392b">China-Experte / China-Expertin</b> verdient hat.</div>' +
+      '<div class="bd">' + Kurs.STATIONS.map(s => Kurs.isDone('badge-' + s.id) ? '<span><i>' + s.emoji + '</i>' + s.badge + '</span>' : '').join('') + '</div>' +
+      '<div><b>Abschlusstest: ' + best + ' von 15 Punkten</b> · ' + st.xp + ' XP gesammelt</div>' +
+      '<div class="sig"><div>' + d + '</div><div>Lehrkraft</div></div>' +
+      '<div class="seal"><div><span>⭐</span>China-<br>Experte</div></div>' +
+      '</div>';
+  };
+  cn.oninput = () => { Kurs.setName(cn.value.trim()); draw(); };
+  draw();
+}
+if ((S.best['final'] || 0) >= 10) showCert();
+</script>
+</body>
+</html>

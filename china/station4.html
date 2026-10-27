@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chinas Städte wachsen</title>
+<link rel="stylesheet" href="kurs.css">
+</head>
+<body>
+<main>
+  <section class="hero">
+    <div class="kicker">Station 4 von 5 · GPG M10 · China</div>
+    <h1>🏙️ Warum wachsen Chinas Städte so schnell?</h1>
+    <p>Millionen Menschen sind in China vom Dorf in die Stadt gezogen. Hier erfährst du, warum – und was passiert, wenn eine Stadt schneller wächst, als Straßen und Wohnungen gebaut werden können.</p>
+    <div class="deco">🏗️</div>
+  </section>
+
+  <div class="question">❓ <span>Frage der Station: Warum ziehen so viele Menschen in Chinas Städte – und welche Chancen und Probleme entstehen dadurch?</span></div>
+
+  <div id="tip4"></div>
+
+  <section class="section" id="start">
+    <div class="step-head"><div class="num">🎯</div><h2>Aufwärmen</h2></div>
+    <div id="est4"></div>
+  </section>
+
+  <section class="section" data-act="s4-video" id="film">
+    <div class="step-head"><div class="num">🎬</div><h2>Erklärfilm: Vom Dorf in die Megastadt</h2><span class="done-tag">✔ erledigt</span></div>
+    <div id="vid4"></div>
+  </section>
+
+  <section class="section" data-act="s4-audio">
+    <div class="step-head"><div class="num">🎧</div><h2>Hörtext: Vom Land in die Stadt</h2><span class="done-tag">✔ erledigt</span></div>
+    <div id="aud4"></div>
+  </section>
+
+  <section class="section" data-act="s4-chart">
+    <div class="step-head"><div class="num">📊</div><h2>Schaubild auswerten</h2><span class="done-tag">✔ erledigt</span></div>
+    <div id="chart4"></div>
+    <div id="ana4" style="margin-top:14px"></div>
+  </section>
+
+  <section class="section" data-act="s4-order">
+    <div class="step-head"><div class="num">🔁</div><h2>So wächst eine Megastadt</h2><span class="done-tag">✔ erledigt</span></div>
+    <div id="ord4"></div>
+  </section>
+
+  <section class="section" data-act="s4-sort">
+    <div class="step-head"><div class="num">⚖️</div><h2>Chance oder Problem?</h2><span class="done-tag">✔ erledigt</span></div>
+    <div id="sort4"></div>
+  </section>
+
+  <section class="section" data-act="s4-rollen">
+    <div class="step-head"><div class="num">🎭</div><h2>Bonus: Schlüpf in eine Rolle</h2><span class="done-tag">✔ erledigt</span></div>
+    <div id="rol4"></div>
+  </section>
+
+  <section class="section" data-act="s4-quiz">
+    <div class="step-head"><div class="num">✅</div><h2>Check: Was weißt du jetzt?</h2><span class="done-tag">✔ bestanden</span></div>
+    <div id="quiz4"></div>
+  </section>
+
+  <section class="section">
+    <div class="merk">
+      <h3>📌 Merksatz</h3>
+      <p>Chinas Städte wachsen, weil <b>Arbeitsplätze, Ausbildung und Dienstleistungen</b> viele Menschen aus ländlichen Gebieten anziehen (<b>Land-Stadt-Wanderung</b>). Heute lebt ungefähr zwei Drittel der Bevölkerung in Städten (<b>Verstädterung</b>). Dieses Stadtwachstum schafft Chancen, führt aber gleichzeitig zu Herausforderungen wie <b>Wohnraummangel, Verkehr, Umweltbelastungen und sozialen Unterschieden</b>.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="step-head"><div class="num">🃏</div><h2>Fachbegriffe-Karten</h2></div>
+    <div id="flash4"></div>
+  </section>
+
+  <nav class="nextnav">
+    <a class="btn ghost" href="station3.html">← Station 3: Die „Werkbank der Welt“</a>
+    <a class="btn" href="station5.html">Station 5: Ein Kind – und dann? →</a>
+  </nav>
+</main>
+
+<script src="kurs.js"></script>
+<script>
+const A = Kurs.Art;
+Kurs.init({ station: 's4' });
+
+Kurs.tip('#tip4', 'Stell dir vor, in deinem Ort gibt es kaum Ausbildungsplätze – in einer Großstadt aber Hunderte. <b>Würdest du umziehen?</b> Genau diese Entscheidung haben in China Millionen Menschen getroffen. 🧳');
+
+Kurs.estimate('#est4', {
+  id: 's4-est',
+  q: 'Wie viele Menschen leben heute ungefähr in <b>Chinas Städten</b>? (in Millionen)',
+  min: 0, max: 1400, step: 10, a: 970, unit: 'Mio.',
+  e: 'Rund 970 Millionen Menschen – das sind mehr als elfmal so viele, wie in ganz Deutschland leben (ca. 83 Mio.).',
+  compare: [{ label: 'Deutschland', value: 83 }]
+});
+
+/* ---------- Erklärfilm ---------- */
+function house(x, y, c, d) {
+  return '<g class="a-pop" style="--d:' + d + 's"><rect x="' + x + '" y="' + y + '" width="46" height="36" fill="' + c + '" stroke="#1f2430" stroke-width="2"/><path d="M' + (x - 6) + ',' + y + 'L' + (x + 23) + ',' + (y - 24) + 'L' + (x + 52) + ',' + y + 'Z" fill="#c0392b" stroke="#1f2430" stroke-width="2"/></g>';
+}
+function tower(x, w, hh, c, d) {
+  let s = '<g class="a-grow" style="--d:' + d + 's"><rect x="' + x + '" y="' + (360 - hh) + '" width="' + w + '" height="' + hh + '" fill="' + c + '" stroke="#1f2430" stroke-width="2"/>';
+  for (let yy = 360 - hh + 12; yy < 350; yy += 22) for (let xx = x + 8; xx < x + w - 10; xx += 18) s += '<rect x="' + xx + '" y="' + yy + '" width="9" height="10" fill="#fff4d6"/>';
+  return s + '</g>';
+}
+Kurs.video('#vid4', {
+  id: 's4-video', title: 'Vom Dorf in die Megastadt', next: '#aud4',
+  scenes: [
+    { svg: () => A.bg() + A.title('Bleiben oder gehen?') +
+        '<rect x="30" y="130" width="350" height="230" rx="18" fill="#e3f5ef" class="a-left"/>' +
+        house(70, 290, '#fff4d6', .3) + house(150, 300, '#fff', .5) + house(240, 290, '#fff4d6', .7) +
+        A.label(205, 170, 'Dorf', { size: 22, d: .2 }) + A.label(205, 205, 'wenige Jobs · weite Wege', { size: 15, fill: '#5a6170', d: .9 }) +
+        '<rect x="420" y="130" width="350" height="230" rx="18" fill="#e8f0fd" class="a-right" style="--d:1.2s"/>' +
+        tower(450, 60, 120, '#9cc7ea', 1.5) + tower(525, 70, 170, '#7aa7ff', 1.7) + tower(610, 55, 140, '#9cc7ea', 1.9) + tower(680, 60, 100, '#7aa7ff', 2.1) +
+        A.label(595, 170, 'Großstadt', { size: 22, d: 1.3 }) +
+        A.emoji(400, 260, '🧑', 54, 'a-pop', 2.6) + A.emoji(400, 205, '🤔', 30, 'a-pop', 3),
+      say: 'Stell dir vor, du wohnst in einem kleinen Dorf. Nach der Schule gibt es dort kaum Ausbildungsplätze. In einer Großstadt gibt es Fabriken, Büros, Hochschulen und Krankenhäuser. Würdest du umziehen? Genau diese Frage haben sich in China Millionen Menschen gestellt.' },
+    { svg: () => A.bg() + A.title('Was drückt weg – was zieht an?') +
+        A.box(60, 130, 300, 230, 'wenig Arbeit\nniedrige Einkommen\nwenig Schulen & Ärzte', { icon: '🏚️', d: .3, fill: '#fdecea', size: 16 }) +
+        A.box(440, 130, 300, 230, 'viele Jobs\nhöhere Löhne\nAusbildung & Kliniken', { icon: '🏙️', d: 1.5, fill: '#e3f5ef', size: 16 }) +
+        A.arrow(370, 245, 430, 245, { d: 2.4, w: 6 }),
+      say: 'Manche Gründe drücken die Menschen vom Land weg: wenig Arbeit, niedrige Einkommen, wenige Schulen und Ärzte. Andere Gründe ziehen sie in die Stadt: viele Arbeitsplätze, höhere Löhne, Ausbildung, Krankenhäuser und Geschäfte.' },
+    { svg: () => A.bg('#eaf3fb') + A.label(400, 42, 'Land-Stadt-Wanderung', { size: 30, cls: 'a-up' }) +
+        Kurs.map({ x: 150, y: 55, w: 500, h: 320, cities: ['Peking', 'Shanghai', 'Shenzhen'], cityDelay: .6 }) +
+        (() => { const p = Kurs.proj(150, 55, 500, 320); const from = [[104, 31], [108, 26], [112, 35], [100, 36], [106, 39]]; const to = [[121.5, 31.2], [114.1, 22.6], [116.4, 39.9], [121.5, 31.2], [116.4, 39.9]];
+          return from.map((f, i) => { const a = p(f), b = p(to[i]); return A.emoji(a[0], a[1] + 8, '🏘️', 22, 'a-pop', 1.5 + i * .2) + A.arrow(a[0] + 8, a[1], b[0] - 6, b[1], { d: 2 + i * .3, w: 3 }); }).join(''); })(),
+      say: 'Wenn Menschen ihren Wohnort wechseln, nennt man das Migration. Ziehen sie innerhalb eines Landes vom Dorf in die Stadt, heißt das Land-Stadt-Wanderung. In China zogen viele Menschen aus dem Inland in die großen Städte an der Küste, wo neue Fabriken entstanden.' },
+    { svg: () => A.bg() + A.title('Verstädterung in China', 'Anteil der Menschen, die in Städten leben') +
+        [[1980, 19], [1990, 26], [2000, 36], [2010, 50], [2020, 64], [2026, 69]].map((d, i) => {
+          const hh = d[1] * 3.2, x = 110 + i * 105;
+          return '<rect class="a-grow" style="--d:' + (.4 + i * .4) + 's" x="' + x + '" y="' + (360 - hh) + '" width="70" height="' + hh + '" rx="6" fill="' + (i === 5 ? '#c0392b' : '#2d6cdf') + '"/>' +
+            A.label(x + 35, 352 - hh, 'ca. ' + d[1] + ' %', { size: 16, d: .7 + i * .4 }) + A.label(x + 35, 382, String(d[0]), { size: 15, d: .4 + i * .4, fill: '#5a6170' });
+        }).join(''),
+      say: 'Wenn immer mehr Menschen in Städten leben, nennt man das Urbanisierung oder Verstädterung. 1980 lebte nur etwa jeder fünfte Chinese in einer Stadt. Heute sind es ungefähr zwei Drittel. Bei so vielen Einwohnern bedeutet das: Hunderte Millionen Menschen sind in die Städte gezogen.' },
+    { svg: () => A.bg() + A.label(400, 44, 'Wie aus Wachstum eine Megastadt wird', { size: 28, cls: 'a-up' }) +
+        (() => { const it = [['🏭', 'Unternehmen'], ['💼', 'Jobs'], ['🧳', 'Zuzug'], ['🏢', 'Wohnungen'], ['🛍️', 'Geschäfte'], ['🚇', 'Verkehr'], ['🏗️', 'Ausbau']];
+          const cx = 400, cy = 235, r = 112; let s = '';
+          const pt = i => { const a = -Math.PI / 2 + i * 2 * Math.PI / it.length; return [cx + Math.cos(a) * r * 2.1, cy + Math.sin(a) * r]; };
+          it.forEach((t, i) => { const [x, y] = pt(i), [x2, y2] = pt((i + 1) % it.length);
+            s += A.box(x - 60, y - 34, 120, 68, t[1], { icon: t[0], iconSize: 24, d: .3 + i * .5, size: 14, fill: i === 0 ? '#fff4d6' : '#fff' });
+            const dx = x2 - x, dy = y2 - y, L = Math.hypot(dx, dy);
+            s += A.arrow(x + dx / L * 62, y + dy / L * 38, x2 - dx / L * 62, y2 - dy / L * 38, { d: .5 + i * .5, w: 3 }); });
+          return s + A.label(cx, cy + 8, '↻ verstärkt sich', { size: 18, fill: '#c0392b', d: 4 }); })(),
+      say: 'Eine Megastadt ist eine sehr große Stadt mit vielen Millionen Einwohnern. Meist wirkt eine Kette: Neue Unternehmen schaffen Arbeitsplätze. Menschen ziehen zu. Es braucht mehr Wohnungen, Geschäfte und Verkehrswege. Die Stadt wird ausgebaut und lockt wieder neue Firmen an. Dieser Kreislauf verstärkt sich selbst.' },
+    { svg: () => A.bg() + A.title('Beispiel Shenzhen') +
+        '<rect x="60" y="130" width="300" height="230" rx="18" fill="#e3f5ef" class="a-left"/>' + A.label(210, 165, '1980', { size: 24, d: .2 }) +
+        house(110, 300, '#fff', .5) + house(200, 310, '#fff4d6', .7) + A.label(210, 220, 'kleiner Ort', { size: 18, fill: '#5a6170', d: .8 }) +
+        A.arrow(375, 245, 425, 245, { d: 1.3, w: 6 }) +
+        '<rect x="440" y="130" width="300" height="230" rx="18" fill="#e8f0fd" class="a-right" style="--d:1.5s"/>' + A.label(590, 165, 'heute', { size: 24, d: 1.6 }) +
+        tower(465, 45, 100, '#9cc7ea', 1.9) + tower(520, 55, 135, '#7aa7ff', 2.1) + tower(585, 45, 115, '#9cc7ea', 2.3) + tower(640, 70, 85, '#7aa7ff', 2.5) +
+        A.label(590, 205, 'Millionenstadt', { size: 18, fill: '#2d6cdf', d: 2.8 }),
+      say: 'Ein besonders auffälliges Beispiel ist Shenzhen im Süden Chinas, nahe Hongkong. Mit der wirtschaftlichen Öffnung siedelten sich dort Industrie und Technologiefirmen an. Aus einem vergleichsweise kleinen Ort wurde in wenigen Jahrzehnten eine riesige Millionenstadt.' },
+    { svg: () => A.bg() + A.title('Wenn die Stadt zu schnell wächst …') +
+        A.box(40, 140, 170, 170, 'Stau', { icon: '🚗🚗', iconSize: 30, d: .3, fill: '#fdecea' }) +
+        A.box(225, 140, 170, 170, 'Smog', { icon: '🏭💨', iconSize: 30, d: 1, fill: '#fdecea' }) +
+        A.box(410, 140, 170, 170, 'enge, teure\nWohnungen', { icon: '🏢', d: 1.7, fill: '#fdecea' }) +
+        A.box(595, 140, 170, 170, 'Arm und\nReich', { icon: '💰', d: 2.4, fill: '#fdecea' }),
+      say: 'Schnelles Wachstum bringt aber auch Probleme. Wenn zu wenig Wohnraum gebaut wird, steigen die Mieten oder Menschen wohnen sehr beengt. Mehr Autos bedeuten Staus und Luftverschmutzung. Müll, Abwasser und Energie werden zu großen Aufgaben. Und nicht alle profitieren gleich vom Wachstum.' },
+    { svg: () => A.bg() + A.title('Hukou – der Wohnort im Ausweis') +
+        A.box(80, 140, 220, 200, 'registriert:\nDorf', { icon: '📄', d: .3, fill: '#fff4d6' }) +
+        A.arrow(310, 240, 480, 240, { d: .9, w: 5 }) + A.emoji(395, 225, '🧳', 40, 'a-pop', 1.1) +
+        A.box(490, 140, 230, 200, 'lebt in der Stadt\n– weniger Rechte?', { icon: '🏙️', d: 1.6, fill: '#e8f0fd' }) +
+        A.emoji(720, 160, '⚠️', 40, 'a-pop', 2.4),
+      say: 'In China gibt es außerdem die Haushaltsregistrierung, genannt Hukou. Sie ordnet jeden Menschen offiziell einem Wohnort zu. Wer vom Dorf in eine Stadt zieht, kann dort bei Schulen oder Gesundheitsversorgung Nachteile haben. Das System wurde gelockert, zeigt aber: Ein Umzug löst nicht automatisch alle Probleme.' },
+    { svg: () => A.bg() + A.title('Chance und Belastung zugleich') +
+        A.box(90, 140, 280, 170, 'Chancen:\nJobs · Bildung · Einkommen', { icon: '👍', d: .3, fill: '#e3f5ef', size: 16 }) +
+        A.box(430, 140, 280, 170, 'Probleme:\nWohnen · Verkehr · Umwelt', { icon: '👎', d: 1, fill: '#fdecea', size: 16 }) +
+        A.label(400, 355, 'Wie in Nürnberg oder München – nur viel größer!', { size: 20, fill: '#c0392b', d: 2, cls: 'a-up' }) + A.panda(700, 300, 1.1, 'a-pop', 2.4),
+      say: 'Auch in Deutschland ziehen Menschen für Ausbildung oder Arbeit nach Nürnberg oder München. In China ist die Größenordnung nur viel gewaltiger. Fazit: Das Wachstum der Städte schafft große Chancen – aber auch große Aufgaben für die Menschen und die Stadtverwaltung.' }
+  ]
+});
+
+/* ---------- Hörtext ---------- */
+Kurs.audio('#aud4', {
+  id: 's4-audio', title: 'Warum wachsen Chinas Städte so schnell?', sub: 'Sachtext zum Anhören und Mitlesen',
+  paras: [
+    'Stell dir vor, du wohnst in einem kleinen Ort. Nach der Schule findest du dort nur wenige Ausbildungsplätze. In einer weit entfernten Großstadt gibt es dagegen Fabriken, Büros, Hochschulen, Krankenhäuser und viel mehr Arbeitsmöglichkeiten. Würdest du umziehen? Genau solche Entscheidungen haben in China über Jahrzehnte Millionen Menschen getroffen.',
+    { h: 'Vom Land in die Stadt' },
+    'Wenn Menschen ihren Wohnort wechseln, spricht man von Migration. Ziehen Menschen innerhalb eines Landes vom Dorf in eine Stadt, nennt man das Land-Stadt-Wanderung. Ein wichtiger Grund sind Arbeitsplätze. Viele neue Fabriken und Dienstleistungsunternehmen entstanden in Städten und Küstenregionen. Die Menschen hofften dort auf höhere Einkommen und bessere Zukunftschancen. Auch Ausbildung, Ärzte und Einkaufsmöglichkeiten spielen eine Rolle.',
+    { h: 'Urbanisierung oder Verstädterung' },
+    'Wenn immer mehr Menschen in Städten leben und Städte wachsen, nennt man das Urbanisierung oder Verstädterung. China hat in wenigen Jahrzehnten eine sehr starke Verstädterung erlebt. Heute lebt ungefähr zwei Drittel der Bevölkerung in Städten. Ein besonders auffälliges Beispiel ist Shenzhen im Süden Chinas, nahe Hongkong. Mit der wirtschaftlichen Öffnung wurde Shenzhen zu einem wichtigen Standort für Industrie und Technologie.',
+    { h: 'Wie entsteht eine Megastadt?' },
+    'Eine Megastadt ist eine sehr große Stadt mit vielen Millionen Einwohnern. Meist wirkt eine Kette: Neue Unternehmen schaffen neue Arbeitsplätze. Menschen ziehen zu. Es werden mehr Wohnungen, Geschäfte und Dienstleistungen gebraucht. Der Verkehr nimmt zu und die Stadt wird weiter ausgebaut. Je größer eine Stadt wird, desto attraktiver kann sie für weitere Unternehmen werden.',
+    { h: 'Chancen des Stadtlebens' },
+    'Große Städte bieten viele Möglichkeiten: unterschiedliche Berufe, Schulen, Universitäten und Krankenhäuser. Auch Freizeitangebote und öffentlicher Verkehr sind oft besser als auf dem Land. Für viele Familien bedeutet ein Umzug die Chance auf ein höheres Einkommen.',
+    { h: 'Aber schnelles Wachstum erzeugt Probleme' },
+    'Wenn sehr viele Menschen in kurzer Zeit in eine Stadt ziehen, muss die Infrastruktur mithalten: Wohnungen, Straßen, U-Bahnen, Schulen, Wasserleitungen und Stromnetze. Wird zu wenig Wohnraum gebaut, steigen die Mieten oder Menschen wohnen sehr beengt. Mehr Autos bedeuten Staus und Luftverschmutzung. Auch Müll, Abwasser und Energieversorgung werden zu großen Aufgaben. Außerdem profitieren nicht alle gleich: Manche verdienen sehr gut, andere arbeiten für niedrige Löhne.',
+    'In China gibt es zusätzlich die Haushaltsregistrierung, Hukou genannt. Sie ordnet Menschen offiziell einem Wohnort zu. Wer vom Land in eine andere Stadt zieht, kann beim Zugang zu öffentlichen Leistungen Nachteile haben. Das System wurde teilweise gelockert, zeigt aber, dass ein Umzug nicht automatisch alle Probleme löst.',
+    { h: 'Was hat das mit dir zu tun?' },
+    'Auch in Deutschland ziehen Menschen für Ausbildung, Studium oder Arbeit nach Nürnberg, München oder in andere große Städte. Der Grundgedanke ist ähnlich: Menschen ziehen dorthin, wo sie Chancen sehen. Und wenn du ein elektronisches Gerät kaufst, kann die Fabrik in einer chinesischen Stadtregion liegen, die genau durch dieses Wachstum so groß geworden ist.'
+  ]
+});
+
+/* ---------- Schaubild ---------- */
+Kurs.line('#chart4', {
+  title: 'Wie viele Menschen leben in Städten?',
+  sub: 'Anteil der Stadtbevölkerung an der Gesamtbevölkerung in Prozent (gerundet)',
+  series: [
+    { name: 'China', color: 'var(--red)', data: [[1980, 19], [1990, 26], [2000, 36], [2010, 50], [2020, 64], [2026, 68.7]] },
+    { name: 'Deutschland', color: 'var(--sky)', data: [[1980, 73], [1990, 73], [2000, 75], [2010, 77], [2020, 77], [2026, 78]] }
+  ],
+  yMin: 0, yMax: 100, yStep: 20, unit: '%', unitShort: ' %', yLabel: 'Anteil in %', xLabel: 'Jahr',
+  source: 'UN World Urbanization Prospects / Nationales Statistikamt China, gerundet'
+});
+Kurs.analyse('#ana4', {
+  id: 's4-chart',
+  steps: [
+    { label: 'Beschreiben', type: 'mc', q: 'Wie hat sich der Anteil der Stadtbevölkerung in China seit 1980 entwickelt?',
+      o: ['Er ist stark gestiegen – von ca. 19 % auf ca. 69 %', 'Er ist ungefähr gleich geblieben', 'Er ist gesunken, weil viele aufs Land gezogen sind'],
+      a: 0, e: 'Der Anteil hat sich mehr als verdreifacht. In Deutschland dagegen bleibt er fast gleich.' },
+    { label: 'Ablesen', type: 'num', q: 'In welchem Jahr lebte in China ungefähr die <b>Hälfte</b> der Menschen (ca. 50 %) in Städten?', a: 2010, tol: 0, unit: '',
+      e: 'Um 2010 war es so weit: Seitdem leben in China mehr Menschen in Städten als auf dem Land.' },
+    { label: 'Vergleichen & Erklären', type: 'open', q: 'Vergleiche China mit Deutschland. Erkläre, warum Chinas Kurve so steil ansteigt, die deutsche aber kaum.',
+      check: 'Vergleich der Kurven · Land-Stadt-Wanderung · Arbeitsplätze in Fabriken/Städten · Deutschland schon früher verstädtert',
+      model: 'In Deutschland lebten schon 1980 rund drei Viertel der Menschen in Städten, deshalb steigt der Anteil kaum noch. In China lebte 1980 nur etwa jeder Fünfte in der Stadt. Durch die wirtschaftliche Öffnung entstanden viele Fabriken und Arbeitsplätze in den Städten an der Küste. Millionen Menschen zogen deshalb vom Land in die Stadt (Land-Stadt-Wanderung). Darum steigt die chinesische Kurve so steil an.' },
+    { label: 'Beurteilen', type: 'open', q: 'Ist die schnelle Verstädterung für China eher eine Chance oder eine Belastung? Begründe mit je einem Beispiel.',
+      check: 'mindestens eine Chance und ein Problem · eigene Meinung mit „weil“',
+      model: 'Sie ist beides. Eine Chance ist, dass viele Menschen in der Stadt Arbeit, höhere Einkommen und bessere Schulen finden. Eine Belastung ist, dass die Infrastruktur oft nicht schnell genug wächst: Es gibt Staus, Smog und teure, enge Wohnungen. Ich finde, es ist eher eine Chance, wenn die Städte genug Wohnungen und U-Bahnen bauen, weil dann viele Familien ein besseres Leben haben.' }
+  ]
+});
+
+/* ---------- Übungen ---------- */
+Kurs.order('#ord4', {
+  id: 's4-order', tag: 'Ursache – Wirkung',
+  prompt: 'Wie wächst eine Stadt zur Megastadt? Bring die Wachstumskette in die richtige Reihenfolge!',
+  items: ['Neue Unternehmen siedeln sich an', 'Es entstehen neue Arbeitsplätze', 'Menschen ziehen vom Land zu', 'Mehr Wohnungen werden gebaut', 'Mehr Geschäfte und Dienstleistungen entstehen', 'Der Verkehr nimmt zu', 'Die Stadt wird weiter ausgebaut'],
+  explain: 'Diese Kette verstärkt sich selbst: Eine größere, gut ausgebaute Stadt lockt wieder neue Unternehmen an – und alles beginnt von vorn.'
+});
+
+Kurs.sort('#sort4', {
+  id: 's4-sort', tag: 'Stadtwachstum',
+  prompt: 'Chance oder Problem? Ordne die Karten zu.',
+  cats: [{ id: 'ch', label: '👍 Chancen der Großstadt' }, { id: 'pr', label: '👎 Probleme schnellen Wachstums' }],
+  items: [
+    { t: 'Viele unterschiedliche Arbeitsplätze', c: 'ch' },
+    { t: 'Höheres Einkommen als auf dem Land', c: 'ch' },
+    { t: 'Schulen, Universitäten und Krankenhäuser', c: 'ch' },
+    { t: 'Gut ausgebauter öffentlicher Verkehr', c: 'ch' },
+    { t: 'Steigende Mieten und enge Wohnungen', c: 'pr' },
+    { t: 'Staus und Luftverschmutzung', c: 'pr' },
+    { t: 'Berge von Müll und Abwasser', c: 'pr' },
+    { t: 'Nachteile für Zugezogene durch den Hukou', c: 'pr' }
+  ],
+  explain: 'Stadtwachstum ist Chance und Belastung zugleich – entscheidend ist, ob Wohnungen, Verkehr und Versorgung mitwachsen.'
+});
+
+Kurs.open('#rol4', {
+  id: 's4-rollen', tag: 'Perspektivwechsel', xp: 15,
+  prompt: 'Wähle eine Rolle: <b>junger Arbeiter vom Land</b>, <b>Familie mit zwei Kindern</b>, <b>Stadtverwaltung</b> oder <b>Unternehmer</b>. Ist das schnelle Stadtwachstum aus deiner Sicht eine Chance oder eine Belastung? Begründe!',
+  placeholder: 'Ich bin … Für mich ist das Stadtwachstum eher …, weil …',
+  minWords: 12,
+  model: '<b>Mögliche Sichtweisen:</b><br>👷 <b>Junger Arbeiter:</b> Chance – endlich ein Job und mehr Geld. Aber: teures, enges Zimmer und durch den Hukou weniger Rechte.<br>👨‍👩‍👧‍👦 <b>Familie:</b> Bessere Schulen und Ärzte – aber hohe Mieten, Stau und schlechte Luft.<br>🏛️ <b>Stadtverwaltung:</b> Mehr Steuereinnahmen – aber riesige Aufgaben: Wohnungen, U-Bahnen, Wasser, Strom, Müll.<br>🏭 <b>Unternehmer:</b> Viele Arbeitskräfte und Kunden – aber steigende Löhne und Grundstückspreise.<br><i>Merke: Je nach Rolle sieht dieselbe Entwicklung ganz anders aus.</i>'
+});
+
+/* ---------- Quiz ---------- */
+Kurs.quiz('#quiz4', {
+  id: 's4-quiz',
+  questions: [
+    { q: 'Was versteht man unter <b>Land-Stadt-Wanderung</b>?', o: ['Menschen ziehen innerhalb eines Landes vom Land in die Stadt', 'Menschen machen am Wochenende Ausflüge aufs Land', 'Menschen ziehen aus der Stadt in ein anderes Land'], a: 0, e: 'Sie ist eine Form der Migration – also eines Wohnortwechsels.' },
+    { q: 'Wie nennt man es, wenn der Anteil der Stadtbevölkerung zunimmt?', o: ['Urbanisierung oder Verstädterung', 'Globalisierung', 'Industrialisierung'], a: 0, e: 'Urbs ist lateinisch und heißt „Stadt“.' },
+    { q: 'Wie viele Menschen in China leben heute ungefähr in Städten?', o: ['ca. zwei Drittel', 'ca. ein Zehntel', 'fast alle'], a: 0, e: 'Rund 69 % – etwa 970 Millionen Menschen.' },
+    { q: 'Was ist der <b>wichtigste</b> Grund für den Umzug in die Stadt?', o: ['Arbeitsplätze und höhere Einkommen', 'Das bessere Wetter', 'Weil Dörfer verboten wurden'], a: 0, e: 'Neue Fabriken und Dienstleistungsfirmen entstanden vor allem in Städten und an der Küste.' },
+    { q: 'Was ist eine <b>Megastadt</b>?', o: ['Eine sehr große Stadt mit vielen Millionen Einwohnern', 'Eine Stadt mit besonders vielen Hochhäusern', 'Die Hauptstadt eines Landes'], a: 0, e: 'Beispiele in China: Shanghai, Peking, Shenzhen oder Guangzhou.' },
+    { q: 'Was ist der <b>Hukou</b>?', o: ['Die Haushaltsregistrierung, die Menschen einem Wohnort zuordnet', 'Ein chinesisches Neujahrsfest', 'Eine Sonderwirtschaftszone'], a: 0, e: 'Zugezogene können dadurch bei Schulen oder Gesundheitsversorgung Nachteile haben.' },
+    { q: 'Was passiert, wenn die Infrastruktur <b>langsamer</b> wächst als die Bevölkerung?', o: ['Wohnungsnot, Staus und Umweltprobleme', 'Die Mieten sinken', 'Es ziehen automatisch weniger Menschen zu'], a: 0, e: 'Wohnungen, U-Bahnen, Wasser- und Stromnetze müssen mitwachsen – sonst wird es eng.' }
+  ]
+});
+
+Kurs.flash('#flash4', [
+  ['Migration', 'Dauerhafter oder längerfristiger Wechsel des Wohnortes.'],
+  ['Land-Stadt-Wanderung', 'Umzug von Menschen aus ländlichen Gebieten in Städte.'],
+  ['Urbanisierung / Verstädterung', 'Der Anteil der Stadtbevölkerung und die Bedeutung von Städten nehmen zu.'],
+  ['Megastadt', 'Sehr große Stadt mit vielen Millionen Einwohnern.'],
+  ['Infrastruktur', 'Einrichtungen wie Straßen, Bahn, Schulen, Wasserleitungen, Stromnetze und Krankenhäuser.'],
+  ['Hukou', 'Chinesisches System der Haushaltsregistrierung, das Menschen offiziell einem Wohnort zuordnet.']
+]);
+</script>
+</body>
+</html>

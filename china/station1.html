@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>China in deinem Alltag</title>
+<link rel="stylesheet" href="kurs.css">
+</head>
+<body>
+<main>
+  <section class="hero">
+    <div class="kicker">Station 1 von 5 · GPG M10 · China</div>
+    <h1>📱 China in deinem Alltag</h1>
+    <p>Smartphone, Kopfhörer, Sneaker: Vieles, was du täglich benutzt, hat eine Weltreise hinter sich. Hier findest du heraus, welche – und was das mit China zu tun hat.</p>
+    <div class="deco">🚢</div>
+  </section>
+
+  <div class="question">❓ <span>Frage der Station: Wie viel China steckt in deinem Alltag – und warum?</span></div>
+
+  <div id="tip1"></div>
+
+  <section class="section" id="start">
+    <div class="step-head"><div class="num">🎯</div><h2>Aufwärmen</h2></div>
+    <div id="est1"></div>
+  </section>
+
+  <section class="section" data-act="s1-video" id="film">
+    <div class="step-head"><div class="num">🎬</div><h2>Erklärfilm: Die Weltreise deiner Kopfhörer</h2><span class="done-tag">✔ erledigt</span></div>
+    <div id="vid1"></div>
+  </section>
+
+  <section class="section" data-act="s1-audio">
+    <div class="step-head"><div class="num">🎧</div><h2>Hörtext: Ein ganz normaler Morgen …</h2><span class="done-tag">✔ erledigt</span></div>
+    <div id="aud1"></div>
+  </section>
+
+  <section class="section" data-act="s1-chart">
+    <div class="step-head"><div class="num">📊</div><h2>Schaubild auswerten</h2><span class="done-tag">✔ erledigt</span></div>
+    <div id="chart1"></div>
+    <div id="ana1" style="margin-top:14px"></div>
+  </section>
+
+  <section class="section" data-act="s1-order">
+    <div class="step-head"><div class="num">🔗</div><h2>Bau die Lieferkette</h2><span class="done-tag">✔ erledigt</span></div>
+    <div id="ord1"></div>
+  </section>
+
+  <section class="section" data-act="s1-sort">
+    <div class="step-head"><div class="num">↔️</div><h2>Import oder Export?</h2><span class="done-tag">✔ erledigt</span></div>
+    <div id="sort1"></div>
+  </section>
+
+  <section class="section" data-act="s1-mission">
+    <div class="step-head"><div class="num">🕵️</div><h2>Bonus-Mission: Zimmer-Detektiv</h2><span class="done-tag">✔ erledigt</span></div>
+    <div id="mis1"></div>
+  </section>
+
+  <section class="section" data-act="s1-quiz">
+    <div class="step-head"><div class="num">✅</div><h2>Check: Was weißt du jetzt?</h2><span class="done-tag">✔ bestanden</span></div>
+    <div id="quiz1"></div>
+  </section>
+
+  <section class="section">
+    <div class="merk">
+      <h3>📌 Merksatz</h3>
+      <p>Viele Produkte unseres Alltags werden ganz oder teilweise in China hergestellt. Ihre Bauteile stammen oft aus mehreren Ländern. Über eine <b>Lieferkette</b> aus Fabrik, Hafen, Containerschiff, Lager und Paketdienst gelangen sie zu uns. Diese weltweite Verflechtung heißt <b>Globalisierung</b>. Sie macht Waren günstig und schnell verfügbar – hat aber auch Folgen für Umwelt und Menschen.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="step-head"><div class="num">🃏</div><h2>Fachbegriffe-Karten</h2></div>
+    <div id="flash1"></div>
+  </section>
+
+  <nav class="nextnav">
+    <a class="btn ghost" href="index.html">← Zur Kursübersicht</a>
+    <a class="btn" href="station2.html">Station 2: Warum leben die meisten im Osten? →</a>
+  </nav>
+</main>
+
+<script src="kurs.js"></script>
+<script>
+const A = Kurs.Art;
+Kurs.init({ station: 's1' });
+
+Kurs.tip('#tip1', '<b>Ni hao!</b> Ich bin Pandi und begleite dich durch den Kurs. Arbeite die Abschnitte von oben nach unten durch. Für jede Aufgabe gibt es ⭐ XP – und für jede komplette Station ein Abzeichen. 🏅');
+
+Kurs.estimate('#est1', {
+  id: 's1-est',
+  q: 'Für wie viele <b>Milliarden Euro</b> hat Deutschland 2023 Waren aus China eingekauft (importiert)?',
+  min: 0, max: 300, step: 1, a: 157, unit: 'Mrd. €',
+  e: 'China war damit das Land, aus dem Deutschland am meisten Waren eingekauft hat. Zum Vergleich: aus den USA waren es rund 95 Mrd. €.',
+  compare: [{ label: 'USA', value: 95 }]
+});
+
+/* ---------- Erklärfilm ---------- */
+Kurs.video('#vid1', {
+  id: 's1-video', title: 'Die Weltreise deiner Kopfhörer', next: '#aud1',
+  scenes: [
+    { svg: () => A.bg() + A.title('Ein ganz normaler Morgen …') +
+        A.emoji(140, 220, '⏰', 70, 'a-pop', .3) + A.emoji(260, 220, '📱', 70, 'a-pop', .6) + A.emoji(380, 220, '🧥', 70, 'a-pop', .9) +
+        A.emoji(500, 220, '👟', 70, 'a-pop', 1.2) + A.emoji(620, 220, '🎧', 70, 'a-pop', 1.5) +
+        A.label(400, 300, '„Made in China“?', { size: 30, fill: '#c0392b', d: 2.2, cls: 'a-up' }) + A.panda(680, 300, 1.3, 'a-pop', 2.6),
+      say: 'Ein ganz normaler Morgen. Der Wecker klingelt auf deinem Smartphone. Du ziehst Hoodie und Sneaker an und steckst deine Kopfhörer ein. Bei erstaunlich vielen dieser Dinge steht irgendwo: Made in China.' },
+    { svg: () => A.bg() + A.title('„Made in China“ = hergestellt in China') +
+        A.box(330, 160, 140, 150, 'Montage\nin China', { icon: '📱', d: .2, fill: '#fdecea' }) +
+        A.box(40, 120, 170, 60, 'Display: Südkorea', { d: .8, size: 15 }) + A.arrow(210, 150, 325, 200, { d: 1 }) +
+        A.box(40, 260, 170, 60, 'Chips: Taiwan', { d: 1.3, size: 15 }) + A.arrow(210, 290, 325, 260, { d: 1.5 }) +
+        A.box(590, 120, 170, 60, 'Entwicklung: USA', { d: 1.8, size: 15 }) + A.arrow(590, 150, 475, 200, { d: 2 }) +
+        A.box(590, 260, 170, 60, 'Kamera: Japan', { d: 2.3, size: 15 }) + A.arrow(590, 290, 475, 260, { d: 2.5 }),
+      say: 'Made in China heißt: hergestellt in China. Das bedeutet aber nicht, dass jedes Teil aus China kommt. Ein Smartphone wird vielleicht in den USA entwickelt. Display, Chips und Kamera stammen aus verschiedenen Ländern. Zusammengesetzt wird es oft in China.' },
+    { svg: () => A.bg('#eaf3fb') + A.title('Globalisierung') +
+        '<circle cx="400" cy="240" r="120" fill="#9cc7ea" stroke="#2d6cdf" stroke-width="3" class="a-pop"/>' +
+        '<path d="M330 190 q40 -40 90 -10 q30 30 70 10 M310 260 q50 30 100 0 q40 -20 90 20" stroke="#1f8a70" stroke-width="18" fill="none" stroke-linecap="round" opacity=".7" class="a-fade" style="--d:.3s"/>' +
+        A.emoji(180, 150, '💶', 44, 'a-pop', .8) + A.emoji(620, 150, '📦', 44, 'a-pop', 1.1) + A.emoji(180, 340, '💬', 44, 'a-pop', 1.4) + A.emoji(620, 340, '🎮', 44, 'a-pop', 1.7) +
+        A.arrow(215, 160, 300, 200, { d: .9, color: '#2d6cdf' }) + A.arrow(585, 160, 500, 200, { d: 1.2, color: '#2d6cdf' }) + A.arrow(215, 330, 300, 290, { d: 1.5, color: '#2d6cdf' }) + A.arrow(585, 330, 500, 290, { d: 1.8, color: '#2d6cdf' }),
+      say: 'Länder, Firmen und Menschen auf der ganzen Welt sind heute eng miteinander verbunden. Waren, Geld und Informationen reisen über alle Grenzen. Das nennt man Globalisierung. Und du bist jeden Tag ein Teil davon, zum Beispiel wenn du online mit Leuten aus anderen Ländern zockst.' },
+    { svg: () => A.bg() + A.title('Die Lieferkette', 'alle Stationen eines Produkts bis zu dir') +
+        [['🏭', 'Fabrik'], ['🚚', 'Lkw'], ['⚓', 'Hafen'], ['🚢', 'Schiff'], ['🏬', 'Lager'], ['📦', 'Paket'], ['😀', 'Du']].map((s, i) =>
+          A.box(20 + i * 110, 180, 92, 110, s[1], { icon: s[0], d: .3 + i * .45, size: 15, fill: i === 6 ? '#fff4d6' : '#fff' }) +
+          (i < 6 ? A.arrow(114 + i * 110, 235, 128 + i * 110, 235, { d: .5 + i * .45, w: 3 }) : '')).join(''),
+      say: 'Stell dir vor, du bestellst Kopfhörer. Sie werden in einer Fabrik in China gebaut, verpackt und mit dem Lkw zum Hafen gebracht. Ein Schiff bringt sie nach Europa. Von dort geht es ins Lager und mit dem Paketdienst zu dir. Diesen ganzen Weg nennt man Lieferkette.' },
+    { svg: () => A.bg('#eaf3fb') + '<circle cx="680" cy="80" r="40" fill="#f5c542" class="a-pop"/>' +
+        '<g class="a-ship" style="--x0:-260px;--x1:820px;--t:11s">' + A.ship(0, 230, 1.3) + '</g>' + A.waves(320) +
+        A.label(400, 70, 'Ein Container fasst viele Tausend Produkte', { size: 26, cls: 'a-up' }) +
+        A.label(400, 105, 'Große Schiffe tragen über 20.000 Container', { size: 20, fill: '#5a6170', d: 1.5 }),
+      say: 'Für die lange Reise kommen die Waren in Container. Das sind riesige, genormte Metallkisten. In einen einzigen Container passen viele Tausend Kopfhörer. Die größten Containerschiffe können über zwanzigtausend Container auf einmal tragen.' },
+    { svg: () => A.bg() + A.title('Warum wird so viel in China hergestellt?') +
+        A.box(60, 150, 200, 160, 'riesige\nIndustriegebiete', { icon: '🏭', d: .3, fill: '#fdecea' }) +
+        A.box(300, 150, 200, 160, 'Häfen, Straßen,\nBahnen', { icon: '⚓', d: 1.2, fill: '#e8f0fd' }) +
+        A.box(540, 150, 200, 160, 'Massen-\nproduktion', { icon: '📦📦📦', iconSize: 26, d: 2.1, fill: '#e3f5ef' }),
+      say: 'Warum gerade China? Dort entstanden riesige Industriegebiete, in denen viele Firmen dicht beieinander liegen. Es gibt große Häfen, Straßen und Bahnlinien. Und es wird in Massenproduktion hergestellt: Wer Millionen Kopfhörer baut statt hundert, kann jedes einzelne Stück billiger machen.' },
+    { svg: () => A.bg() + A.title('Günstig ist gut – oder?') +
+        '<g class="a-fade" style="--d:.2s"><line x1="400" y1="130" x2="400" y2="320" stroke="#1f2430" stroke-width="6"/><rect x="340" y="320" width="120" height="16" rx="6" fill="#1f2430"/></g>' +
+        '<g class="a-pop" style="--d:.5s"><line x1="200" y1="160" x2="600" y2="140" stroke="#1f2430" stroke-width="6" stroke-linecap="round"/></g>' +
+        A.box(110, 180, 180, 120, '😀 günstig\nschnell da\ngroße Auswahl', { d: 1, fill: '#e3f5ef', size: 15 }) +
+        A.box(510, 160, 180, 120, '🤔 Umwelt?\nArbeits-\nbedingungen?', { d: 2.2, fill: '#fdecea', size: 15 }),
+      say: 'Für uns hat das Vorteile: Viele Produkte sind günstig, schnell da und es gibt eine riesige Auswahl. Aber es gibt auch Fragen. Was bedeuten die langen Transporte für die Umwelt? Unter welchen Bedingungen arbeiten die Menschen? Man muss also genau hinschauen, statt einfach gut oder schlecht zu sagen.' },
+    { svg: () => A.bg() + A.title('China ist mehr als die „Fabrik der Welt“') +
+        A.box(60, 140, 160, 130, 'Produktions-\nland', { icon: '🏭', d: .3 }) + A.box(240, 140, 160, 130, 'Absatz-\nmarkt', { icon: '🛒', d: .8 }) +
+        A.box(420, 140, 160, 130, 'Technologie-\nstandort', { icon: '🔋', d: 1.3 }) + A.box(600, 140, 160, 130, 'Handels-\npartner', { icon: '🤝', d: 1.8 }) +
+        A.label(400, 330, 'Deshalb betrifft uns, was in China passiert.', { size: 22, fill: '#c0392b', d: 2.6, cls: 'a-up' }),
+      say: 'China ist heute viel mehr als eine Fabrik. Chinesische Firmen bauen Elektroautos, Akkus und Solarmodule. China ist Produktionsland, Absatzmarkt, Technologiestandort und Handelspartner. Deshalb hat das, was in China passiert, auch Folgen für unser Leben in Deutschland.' }
+  ]
+});
+
+/* ---------- Hörtext ---------- */
+Kurs.audio('#aud1', {
+  id: 's1-audio', title: 'Wie viel China steckt in deinem Alltag?', sub: 'Sachtext zum Anhören und Mitlesen',
+  paras: [
+    'Der Wecker klingelt. Wahrscheinlich auf deinem Smartphone. Du ziehst einen Hoodie und deine Sneaker an, steckst deine Kopfhörer ein und packst Tablet, Ladekabel oder Powerbank in den Rucksack. Bei erstaunlich vielen dieser Produkte könnte auf der Verpackung stehen: Made in China.',
+    'Aber selbst wenn dort nicht China steht, kann China beteiligt sein. Einzelne Bauteile, Rohstoffe oder Akkus können aus China stammen. China ist viel näher an deinem Alltag, als die Entfernung auf der Weltkarte vermuten lässt.',
+    { h: 'Was bedeutet Made in China?' },
+    'Made in China bedeutet: hergestellt in China. Das heißt aber nicht, dass jeder Bestandteil aus China kommt. Ein Smartphone besteht aus Display, Akku, Kamera, Speicherchips, Prozessor und Gehäuse. Diese Teile können aus verschiedenen Ländern stammen. Danach werden sie in einer Fabrik zusammengesetzt. Ein Produkt kann also eine richtige Weltreise hinter sich haben, bevor es bei dir landet.',
+    'Dass Länder, Unternehmen und Menschen auf der ganzen Welt immer stärker miteinander verbunden sind, nennt man Globalisierung. Waren, Geld, Informationen und Dienstleistungen bewegen sich über Ländergrenzen hinweg.',
+    { h: 'Wie kommt ein Produkt aus China zu dir?' },
+    'Stell dir vor, du bestellst Kopfhörer. Sie werden in einer chinesischen Fabrik hergestellt, verpackt und zu einem Hafen gebracht. Dort kommen sie in Container, also große, genormte Metallkisten. Riesige Kräne laden die Container auf Schiffe. Nach einer langen Reise erreicht das Schiff einen europäischen Hafen. Mit Zug oder Lkw geht es weiter ins Lager und schließlich zu dir. Diesen ganzen Weg nennt man Lieferkette.',
+    { h: 'Warum wird so viel in China hergestellt?' },
+    'In China entstanden riesige Industriegebiete, in denen viele Firmen nah beieinander liegen. Außerdem besitzt China große Häfen, Straßen, Eisenbahnen und Logistikzentren. Hinzu kommt die Massenproduktion: Wenn eine Fabrik nicht hundert, sondern Millionen Kopfhörer herstellt, sinken die Kosten für jedes einzelne Stück.',
+    { h: 'Günstig ist gut – oder?' },
+    'Weltweit produzierte Waren sind günstig, schnell verfügbar und in großer Auswahl erhältlich. Aber es gibt Fragen: Was passiert mit der Umwelt, wenn Millionen Produkte um die Welt reisen? Woher kommen die Rohstoffe? Unter welchen Bedingungen arbeiten die Menschen? Und warum kaufen wir manchmal Dinge, die wir gar nicht brauchen, nur weil sie billig sind?',
+    { h: 'Import und Export' },
+    'Deutschland und China sind wirtschaftlich eng verbunden. Kauft ein Land Waren aus dem Ausland, heißt das Import. Verkauft ein Land Waren ins Ausland, heißt das Export. Deutschland importiert zum Beispiel Elektronik aus China und exportiert Maschinen und Autos.',
+    'China ist heute nicht nur die Fabrik der Welt. Chinesische Firmen bauen Elektroautos, Akkus, Solarmodule und Smartphones. China ist Produktionsland, Absatzmarkt, Technologiestandort und Handelspartner zugleich. Deshalb hat das, was in China passiert, auch Auswirkungen auf unser Leben.'
+  ]
+});
+
+/* ---------- Schaubild ---------- */
+Kurs.bars('#chart1', {
+  title: 'Woher kauft Deutschland seine Waren?',
+  sub: 'Die fünf wichtigsten Herkunftsländer der deutschen Importe 2023, in Milliarden Euro (gerundet)',
+  items: [
+    { label: 'China', value: 157, hi: true },
+    { label: 'Niederlande', value: 103 },
+    { label: 'USA', value: 95 },
+    { label: 'Polen', value: 82 },
+    { label: 'Italien', value: 71 }
+  ],
+  unitShort: 'Mrd. €', labelW: 120,
+  source: 'Statistisches Bundesamt (Destatis), Außenhandel 2023; Werte gerundet'
+});
+Kurs.analyse('#ana1', {
+  id: 's1-chart',
+  steps: [
+    { label: 'Beschreiben', type: 'mc', q: 'Was zeigt das Diagramm? Wähle die beste Beschreibung.',
+      o: ['Die Länder, aus denen Deutschland 2023 am meisten Waren eingekauft hat', 'Die Länder, in die Deutschland am meisten verkauft hat', 'Die Einwohnerzahlen von fünf Ländern'],
+      a: 0, e: 'Importe = Einkäufe aus dem Ausland. Thema, Jahr (2023) und Einheit (Milliarden Euro) gehören immer in die Beschreibung.' },
+    { label: 'Ablesen', type: 'num', q: 'Um wie viele Milliarden Euro liegt China vor den USA?', a: 62, tol: 2, unit: 'Mrd. €',
+      e: '157 − 95 = 62. China liegt also deutlich vorn.' },
+    { label: 'Erklären', type: 'open', q: 'Erkläre mithilfe des Films oder Hörtextes: Warum kauft Deutschland so viele Waren aus China? Nenne mindestens zwei Gründe.',
+      check: 'Industriegebiete · Häfen/Verkehrswege · Massenproduktion · günstige Preise',
+      model: 'In China gibt es riesige Industriegebiete, in denen viele Firmen eng zusammenarbeiten. Große Häfen und gute Verkehrswege sorgen dafür, dass die Waren schnell verschifft werden. Durch Massenproduktion können viele Produkte sehr günstig hergestellt werden. Deshalb kaufen deutsche Firmen und Kunden viele Waren aus China.' },
+    { label: 'Beurteilen', type: 'open', q: 'Ist es gut, dass Deutschland so viel aus China importiert? Nenne einen Vorteil und ein mögliches Problem.',
+      check: 'je ein Vorteil und ein Problem · mit „weil“ begründet',
+      model: 'Ein Vorteil ist, dass viele Produkte günstig und schnell verfügbar sind. Ein Problem ist, dass Deutschland abhängig wird: Wenn China plötzlich weniger liefert, könnten Bauteile fehlen und Elektronik teurer werden. Außerdem belasten die langen Transporte die Umwelt.' }
+  ]
+});
+
+/* ---------- Übungen ---------- */
+Kurs.order('#ord1', {
+  id: 's1-order', tag: 'Lieferkette',
+  prompt: 'Deine neuen Kopfhörer sind unterwegs. Bring die Stationen ihrer Reise in die richtige Reihenfolge!',
+  items: ['Rohstoffe werden gewonnen', 'Bauteile werden hergestellt', 'In der Fabrik zusammengesetzt', 'Verpackt und mit dem Lkw zum Hafen', 'Container aufs Schiff – ab nach Europa', 'Im Lager in Deutschland', 'Der Paketdienst bringt sie zu dir'],
+  explain: 'Genau das ist eine Lieferkette: alle Stationen eines Produkts bis zum Käufer. Fällt eine Station aus (z. B. ein Hafen), stockt die ganze Kette.'
+});
+
+Kurs.sort('#sort1', {
+  id: 's1-sort', tag: 'Welthandel',
+  prompt: 'Aus Sicht von Deutschland: Ist das ein Import oder ein Export?',
+  cats: [{ id: 'im', label: '⬅️ Import<br><small>Waren kommen nach Deutschland</small>' }, { id: 'ex', label: '➡️ Export<br><small>Waren gehen ins Ausland</small>' }],
+  items: [
+    { t: 'Ein Elektronikmarkt kauft Smartphones aus China', c: 'im' },
+    { t: 'Eine Firma aus Bayern verkauft Maschinen nach China', c: 'ex' },
+    { t: 'Ein Autobauer liefert Autos nach Asien', c: 'ex' },
+    { t: 'Du bestellst LED-Streifen aus Shenzhen', c: 'im' },
+    { t: 'Solarmodule aus China werden auf deutsche Dächer montiert', c: 'im' },
+    { t: 'Ein deutsches Chemieunternehmen liefert Kunststoff nach China', c: 'ex' }
+  ],
+  explain: 'Import = einkaufen aus dem Ausland, Export = verkaufen ins Ausland. Deutschland macht beides – darum sind beide Länder eng verbunden.'
+});
+
+Kurs.open('#mis1', {
+  id: 's1-mission', tag: 'Mission', xp: 15,
+  prompt: 'Werde zum Zimmer-Detektiv! Schau bei fünf Dingen in deinem Zimmer auf Etikett oder Verpackung. Wo wurden sie hergestellt?',
+  placeholder: 'z. B. Kopfhörer – China, Hoodie – Bangladesch, Ladekabel – China …',
+  minWords: 5,
+  model: '<b>Auswertung:</b> Zähle, wie oft China vorkommt. Bei vielen Jugendlichen sind es zwei bis vier von fünf Dingen – besonders bei Elektronik. Kleidung kommt oft auch aus Bangladesch, Vietnam oder der Türkei. Denk daran: Auch wo „China“ nicht draufsteht, können Bauteile von dort stammen.'
+});
+
+/* ---------- Quiz ---------- */
+Kurs.quiz('#quiz1', {
+  id: 's1-quiz',
+  questions: [
+    { q: 'Was bedeutet „Made in China“?', o: ['Hergestellt bzw. zusammengesetzt in China', 'Alle Teile stammen garantiert aus China', 'Die Firma gehört dem chinesischen Staat'], a: 0, e: 'Die Bauteile können aus vielen Ländern stammen – zusammengesetzt wird in China.' },
+    { q: 'Wie nennt man den Weg eines Produkts von der Herstellung bis zum Käufer?', o: ['Lieferkette', 'Warenkorb', 'Handelsbilanz'], a: 0, e: 'Fabrik → Hafen → Schiff → Lager → Paketdienst → du.' },
+    { q: 'Welche Aussage beschreibt <b>Globalisierung</b>?', o: ['Länder, Firmen und Menschen weltweit sind immer stärker verbunden', 'Jedes Land stellt alles selbst her', 'Nur große Länder treiben Handel'], a: 0, e: 'Waren, Geld und Informationen bewegen sich über Grenzen hinweg.' },
+    { q: 'Warum können manche Produkte aus China so günstig sein?', o: ['Massenproduktion senkt die Kosten pro Stück', 'Der Transport ist kostenlos', 'In China gibt es keine Fabrikkosten'], a: 0, e: 'Millionen gleiche Produkte → feste Kosten verteilen sich auf viele Stücke.' },
+    { q: 'Deutschland kauft Smartphones aus China. Das ist …', o: ['ein Import', 'ein Export', 'eine Investition'], a: 0, e: 'Import = Waren kommen ins eigene Land.' },
+    { q: 'Wozu dient ein Container?', o: ['Genormte Metallkiste zum Transport vieler Waren', 'Lagerhalle im Hafen', 'Fabrik auf einem Schiff'], a: 0, e: 'Weil alle Container gleich groß sind, passen sie auf Schiff, Zug und Lkw.' },
+    { q: 'Welche Rolle hat China heute <b>nicht</b> nur?', o: ['Nur billige Fabrik – sonst nichts', 'Technologiestandort für E-Autos und Akkus', 'Wichtiger Handelspartner Deutschlands'], a: 0, e: 'Genau – China ist heute weit mehr als die „Fabrik der Welt“.' }
+  ]
+});
+
+Kurs.flash('#flash1', [
+  ['Globalisierung', 'Weltweite Verbindung von Ländern, Unternehmen und Menschen.'],
+  ['Lieferkette', 'Weg eines Produkts von der Herstellung bis zum Käufer.'],
+  ['Container', 'Große, genormte Metallkiste zum Transport von Waren.'],
+  ['Massenproduktion', 'Herstellung sehr großer Mengen eines Produkts.'],
+  ['Import', 'Waren werden aus dem Ausland ins eigene Land gebracht.'],
+  ['Export', 'Waren werden ins Ausland verkauft.'],
+  ['Welthandel', 'Handel mit Waren und Dienstleistungen zwischen verschiedenen Ländern.']
+]);
+</script>
+</body>
+</html>
